@@ -1,0 +1,12 @@
+name: HungerClans
+version: ${project.version}
+main: com.gmail.creepycucumber1.hungerclans.HungerClans
+api-version: 1.18
+authors: [longbread, ItsGJK]
+description: HungerClans Core
+depend: [NametagEdit]
+commands:
+  clan:
+    description: Manage clans
+    aliases:
+      - c
