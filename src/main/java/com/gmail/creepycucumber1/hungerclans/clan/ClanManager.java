@@ -1,20 +1,16 @@
 package com.gmail.creepycucumber1.hungerclans.clan;
 
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
-import com.gmail.creepycucumber1.hungerclans.data.DataManager;
 import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
-import com.gmail.creepycucumber1.hungerclans.util.ItemUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.block.Banner;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -55,8 +51,8 @@ public class ClanManager {
             player.sendMessage(TextUtil.convertColor("A clan name must only have letters and spaces!"));
             return;
         }
-        List<String> bannedNames = List.of("join", "leave", "gabe", "hayes", "xarkenz", "longbread", "nigger", "fag",
-                "cunt", "burn jews", "fuck", "shit", "clan");
+        List<String> bannedNames = List.of("join", "leave", "gabe", "hayes", "xarkenz", "longbread", "nigg", "fag",
+                "cunt", "burn jews", "fuck", "shit", "clan", "amogus");
         for(String str : bannedNames)
             if(clanName.toLowerCase().contains(str)) {
                 player.sendMessage(TextUtil.convertColor("Please think of something more creative."));
@@ -72,34 +68,49 @@ public class ClanManager {
         List<ChatColor> COLORS = List.of(ChatColor.DARK_GRAY, ChatColor.GREEN, ChatColor.YELLOW, ChatColor.AQUA,
                 ChatColor.LIGHT_PURPLE, ChatColor.GOLD, ChatColor.BLUE, ChatColor.DARK_GREEN, ChatColor.RED);
         String clanColor = ColorUtil.colorToString(COLORS.get((int) (Math.random() * COLORS.size() + 1)));
-        HashMap<String, String> relationships = new HashMap<>(); //other clan name, status
+        //clan motto
+        String motto = "";
+        //roles
         ArrayList<String> members = new ArrayList<>(); //unique IDs
         members.add(player.getUniqueId().toString());
         ArrayList<String> trusted = new ArrayList<>(); //unique IDs
         trusted.add(player.getUniqueId().toString());
         String leader = player.getUniqueId().toString(); //unique ID
+        //banner
         ItemStack banner = new ItemStack(Material.WHITE_BANNER);
+        //creation date
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         String created = dateFormat.format(date);
+        //points
+        int points = 1000;
+        //clan home
+        ArrayList<String> home = new ArrayList<>();
+        //blocked from war declaration
+        HashMap<String, String> noDeclareMap = new HashMap<>();
+        List<HashMap<String, String>> noDeclare = List.of(noDeclareMap);
 
         Map<String, Object> map = new HashMap<>();
         map.put("code", clanCode);
         map.put("color", clanColor);
+        map.put("motto", motto);
         map.put("members", members);
         map.put("trusted", trusted);
         map.put("leader", leader);
-        map.put("relationships", relationships);
         map.put("banner", banner);
         map.put("created", created);
+        map.put("points", points);
+        map.put("home", home);
+        map.put("hasHome", false);
+        map.put("noDeclare", noDeclare);
 
         plugin.getDataManager().getConfig().createSection("clans." + clanName, map);
         plugin.getDataManager().saveConfig();
 
-        player.sendMessage(TextUtil.convertColor("You have successfully created a clan!"));
+        player.sendMessage(TextUtil.convertColor("&3You have successfully created a clan!"));
     }
 
-    //player methods
+    //PLAYER METHODS
     //getter
     public boolean isInClan(OfflinePlayer player) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
@@ -135,6 +146,19 @@ public class ClanManager {
     }
 
     //setter
+    public void addMember(OfflinePlayer player, String clanName) {
+        if(isInClan(player)) return;
+        if(getMembers(clanName).size() >= 9) return;
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
+        ArrayList<String> members = new ArrayList<>(cfg.getStringList(clanName + ".members"));
+        members.add(player.getUniqueId().toString());
+
+        plugin.getPlayerManager().setJoinedClanToNow(player);
+
+        cfg.set(clanName + ".members", members);
+        plugin.getDataManager().saveConfig();
+    }
+
     public void addRole(OfflinePlayer player, String role) {
         if(!isInClan(player)) return;
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
@@ -146,6 +170,7 @@ public class ClanManager {
             trusted.add(player.getUniqueId().toString());
             cfg.set(clanName + ".trusted", trusted);
         }
+        plugin.getDataManager().saveConfig();
     }
 
     public void removeRole(OfflinePlayer player, String role) {
@@ -164,9 +189,10 @@ public class ClanManager {
             members.remove(player.getUniqueId().toString());
             cfg.set(clanName + ".members", members);
         }
+        plugin.getDataManager().saveConfig();
     }
 
-    //clan and other methods
+    //CLAN AND OTHER METHODS
     //getter
     public ArrayList<String> getClanList() {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
@@ -184,6 +210,11 @@ public class ClanManager {
         return (String) cfg.get("code");
     }
 
+    public String getMotto(String clanName) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
+        return (String) cfg.get("motto");
+    }
+
     public ItemStack getBanner(String clanName) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
         return cfg.getItemStack("banner");
@@ -199,12 +230,31 @@ public class ClanManager {
         return cfg.getString("created");
     }
 
-    public String getRelationshipBetween(String clanName, String otherClanName) {
+    public int getPoints(String clanName) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
-        HashMap<String, String> map = (HashMap<String, String>) cfg.get("relationships");
-        assert map != null;
-        if(!map.containsKey(otherClanName)) return "none";
-        return map.get(otherClanName);
+        return cfg.getInt("points");
+    }
+
+    public ArrayList<String> getHome(String clanName) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
+        return (ArrayList<String>) cfg.getStringList("home");
+    }
+
+    public boolean getHasHome(String clanName) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
+        return cfg.getBoolean("hasHome");
+    }
+
+    public String getDeclareAgainDay(String clanName, String otherClanName) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
+        HashMap<String, String> noDeclareMap = new HashMap<>((Map<? extends String, ? extends String>) cfg.getMapList("noDeclare").get(0));
+        return noDeclareMap.get(otherClanName);
+    }
+
+    public boolean declarationsBlocked(String clanName, String otherClanName) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
+        HashMap<String, String> noDeclareMap = new HashMap<>((Map<? extends String, ? extends String>) cfg.getMapList("noDeclare").get(0));
+        return noDeclareMap.containsKey(otherClanName);
     }
 
     //setter
@@ -226,32 +276,79 @@ public class ClanManager {
 
         cfg.set("banner", p.getInventory().getItemInMainHand());
 
+        if(p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName() &&
+                !p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().toLowerCase().contains("banner")) {
+            List<String> bannedWords = List.of("nigg", "fag", "cunt", "burn jews", "fuck", "shit");
+            for(String str : bannedWords)
+                if(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().toLowerCase().contains(str)) {
+                    cfg.set("motto", "We are very bad");
+                    plugin.getDataManager().saveConfig();
+                    return;
+                }
+            cfg.set("motto", p.getInventory().getItemInMainHand().getItemMeta().getDisplayName());
+        }
+        else
+            cfg.set("motto", "");
+
         plugin.getDataManager().saveConfig();
     }
 
-    public void setRelationship(String clanName, String otherClanName, String relation) {
-        if(!getClanList().contains(otherClanName)) return;
+    public void addPoints(String clanName, int points) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
-        HashMap<String, String> map = new HashMap<>((HashMap<String, String>) cfg.get("relationships"));
-        map.put(otherClanName, relation);
-        cfg.set("relationships", map);
-        ConfigurationSection cfg2 = plugin.getDataManager().getConfig().getConfigurationSection("clans." + otherClanName);
-        HashMap<String, String> map2 = new HashMap<>((HashMap<String, String>) cfg2.get("relationships"));
-        map.put(clanName, relation);
-        cfg2.set("relationships", map2);
+        cfg.set("points", cfg.getInt("points") + points);
         plugin.getDataManager().saveConfig();
     }
 
-    public void removeRelationship(String clanName, String otherClanName) {
-        if(!getClanList().contains(otherClanName)) return;
+    public void removePoints(String clanName, int points) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
-        HashMap<String, String> map = new HashMap<>((HashMap<String, String>) cfg.get("relationships"));
-        map.remove(otherClanName);
-        cfg.set("relationships", map);
-        ConfigurationSection cfg2 = plugin.getDataManager().getConfig().getConfigurationSection("clans." + otherClanName);
-        HashMap<String, String> map2 = new HashMap<>((HashMap<String, String>) cfg2.get("relationships"));
-        map.remove(otherClanName);
-        cfg2.set("relationships", map2);
+        cfg.set("points", cfg.getInt("points") - points);
+        plugin.getDataManager().saveConfig();
+    }
+
+    public void setHome(String clanName, Location location) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
+        ArrayList<String> home = new ArrayList<>();
+        home.add(location.getWorld().getName());
+        home.add(String.valueOf((int) location.getX()));
+        home.add(String.valueOf((int) location.getY()));
+        home.add(String.valueOf((int) location.getZ()));
+        cfg.set("home", home);
+        cfg.set("hasHome", true);
+        plugin.getDataManager().saveConfig();
+    }
+
+    public void setDeclarationBlock(String clanName, String otherClanName) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
+        HashMap<String, String> noDeclareMap = new HashMap<>((Map<? extends String, ? extends String>) cfg.getMapList("noDeclare").get(0));
+
+        Date currentDate = Calendar.getInstance().getTime();
+        DateFormat dayFormat = new SimpleDateFormat("dd");
+        DateFormat monthFormat = new SimpleDateFormat("MM");
+        int currentDay = Integer.parseInt(dayFormat.format(currentDate));
+        String currentMonth = monthFormat.format(currentDate);
+        int last = 30;
+        if(Integer.parseInt(currentMonth) % 2 == 1)
+            last = 31;
+        else if(Integer.parseInt(currentMonth) == 2)
+            last = 28;
+        String day = String.valueOf((currentDay + 8) % last);
+
+        noDeclareMap.put(otherClanName, day);
+        List<HashMap<String, String>> noDeclare = List.of(noDeclareMap);
+        cfg.set("noDeclare", noDeclare);
+
+        plugin.getDataManager().saveConfig();
+    }
+
+    public void removeDeclarationBlock(String clanName, String otherClanName) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
+        HashMap<String, String> noDeclareMap = new HashMap<>((Map<? extends String, ? extends String>) cfg.getMapList("noDeclare").get(0));
+
+        noDeclareMap.remove(otherClanName);
+
+        List<HashMap<String, String>> noDeclare = List.of(noDeclareMap);
+        cfg.set("noDeclare", noDeclare);
+
         plugin.getDataManager().saveConfig();
     }
 
