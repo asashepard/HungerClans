@@ -4,9 +4,18 @@ main: com.gmail.creepycucumber1.hungerclans.HungerClans
 api-version: 1.18
 authors: [longbread, ItsGJK]
 description: HungerClans Core
-depend: [NametagEdit]
+depend: [NametagEdit, Vault]
+softdepend: [Essentials]
 commands:
   clan:
     description: Manage clans
     aliases:
       - c
+  clanwhisper:
+    description: Message only members of your clan
+    aliases:
+      - clanmessage
+      - cw
+      - cmsg
+  war:
+    description: View war(s)
