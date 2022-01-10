@@ -9,11 +9,9 @@ package com.gmail.creepycucumber1.hungerclans.util;
 
 import org.bukkit.ChatColor;
 
-import java.awt.*;
-
 public class ColorUtil {
-    public static String colorToString(ChatColor color){
-        if(color == ChatColor.GRAY) return null;
+    public static String colorToString(ChatColor color) {
+        if (color == ChatColor.GRAY) return null;
 
         if (ChatColor.DARK_GRAY.equals(color)) {
             return "gray";
@@ -33,6 +31,8 @@ public class ColorUtil {
             return "blue";
         } else if (ChatColor.DARK_GREEN.equals(color)) {
             return "darkGreen";
+        } else if (ChatColor.GREEN.equals(color)) {
+            return "green";
         } else if (ChatColor.RED.equals(color)) {
             return "red";
         } else if (ChatColor.BLACK.equals(color)) {
@@ -50,6 +50,8 @@ public class ColorUtil {
             return "&b";
         } else if (ChatColor.LIGHT_PURPLE.equals(color)) {
             return "&d";
+        } else if (ChatColor.YELLOW.equals(color)) {
+            return "&e";
         } else if (ChatColor.GOLD.equals(color)) {
             return "&6";
         } else if (ChatColor.WHITE.equals(color)) {
@@ -62,6 +64,8 @@ public class ColorUtil {
             return "&9";
         } else if (ChatColor.DARK_GREEN.equals(color)) {
             return "&2";
+        } else if (ChatColor.GREEN.equals(color)) {
+            return "&a";
         } else if (ChatColor.RED.equals(color)) {
             return "&c";
         } else if (ChatColor.BLACK.equals(color)) {
