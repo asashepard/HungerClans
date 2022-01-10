@@ -1,3 +1,3 @@
 # HungerClans
 
-Clans plugin for Bukkit.
+Clans plugin for Bukkit. To be used with HungerCore.
