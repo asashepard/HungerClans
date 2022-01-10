@@ -25,9 +25,13 @@ public class PlayerGUI extends GUI {
         ItemStack skull = getSkull(uuid);
         items[4] = new GUIItem(skull, "skull");
 
-        ItemStack grayPane = ItemUtil.createItemStack(Material.GRAY_STAINED_GLASS_PANE, "");
-        GUIItem gray = new GUIItem(grayPane, "gray");
-        items[3] = gray; items[5] = gray;
+        ItemStack grayPane = ItemUtil.createItemStack(Material.GRAY_STAINED_GLASS_PANE, " ");
+        GUIItem gray = new GUIItem(grayPane, "pane");
+        items[2] = gray; items[6] = gray; items[0] = gray; items[8] = gray;
+
+        ItemStack whitePane = ItemUtil.createItemStack(Material.WHITE_STAINED_GLASS_PANE, " ");
+        GUIItem white = new GUIItem(whitePane, "pane");
+        items[3] = white; items[5] = white;
 
         ItemStack green = ItemUtil.createItemStack(Material.GREEN_CONCRETE, "&2Promote",
                 "&7if leader promotes trusted to leader,",
@@ -58,11 +62,11 @@ public class PlayerGUI extends GUI {
     @Override
     public void clicked(Player p, GUIItem item) {
         if(item.getItem().getType().equals(Material.GREEN_CONCRETE)) {
+            p.closeInventory();
             Bukkit.getServer().dispatchCommand(p, "c promote " + Bukkit.getOfflinePlayer(UUID.fromString(item.getId())).getName());
-            p.closeInventory();
         } else if(item.getItem().getType().equals(Material.RED_CONCRETE)) {
-            Bukkit.getServer().dispatchCommand(p, "c demote " + Bukkit.getOfflinePlayer(UUID.fromString(item.getId())).getName());
             p.closeInventory();
+            Bukkit.getServer().dispatchCommand(p, "c demote " + Bukkit.getOfflinePlayer(UUID.fromString(item.getId())).getName());
         }
     }
 
