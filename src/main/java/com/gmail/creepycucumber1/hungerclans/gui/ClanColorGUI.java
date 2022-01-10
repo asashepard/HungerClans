@@ -44,8 +44,14 @@ public class ClanColorGUI extends GUI {
     @Override
     public void clicked(Player p, GUIItem item) {
         String clanName = plugin.getClanManager().getClan(p);
+        if(plugin.getVault().getBalance(p) < 500) {
+            p.sendMessage(TextUtil.convertColor("&cYou don't have $500 to change your clan's color."));
+            return;
+        }
+        plugin.getVault().withdrawPlayer(p, 500);
+
         plugin.getClanManager().setColor(clanName, item.getId());
-        player.sendMessage(TextUtil.convertColor("Successfully set your clan color to " +
+        player.sendMessage(TextUtil.convertColor("&3Successfully set your clan color to " +
                 ColorUtil.colorToStringCode(ColorUtil.colorFromString(item.getId())) + item.getId() + "!"));
         player.closeInventory();
     }
