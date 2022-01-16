@@ -17,5 +17,12 @@ commands:
       - clanmessage
       - cw
       - cmsg
+      - ctell
   war:
     description: View war(s)
+  surrender:
+    description: Lose more quickly
+  clanconfig:
+    description: Configure the HungerClans plugin in-game
+    aliases:
+      - cconfig
