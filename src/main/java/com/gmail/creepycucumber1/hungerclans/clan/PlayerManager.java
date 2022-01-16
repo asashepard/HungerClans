@@ -5,7 +5,6 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
-import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
@@ -31,13 +30,16 @@ public class PlayerManager {
         String joinedServer = dateFormat.format(date);
         //joined clan
         String joinedClan = "n/a";
-        //suffered last damage by enemy
-        long lastDamagedByEnemy = 0;
 
         HashMap<String, Object> map = new HashMap<>();
         map.put("joinedServer", joinedServer);
         map.put("joinedClan", joinedClan);
-        map.put("lastDamagedByEnemy", lastDamagedByEnemy);
+        map.put("lastDamagedByEnemy", (long) 0);
+        map.put("lastDamagedByPlayer", (long) 0);
+        map.put("timePlayedToday", (long) 0);
+        map.put("updatedTimeAt", Instant.now().toEpochMilli());
+        map.put("receivedReward", false);
+        map.put("combatLogged", false);
 
         plugin.getDataManager().getConfig().createSection("players." + uuid, map);
         plugin.getDataManager().saveConfig();
@@ -49,6 +51,13 @@ public class PlayerManager {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
         long time = Instant.now().toEpochMilli();
         cfg.set("lastDamagedByEnemy", time);
+        plugin.getDataManager().saveConfig();
+    }
+
+    public void setLastDamagedByPlayerToNow(Player player) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        long time = Instant.now().toEpochMilli();
+        cfg.set("lastDamagedByPlayer", time);
         plugin.getDataManager().saveConfig();
     }
 
@@ -67,13 +76,49 @@ public class PlayerManager {
         plugin.getDataManager().saveConfig();
     }
 
+    public void setTimePlayedToday(OfflinePlayer player, long playtime) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        cfg.set("timePlayedToday", playtime);
+        plugin.getDataManager().saveConfig();
+    }
+
+    public void resetTimePlayedToday(OfflinePlayer player) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        cfg.set("timePlayedToday", (long) 0);
+        plugin.getDataManager().saveConfig();
+    }
+
+    public void setUpdateTimeLastToNow(OfflinePlayer player) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        long now = Instant.now().toEpochMilli();
+        cfg.set("updatedTimeAt", now);
+        plugin.getDataManager().saveConfig();
+    }
+
+    public void setReceivedReward(OfflinePlayer player, boolean received) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        cfg.set("receivedReward", received);
+        plugin.getDataManager().saveConfig();
+    }
+
+    public void setCombatLogged(OfflinePlayer player, boolean combatLogged) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        cfg.set("combatLogged", combatLogged);
+        plugin.getDataManager().saveConfig();
+    }
+
     //getter
     public long getLastDamagedByEnemy(OfflinePlayer player) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
         return cfg.getLong("lastDamagedByEnemy");
     }
 
-    public String getJoined(OfflinePlayer player) {
+    public long getLastDamagedByPlayer(OfflinePlayer player) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        return cfg.getLong("lastDamagedByPlayer");
+    }
+
+    public String getJoinedServer(OfflinePlayer player) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
         return cfg.getString("joinedServer");
     }
@@ -81,6 +126,26 @@ public class PlayerManager {
     public String getJoinedClan(OfflinePlayer player) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
         return cfg.getString("joinedClan");
+    }
+
+    public long getTimePlayedToday(OfflinePlayer player) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        return cfg.getLong("timePlayedToday");
+    }
+
+    public long getUpdateTimeLast(OfflinePlayer player) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        return cfg.getLong("updatedTimeAt");
+    }
+
+    public boolean receivedReward(OfflinePlayer player) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        return cfg.getBoolean("receivedReward");
+    }
+
+    public boolean getCombatLogged(OfflinePlayer player) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        return cfg.getBoolean("combatLogged");
     }
 
 }

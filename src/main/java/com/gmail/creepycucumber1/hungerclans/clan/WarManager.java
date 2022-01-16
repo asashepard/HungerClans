@@ -1,8 +1,12 @@
 package com.gmail.creepycucumber1.hungerclans.clan;
 
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
+import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
+import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,12 +36,12 @@ public class WarManager {
             last = 31;
         else if(Integer.parseInt(currentMonth) == 2)
             last = 28;
-        String endsByTime = String.valueOf((currentDay + 4) % last);
+        String endsByTime = String.valueOf((currentDay + plugin.getConfigManager().getConfig().getInt("integer.warLength")) % last);
 
         Map<String, Object> map = new HashMap<>();
         map.put("side1", side1); //side that declared the war
         map.put("side2", side2);
-        map.put("endsByTime", endsByTime); //wars are 3 days long
+        map.put("endsByTime", endsByTime); //wars are 2-3 days long
         map.put("side1score", side1score);
         map.put("side2score", side2score);
 
@@ -60,11 +64,12 @@ public class WarManager {
             winner = side1;
             loser = side2;
         }
-        else {
+        else if(side1score < side2score) {
             winner = side2;
             loser = side1;
         }
         int difference = plugin.getClanManager().getPoints(winner) - plugin.getClanManager().getPoints(loser);
+        int reward = plugin.getConfigManager().getConfig().getInt("integer.warReward");
 
         if(winner.equalsIgnoreCase("draw")) {
             plugin.getClanManager().addPoints(winner, 20);
@@ -72,15 +77,34 @@ public class WarManager {
             return;
         }
 
+        String color = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(loser));
+        // WON by time and points
         for(String uuid : plugin.getDataManager().getConfig().getConfigurationSection("clans." + winner).getStringList("members")) {
-            plugin.getEssentials().getUser(UUID.fromString(uuid)).addMail("Congratulations, your clan won a war against " + loser + "! " +
-                    "You have received $5000 as a result. The score was " + side1score + " - " + side2score + ".");
-            plugin.getVault().depositPlayer(Bukkit.getOfflinePlayer(UUID.fromString(uuid)), 5000);
+            OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+            if(oPlayer.isOnline()) {
+                Player player = (Player) oPlayer;
+                player.sendMessage(TextUtil.convertColor("&aCongratulations, your clan won a war against " + color + loser + "&a! &3" +
+                        "You have received &7$" + reward + " &3as a result. The score was &e" + side1score + " &3- &e" + side2score + "&3."));
+            }
+            else {
+                plugin.getEssentials().getUser(UUID.fromString(uuid)).addMail("Congratulations, your clan won a war against " + loser + "! " +
+                        "You have received $" + reward + " as a result. The score was " + side1score + " - " + side2score + ".");
+            }
+            plugin.getVault().depositPlayer(Bukkit.getOfflinePlayer(UUID.fromString(uuid)), reward);
         }
+        // LOST by time and points
         for(String uuid : plugin.getDataManager().getConfig().getConfigurationSection("clans." + loser).getStringList("members")) {
-            plugin.getEssentials().getUser(UUID.fromString(uuid)).addMail("Your clan lost a war against " + loser + ". " +
-                    "The score was " + side1score + " - " + side2score + ".");
-            plugin.getVault().depositPlayer(Bukkit.getOfflinePlayer(UUID.fromString(uuid)), 5000);
+            String wColor = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(winner));
+            OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+            if(oPlayer.isOnline()) {
+                Player player = (Player) oPlayer;
+                player.sendMessage(TextUtil.convertColor("&4Your clan lost a war against " + wColor + winner + "&4. " +
+                        "The score was &e" + side1score + " &4- &e" + side2score + "&4."));
+            }
+            else {
+                plugin.getEssentials().getUser(UUID.fromString(uuid)).addMail("Your clan lost a war against " + winner + ". " +
+                        "The score was " + side1score + " - " + side2score + ".");
+            }
         }
 
         int bonus = Math.abs(difference) / 50;
@@ -93,13 +117,45 @@ public class WarManager {
         plugin.getDataManager().saveConfig();
     }
 
-    public void endWar(String war, String winner) {
+    public void endWar(String war, String winner, boolean surrender) { //if not surrender, other team disbanded
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("wars");
+        int side1score = plugin.getWarManager().getSide1Points(war);
+        int side2score = plugin.getWarManager().getSide2Points(war);
+        String loser = "";
+        if(surrender)
+            loser = getOpposition(war, winner);
+        int reward = plugin.getConfigManager().getConfig().getInt("integer.warReward");
 
+        // WON by surrender or disappearance
         for(String uuid : plugin.getDataManager().getConfig().getConfigurationSection("clans." + winner).getStringList("members")) {
-            plugin.getEssentials().getUser(UUID.fromString(uuid)).addMail("Congratulations, your clan won a war! " +
-                    "You won so hard, the other team doesn't even exist anymore! You have received $5000 as a result.");
-            plugin.getVault().depositPlayer(Bukkit.getOfflinePlayer(UUID.fromString(uuid)), 5000);
+            OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+            if(oPlayer.isOnline()) {
+                Player player = (Player) oPlayer;
+                player.sendMessage(TextUtil.convertColor("&aCongratulations, your clan won a war! &3" +
+                        (surrender ? "The other team, " + loser + " surrendered." : "You won so decisively, the other team ceased to exist!") +
+                        " The score was &e" + side1score + " &3- &e" + side2score + "&3. You have received &7$" + reward + " &3as a result."));
+            }
+            else {
+                plugin.getEssentials().getUser(UUID.fromString(uuid)).addMail("Congratulations, your clan won a war! " +
+                        (surrender ? "The other team surrendered." : "You won so decisively, the other team ceased to exist!") +
+                        " The score was " + side1score + " - " + side2score + ". You have received $" + reward + " as a result.");
+            }
+            plugin.getVault().depositPlayer(Bukkit.getOfflinePlayer(UUID.fromString(uuid)), reward);
+        }
+
+        // LOST by surrender
+        if(surrender) {
+            String wColor = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(winner));
+            for(String uuid : plugin.getDataManager().getConfig().getConfigurationSection("clans." + loser).getStringList("members")) {
+                OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
+                if(oPlayer.isOnline()) {
+                    Player player = (Player) oPlayer;
+                    player.sendMessage(TextUtil.convertColor("&4Your clan surrendered and lost a war against " + wColor + winner + "&4."));
+                }
+                else {
+                    plugin.getEssentials().getUser(UUID.fromString(uuid)).addMail("Your clan surrendered and lost a war against " + winner + ".");
+                }
+            }
         }
         int rand = (int) (Math.random() * 50 + 1);
         plugin.getClanManager().addPoints(winner, 150 + rand);

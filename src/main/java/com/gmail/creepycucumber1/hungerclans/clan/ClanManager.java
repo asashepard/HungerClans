@@ -27,7 +27,12 @@ public class ClanManager {
         if(isInClan(player)) {
             player.sendMessage("You are already in a clan!"); return;
         }
+        int cost = plugin.getConfigManager().getConfig().getInt("integer.createClanCost");
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
+        if(cost != 0 && plugin.getVault().getBalance(player) < cost) {
+            player.sendMessage(TextUtil.convertColor("&cYou must have $" + cost + " to create a clan."));
+            return;
+        }
         for(String existingName : cfg.getKeys(false))
             if(existingName.toLowerCase().contains(clanName.toLowerCase()) ||
                     clanName.toLowerCase().contains(existingName.toLowerCase()) ||
@@ -107,6 +112,8 @@ public class ClanManager {
         plugin.getDataManager().getConfig().createSection("clans." + clanName, map);
         plugin.getDataManager().saveConfig();
 
+        plugin.getPlayerManager().setJoinedClanToNow(player);
+        plugin.getVault().withdrawPlayer(player, cost);
         player.sendMessage(TextUtil.convertColor("&3You have successfully created a clan!"));
     }
 
@@ -114,10 +121,12 @@ public class ClanManager {
     //getter
     public boolean isInClan(OfflinePlayer player) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
-        for(String str : cfg.getKeys(false))
-            for(String uuid : (ArrayList<String>) plugin.getDataManager().getConfig().get("clans." + str + ".members"))
+        for(String clan : cfg.getKeys(false)) {
+            for(String uuid : cfg.getStringList(clan + ".members")) {
                 if(uuid.equals(player.getUniqueId().toString()))
                     return true;
+            }
+        }
         return false;
     }
 
@@ -331,7 +340,7 @@ public class ClanManager {
             last = 31;
         else if(Integer.parseInt(currentMonth) == 2)
             last = 28;
-        String day = String.valueOf((currentDay + 8) % last);
+        String day = String.valueOf((currentDay + plugin.getConfigManager().getConfig().getInt("integer.declareWait")) % last);
 
         noDeclareMap.put(otherClanName, day);
         List<HashMap<String, String>> noDeclare = List.of(noDeclareMap);
