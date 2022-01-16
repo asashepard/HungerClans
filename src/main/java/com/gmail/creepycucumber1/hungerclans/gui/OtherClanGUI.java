@@ -4,13 +4,16 @@ import com.gmail.creepycucumber1.hungerclans.HungerClans;
 import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.ItemUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class OtherClanGUI extends GUI {
     private Player player;
@@ -44,7 +47,7 @@ public class OtherClanGUI extends GUI {
         ItemStack green = ItemUtil.createItemStack(Material.GREEN_CONCRETE, "&2Peace");
         items[1] = new GUIItem(green, clanName);
 
-        ItemStack red = ItemUtil.createItemStack(Material.RED_CONCRETE, "&4Declare War &f- $5000");
+        ItemStack red = ItemUtil.createItemStack(Material.RED_CONCRETE, "&4Declare War &f- $2500");
         items[7] = new GUIItem(red, clanName);
 
     }
@@ -68,13 +71,18 @@ public class OtherClanGUI extends GUI {
             plugin.getGUIManager().openGUI(p, new AllClansGUI(plugin, p));
         } else if(item.getItem().getType().equals(Material.RED_CONCRETE)) {
             p.closeInventory();
+            if(!plugin.getConfigManager().getConfig().getBoolean("boolean.allowDeclareWar")) {
+                p.sendMessage(TextUtil.convertColor("&cWar declaration has been turned off."));
+                return;
+            }
             if(!plugin.getClanManager().getRole(p).equalsIgnoreCase("leader")) {
                 p.sendMessage(TextUtil.convertColor("&cYou must be the clan leader to declare war."));
                 return;
             }
 
-            if(plugin.getVault().getBalance(p) < 5000) {
-                p.sendMessage(TextUtil.convertColor("&cYou don't have $5000 to declare war."));
+            int cost = plugin.getConfigManager().getConfig().getInt("integer.declareWarCost");
+            if(cost != 0 && plugin.getVault().getBalance(p) < cost) {
+                p.sendMessage(TextUtil.convertColor("&cYou must have $" + cost + " to declare war."));
                 return;
             }
 
@@ -101,10 +109,37 @@ public class OtherClanGUI extends GUI {
 
             plugin.getWarManager().createNewWar(clan, otherClan);
             plugin.getClanManager().setDeclarationBlock(clan, otherClan);
-            plugin.getVault().withdrawPlayer(p, 5000);
+            notifyOfWar(clan, otherClan, true);
+            notifyOfWar(otherClan, clan, false);
+            plugin.getVault().withdrawPlayer(p, cost);
             p.sendMessage(TextUtil.convertColor("&4Declared war on " +
                     ColorUtil.colorToStringCode(plugin.getClanManager().getColor(item.getItemId())) +
                     item.getItemId() + "&r&4! Go get 'em!"));
+            if(cost != 0) player.sendMessage(TextUtil.convertColor("&7Balance: $" + plugin.getVault().getBalance(p)));
+
+        }
+    }
+
+    public void notifyOfWar(String clan, String otherClan, boolean declared) {
+        String color = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(otherClan));
+        for(String str : plugin.getClanManager().getMembers(clan)) {
+            OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(str));
+
+            if(plugin.getClanManager().getRole(player).equalsIgnoreCase("leader")) return;
+
+            if(player.isOnline()) {
+                Player p = (Player) player;
+                if(declared)
+                    p.sendMessage(TextUtil.convertColor("&4Prepare for war! Your clan has declared war against " + color + otherClan + "&4!"));
+                else
+                    p.sendMessage(TextUtil.convertColor("&4Prepare for war! " + color + otherClan + " has declared war against you!"));
+            }
+            else {
+                if(declared)
+                    plugin.getEssentials().getUser(player.getUniqueId()).addMail("Prepare for war! Your clan has declared war against " + otherClan + "!");
+                else
+                    plugin.getEssentials().getUser(player.getUniqueId()).addMail("Prepare for war! " + otherClan + " Has declared war against you!");
+            }
 
         }
     }

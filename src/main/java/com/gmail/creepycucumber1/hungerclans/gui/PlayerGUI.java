@@ -5,14 +5,10 @@ import com.gmail.creepycucumber1.hungerclans.util.ItemUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class PlayerGUI extends GUI {

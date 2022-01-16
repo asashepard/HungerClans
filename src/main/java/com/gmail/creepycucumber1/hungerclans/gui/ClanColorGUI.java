@@ -13,7 +13,8 @@ public class ClanColorGUI extends GUI {
     private Player player;
 
     public ClanColorGUI(HungerClans plugin, Player player) {
-        super(plugin, player.getUniqueId(), "Clan Color Editor", 1);
+        super(plugin, player.getUniqueId(), "Clan Color Editor" +
+                (plugin.getConfigManager().getConfig().getInt("integer.setColorCost") != 0 ? " - $" + plugin.getConfigManager().getConfig().getInt("integer.setColorCost") : ""), 1);
         this.player = player;
 
         ItemStack gray = ItemUtil.createItemStack(Material.GRAY_WOOL, "&8Gray");
@@ -44,15 +45,18 @@ public class ClanColorGUI extends GUI {
     @Override
     public void clicked(Player p, GUIItem item) {
         String clanName = plugin.getClanManager().getClan(p);
-        if(plugin.getVault().getBalance(p) < 500) {
-            p.sendMessage(TextUtil.convertColor("&cYou don't have $500 to change your clan's color."));
+
+        int cost = plugin.getConfigManager().getConfig().getInt("integer.setColorCost");
+        if(cost != 0 && plugin.getVault().getBalance(player) < cost) {
+            player.sendMessage(TextUtil.convertColor("&cYou must have $" + cost + " to set your clan color."));
             return;
         }
-        plugin.getVault().withdrawPlayer(p, 500);
 
         plugin.getClanManager().setColor(clanName, item.getId());
         player.sendMessage(TextUtil.convertColor("&3Successfully set your clan color to " +
                 ColorUtil.colorToStringCode(ColorUtil.colorFromString(item.getId())) + item.getId() + "!"));
+        plugin.getVault().withdrawPlayer(p, cost);
+        if(cost != 0) player.sendMessage(TextUtil.convertColor("&7Balance: $" + plugin.getVault().getBalance(p)));
         player.closeInventory();
     }
 

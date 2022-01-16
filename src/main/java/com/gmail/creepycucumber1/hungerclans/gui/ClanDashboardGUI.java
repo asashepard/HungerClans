@@ -5,15 +5,12 @@ import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.ItemUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
 import org.bukkit.*;
-import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
-import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 public class ClanDashboardGUI extends GUI {
@@ -68,15 +65,15 @@ public class ClanDashboardGUI extends GUI {
             if(items[i] == null)
                 items[i] = gray;
 
-        ItemStack whitePane = ItemUtil.createItemStack(Material.WHITE_STAINED_GLASS_PANE, " ");
-        GUIItem white = new GUIItem(whitePane, "pane");
+        ItemStack warPane = ItemUtil.createItemStack((plugin.getWarManager().isInWar(clanName) ? Material.BLACK_STAINED_GLASS_PANE : Material.WHITE_STAINED_GLASS_PANE), " ");
+        GUIItem wPane = new GUIItem(warPane, "pane");
         for(int i = 1; i <= 26; i += 2)
             if(i != 13)
-                items[i] = white;
+                items[i] = wPane;
 
-        ItemStack blackPane = ItemUtil.createItemStack(Material.BLACK_STAINED_GLASS_PANE, " ");
-        GUIItem black = new GUIItem(blackPane, "pane");
-        items[4] = black; items[12] = black; items[14] = black; items[22] = black;
+        ItemStack clanPane = ItemUtil.createItemStack(ColorUtil.colorToGlass(plugin.getClanManager().getColor(clanName)).getType(), " ");
+        GUIItem cPane = new GUIItem(clanPane, "pane");
+        items[4] = cPane; items[12] = cPane; items[14] = cPane; items[22] = cPane;
 
     }
 
