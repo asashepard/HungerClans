@@ -18,7 +18,7 @@ Commands:
 - /c home
 - /war
 - /war all
-- /surrender
+- /surrender [clan name]
 - /clanconfig OR /cconfig [key] [value]
 
 Features:
