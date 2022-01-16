@@ -1,6 +1,6 @@
 # HungerClans
 
-Clans plugin for PaperMC. To be used with ItsGJK's HungerCore.
+Clans plugin for PaperMC to be used with ItsGJK's HungerCore.
 Create and customize "clans" within a server running PaperMC.
 
 Commands:
