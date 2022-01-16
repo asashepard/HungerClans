@@ -52,7 +52,7 @@ public class SurrenderCommand extends CommandBase {
             player.sendMessage(TextUtil.convertColor("&cUsage: &o/surrender [opponent]"));
             return true;
         }
-        String otherClan = args[1];
+        String otherClan = args[0];
         if(!plugin.getDataManager().getConfig().getConfigurationSection("clans").getKeys(false).contains(otherClan)) {
             player.sendMessage(TextUtil.convertColor("&cThat clan (case sensitive) does not exist."));
             return true;
