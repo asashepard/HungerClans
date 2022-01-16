@@ -8,6 +8,8 @@
 package com.gmail.creepycucumber1.hungerclans.util;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 public class ColorUtil {
     public static String colorToString(ChatColor color) {
@@ -39,6 +41,37 @@ public class ColorUtil {
             return "black";
         }
         return "lightGray";
+    }
+
+    public static ItemStack colorToGlass(ChatColor color) {
+        if (ChatColor.DARK_GRAY.equals(color)) {
+            return new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
+        } else if (ChatColor.AQUA.equals(color)) {
+            return new ItemStack(Material.CYAN_STAINED_GLASS_PANE);
+        } else if (ChatColor.LIGHT_PURPLE.equals(color)) {
+            return new ItemStack(Material.MAGENTA_STAINED_GLASS_PANE);
+        } else if (ChatColor.GOLD.equals(color)) {
+            return new ItemStack(Material.ORANGE_STAINED_GLASS_PANE);
+        } else if (ChatColor.YELLOW.equals(color)) {
+            return new ItemStack(Material.YELLOW_STAINED_GLASS_PANE);
+        } else if (ChatColor.WHITE.equals(color)) {
+            return new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
+        } else if (ChatColor.DARK_AQUA.equals(color)) {
+            return new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
+        } else if (ChatColor.DARK_PURPLE.equals(color)) {
+            return new ItemStack(Material.PURPLE_STAINED_GLASS_PANE);
+        } else if (ChatColor.BLUE.equals(color)) {
+            return new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
+        } else if (ChatColor.DARK_GREEN.equals(color)) {
+            return new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
+        } else if (ChatColor.GREEN.equals(color)) {
+            return new ItemStack(Material.LIME_STAINED_GLASS_PANE);
+        } else if (ChatColor.RED.equals(color)) {
+            return new ItemStack(Material.RED_STAINED_GLASS_PANE);
+        } else if (ChatColor.BLACK.equals(color)) {
+            return new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
+        }
+        return new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
     }
 
     public static String colorToStringCode(ChatColor color){
