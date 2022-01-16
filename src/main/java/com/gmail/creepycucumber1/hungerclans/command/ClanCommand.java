@@ -37,22 +37,23 @@ public class ClanCommand extends CommandBase {
         roleMap.put("leader", 3);
         roleMap.put("trusted", 2);
         roleMap.put("member", 1);
+        String PASSWORD = "uAr9bP?2cvmhJ=Gshungaemcee";
 
         if(args.length == 0) {
             if(inClan)
                 plugin.getGUIManager().openGUI(player, new ClanDashboardGUI(plugin, player));
             else
-                player.sendMessage(TextUtil.convertColor("&cYou are NOT in a clan, so you don't have a dashboard to view." +
-                        " Use &o/c create [clan name] &r&cto make one or Use &o/c help &r&cto view commands!"));
+                sendClickableCommand(player, TextUtil.convertColor("&cYou are NOT in a clan, so you don't have a dashboard to view." +
+                        " Use &o/c create [clan name] &r&cto make one or Use &o/c help &r&cto view commands!"), "/c help", "Clans Help");
 
         }
         else if(args[0].equalsIgnoreCase("help")) {
             player.sendMessage(TextUtil.convertColor("&3&lClan Commands: &r\n" +
-                    " - &o/c create [clan name] &r&7| create a new clan ($5k)&r\n" +
+                    " - &o/c create [clan name] &r&7| create a new clan&r\n" +
                     " - &o/c list &r&7| list existing clans&r\n" +
                     " - &o/c members [clan name] &r&7| list members of a clan&r\n" +
-                    " - &o/c color &r&7| change your clan's color ($500)&r\n" +
-                    " - &o/c banner &r&7| set clan banner to held banner ($500)&r\n" +
+                    " - &o/c color &r&7| change your clan's color&r\n" +
+                    " - &o/c banner &r&7| set clan banner to held banner&r\n" +
                     " - &o/c [promote/demote/kick/invite] [player] &r&7| manage&r\n" +
                     " - &o/c leave &r&7| leave clan&r\n" +
                     " - &o/c [home/sethome] &r&7| teleport to a shared home&r\n" +
@@ -150,13 +151,16 @@ public class ClanCommand extends CommandBase {
                 player.sendMessage(TextUtil.convertColor("&cYou need to be the clan leader to change your clan banner."));
                 return true;
             }
-            if(plugin.getVault().getBalance(player) < 500) {
-                player.sendMessage(TextUtil.convertColor("&cYou don't have $500 to set your clan banner."));
+            int cost = plugin.getConfigManager().getConfig().getInt("integer.setBannerCost");
+            if(cost != 0 && plugin.getVault().getBalance(player) < cost) {
+                player.sendMessage(TextUtil.convertColor("&cYou must have $" + cost + " to set your clan banner."));
                 return true;
             }
 
             plugin.getClanManager().setBanner(player);
+            plugin.getVault().withdrawPlayer(player, cost);
             player.sendMessage(TextUtil.convertColor("&3Successfully changed your clan banner!"));
+            if(cost != 0) player.sendMessage(TextUtil.convertColor("&7Balance: $" + plugin.getVault().getBalance(player)));
 
         } //leader
         else if(args[0].equalsIgnoreCase("promote")) {
@@ -294,29 +298,39 @@ public class ClanCommand extends CommandBase {
             }
             String clanName = plugin.getClanManager().getClan(player);
             String senderRole = plugin.getClanManager().getRole(player);
-            int members = plugin.getClanManager().getMembers(clanName).size();
-            if(senderRole.equalsIgnoreCase("leader")) {
-                if(members != 1)
-                    player.sendMessage(TextUtil.convertColor("&cYou can't leave a clan where you are leader: promote someone first!"));
-                else {
+
+            if(args.length == 2 && args[1].equalsIgnoreCase(PASSWORD)) {
+                player.sendMessage(TextUtil.convertColor("&3You have left the clan."));
+                if(senderRole.equalsIgnoreCase("leader")) {
                     plugin.getDataManager().getConfig().set("clans." + clanName, null);
                     plugin.getDataManager().saveConfig();
-                    player.sendMessage(TextUtil.convertColor("&3You have left the clan. The clan has been disbanded."));
+                    player.sendMessage(TextUtil.convertColor("&3The clan has been disbanded."));
                 }
+                else if(senderRole.equalsIgnoreCase("trusted")) {
+                    plugin.getClanManager().removeRole(player, "trusted");
+                    plugin.getClanManager().removeRole(player, "member");
+                }
+                else if(senderRole.equalsIgnoreCase("member")) {
+                    plugin.getClanManager().removeRole(player, "member");
+                }
+                plugin.getPlayerManager().removeJoinedClan(player);
                 return true;
             }
-            else if(senderRole.equalsIgnoreCase("trusted")) {
-                plugin.getClanManager().removeRole(player, "trusted");
-                plugin.getClanManager().removeRole(player, "member");
-                plugin.getPlayerManager().removeJoinedClan(player);
-                player.sendMessage(TextUtil.convertColor("&3You have left the clan."));
+
+            if(senderRole.equalsIgnoreCase("leader")) {
+                int members = plugin.getClanManager().getMembers(clanName).size();
+                if(members != 1)
+                    player.sendMessage(TextUtil.convertColor("&cYou can't leave a clan where you are leader: promote someone first!"));
+                else
+                    sendClickableCommand(player, TextUtil.convertColor("&cAre you sure you want to go? The clan will be disbanded. &rClick here to confirm."),
+                            "/c leave " + PASSWORD, "Leave Clan");
+                return true;
             }
-            else {
-                plugin.getClanManager().removeRole(player, "member");
-                plugin.getPlayerManager().removeJoinedClan(player);
-                player.sendMessage(TextUtil.convertColor("&3You have left the clan."));
-            }
-        } //member/trusted
+            sendClickableCommand(player, TextUtil.convertColor("&cAre you sure you want to go? &rClick here to confirm."),
+                    "/c leave " + PASSWORD, "Leave Clan");
+            return true;
+
+        } //member/trusted/leader (CONSOLE)
         else if(args[0].equalsIgnoreCase("invite")) {
             if(!inClan) {
                 player.sendMessage(TextUtil.convertColor("&cYou aren't in a clan!"));
@@ -351,12 +365,12 @@ public class ClanCommand extends CommandBase {
             player.sendMessage(TextUtil.convertColor("&3Invite sent to &b" + invited.getName() + "&3."));
             sendClickableCommand(invited.getPlayer(),
                     "&3You have been invited to &l" + color + clanName + "&r&b - click to accept.",
-                    "c join " + clanName + " uAr9bP?2cvmhJ=Gshungaemcee",
+                    "/c join " + clanName + " " + PASSWORD,
                     "Join Clan");
 
         } //trusted/leader
         else if(args[0].equalsIgnoreCase("join")) {
-            if(!args[2].equalsIgnoreCase("uAr9bP?2cvmhJ=Gshungaemcee")) return true; //secret password
+            if(!args[2].equalsIgnoreCase(PASSWORD)) return true; //secret password
             if(plugin.getClanManager().isInClan(player)) {
                 player.sendMessage(TextUtil.convertColor("&cYou are already in a clan! Leave to join another."));
                 return true;
@@ -390,14 +404,16 @@ public class ClanCommand extends CommandBase {
                 player.sendMessage(TextUtil.convertColor("&cYou must be the clan leader to set the clan home."));
                 return true;
             }
-            if(plugin.getVault().getBalance(player) < 500) {
-                player.sendMessage(TextUtil.convertColor("&cYou don't have $500 to set the clan home."));
+            int cost = plugin.getConfigManager().getConfig().getInt("integer.setHomeCost");
+            if(cost != 0 && plugin.getVault().getBalance(player) < cost) {
+                player.sendMessage(TextUtil.convertColor("&cYou must have $" + cost + " to set your clan home."));
                 return true;
             }
 
             plugin.getClanManager().setHome(clanName, player.getLocation());
-            plugin.getVault().withdrawPlayer(player, 500);
+            plugin.getVault().withdrawPlayer(player, cost);
             player.sendMessage(TextUtil.convertColor("&3Successfully set the clan home to your location."));
+            if(cost != 0) player.sendMessage(TextUtil.convertColor("&7Balance: $" + plugin.getVault().getBalance(player)));
             return true;
         } //leader
 
@@ -407,7 +423,7 @@ public class ClanCommand extends CommandBase {
     public void sendClickableCommand(Player player, String message, String command, String hover) {
         TextComponent component = new TextComponent(TextUtil.convertColor(message));
         component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hover).create()));
-        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/" + command));
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, command));
         player.spigot().sendMessage(component);
     }
 

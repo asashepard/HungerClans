@@ -1,6 +1,7 @@
 package com.gmail.creepycucumber1.hungerclans.command;
 
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
+import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class ClanWhisperCommand extends CommandBase {
     public ClanWhisperCommand(HungerClans plugin) {
-        super(plugin, "clanwhisper", "Message only members of your clan", "", "clanmessage", "cw", "cmsg");
+        super(plugin, "clanwhisper", "Message only members of your clan", "", "clanmessage", "cw", "cmsg", "ctell");
     }
     private final List<String> blockedWords = Arrays.asList("nigger", "faggot", "nigga", "burn jews", " fag ");
 
@@ -23,6 +24,14 @@ public class ClanWhisperCommand extends CommandBase {
             return true;
         }
         Player player = (Player) sender;
+        if(!plugin.getConfigManager().getConfig().getBoolean("boolean.allowClanChat")) {
+            player.sendMessage(TextUtil.convertColor("&cClan chat has been muted."));
+            return true;
+        }
+        if(plugin.getEssentials().getUser(player.getUniqueId()).isMuted()) {
+            player.sendMessage(TextUtil.convertColor("&cYou are muted."));
+            return true;
+        }
         if(!plugin.getClanManager().isInClan(player)) {
             player.sendMessage(TextUtil.convertColor("&cYou must be part of a clan to use this command!"));
             return true;
@@ -37,11 +46,17 @@ public class ClanWhisperCommand extends CommandBase {
             message += args[i] + " ";
         message = message.substring(0, message.length() - 1);
         message = TextUtil.convertColor("&3[Clan Chat] &b" + player.getName() + " &8» &f" + message);
+        String clan = plugin.getClanManager().getClan(player);
 
         for(Player p : Bukkit.getOnlinePlayers())
             if(plugin.getClanManager().isInClan(p) &&
-                    plugin.getClanManager().getClan(p).equalsIgnoreCase(plugin.getClanManager().getClan(player)))
+                    plugin.getClanManager().getClan(p).equalsIgnoreCase(clan))
                 p.sendMessage(message);
+
+        String color = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(clan));
+        for(Player admin : Bukkit.getOnlinePlayers())
+            if(plugin.getEssentials().getUser(admin.getUniqueId()).isSocialSpyEnabled())
+                admin.sendMessage(TextUtil.convertColor("&7[" + color + clan + "&7]" + message.split("]")[1]));
 
         Bukkit.getLogger().info(message);
 

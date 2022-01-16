@@ -3,11 +3,8 @@ package com.gmail.creepycucumber1.hungerclans.command;
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
 import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
-import org.w3c.dom.Text;
 
 public class WarCommand extends CommandBase {
     public WarCommand(HungerClans plugin) {
@@ -25,11 +22,11 @@ public class WarCommand extends CommandBase {
 
         if(args.length == 0) {
             if(!plugin.getClanManager().isInClan(player)) {
-                player.sendMessage(TextUtil.convertColor("&cYou aren't in a clan! Use &o/war all"));
+                player.sendMessage(TextUtil.convertColor("&cYou aren't in a clan! Use &o/war all &r&c to see all current wars."));
                 return true;
             }
             if(!plugin.getWarManager().isInWar(plugin.getClanManager().getClan(player))) {
-                player.sendMessage(TextUtil.convertColor("&cYour clan is not currently at war."));
+                player.sendMessage(TextUtil.convertColor("&cYour clan is not currently at war. Use &o/war all &r&c to see all current wars."));
                 return true;
             }
 
@@ -43,6 +40,9 @@ public class WarCommand extends CommandBase {
         else if(args[0].equalsIgnoreCase("all")) {
             for (String war : plugin.getDataManager().getConfig().getConfigurationSection("wars").getKeys(false)) {
                 sendWarMessage(player, war, false);
+            }
+            if(plugin.getDataManager().getConfig().getConfigurationSection("wars").getKeys(false).size() == 0) {
+                player.sendMessage(TextUtil.convertColor("&7There are currently no active wars."));
             }
             return true;
         }
