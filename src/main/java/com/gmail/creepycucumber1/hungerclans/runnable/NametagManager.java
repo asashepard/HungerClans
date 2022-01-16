@@ -29,6 +29,13 @@ public class NametagManager {
             public void run() {
                 for(Player p : Bukkit.getOnlinePlayers()) {
 
+                    if(!plugin.getConfigManager().getConfig().getBoolean("boolean.nametags")) {
+                        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
+                                "nte player " + p.getName() + " suffix ''");
+                        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
+                                "nte player " + p.getName() + " prefix ''");
+                        return;
+                    }
                     boolean isAdmin = p.isOp() || p.getGameMode().equals(GameMode.CREATIVE);
 
                     //suffix
