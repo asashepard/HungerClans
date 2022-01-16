@@ -3,16 +3,14 @@ package com.gmail.creepycucumber1.hungerclans;
 import com.gmail.creepycucumber1.hungerclans.clan.ClanManager;
 import com.gmail.creepycucumber1.hungerclans.clan.PlayerManager;
 import com.gmail.creepycucumber1.hungerclans.clan.WarManager;
-import com.gmail.creepycucumber1.hungerclans.command.ClanCommand;
-import com.gmail.creepycucumber1.hungerclans.command.ClanWhisperCommand;
-import com.gmail.creepycucumber1.hungerclans.command.CommandBase;
-import com.gmail.creepycucumber1.hungerclans.command.WarCommand;
+import com.gmail.creepycucumber1.hungerclans.command.*;
+import com.gmail.creepycucumber1.hungerclans.data.ConfigManager;
 import com.gmail.creepycucumber1.hungerclans.data.DataManager;
 import com.gmail.creepycucumber1.hungerclans.event.EventManager;
 import com.gmail.creepycucumber1.hungerclans.gui.GUIManager;
 import com.gmail.creepycucumber1.hungerclans.runnable.NametagManager;
 import com.gmail.creepycucumber1.hungerclans.runnable.Teleport;
-import com.gmail.creepycucumber1.hungerclans.runnable.WarMonitor;
+import com.gmail.creepycucumber1.hungerclans.runnable.GeneralMonitor;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
 import net.ess3.api.IEssentials;
 import net.milkbowl.vault.economy.Economy;
@@ -38,37 +36,42 @@ public final class HungerClans extends JavaPlugin {
     private WarManager warManager;
     private PlayerManager playerManager;
     private DataManager dataManager;
+    private ConfigManager configManager;
     private GUIManager guiManager;
     private NametagManager nametagManager;
-    private WarMonitor warMonitor;
+    private GeneralMonitor generalMonitor;
     private Teleport teleport;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
-        commands = new ArrayList<>(registerCommands());
 
         clanManager = new ClanManager(this);
         warManager = new WarManager(this);
         playerManager = new PlayerManager(this);
         dataManager = new DataManager(this);
+        configManager = new ConfigManager(this);
         guiManager = new GUIManager(this);
 
         nametagManager = new NametagManager(this);
-        warMonitor = new WarMonitor(this);
+        generalMonitor = new GeneralMonitor(this);
         teleport = new Teleport(this);
+
         nametagManager.nametag();
-        warMonitor.monitorWars();
+        generalMonitor.monitorWars();
+        generalMonitor.monitorPlayers();
+
+        commands = new ArrayList<>(registerCommands());
 
         try{
             ess = (IEssentials) getServer().getPluginManager().getPlugin("Essentials");
 
             if(ess==null){
-                getLogger().warning("Failed to hook in with Essentials!");
+                getLogger().warning("HungerClans failed to hook in with Essentials!");
             }
         }
         catch(Exception ex){
-            getLogger().warning("Failed to hook in with Essentials!");
+            getLogger().warning("HungerClans failed to hook in with Essentials!");
         }
 
         if(getServer().getPluginManager().getPlugin("Vault") != null) {
@@ -108,6 +111,8 @@ public final class HungerClans extends JavaPlugin {
         commands.add(new ClanCommand(this));
         commands.add(new ClanWhisperCommand(this));
         commands.add(new WarCommand(this));
+        commands.add(new SurrenderCommand(this));
+        commands.add(new ConfigCommand(this));
         return commands;
     }
 
@@ -119,7 +124,7 @@ public final class HungerClans extends JavaPlugin {
             for(String uuid : cfg.getStringList(clan + ".members")) {
                 OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
                 getVault().depositPlayer(player, getClanManager().getPoints(clan));
-                getEssentials().getUser(UUID.fromString(uuid)).addMail("You have received $" + getClanManager().getPoints(clan) +
+                getEssentials().getUser(UUID.fromString(uuid)).addMail("You have received $" + (getClanManager().getPoints(clan) / 2) +
                         " for being a member of " + getClanManager().getClan(player) + "!");
                 getClanManager().addPoints(clan, (int) (Math.random() * 7.5 + 1));
             }
@@ -143,6 +148,9 @@ public final class HungerClans extends JavaPlugin {
     }
     public DataManager getDataManager() {
         return dataManager;
+    }
+    public ConfigManager getConfigManager() {
+        return configManager;
     }
     public GUIManager getGUIManager() {
         return guiManager;
