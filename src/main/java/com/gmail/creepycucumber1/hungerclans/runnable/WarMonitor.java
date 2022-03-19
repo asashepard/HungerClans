@@ -35,11 +35,11 @@ public class WarMonitor {
                     }
                     else if(plugin.getDataManager().getConfig().getConfigurationSection("clans." +
                             plugin.getWarManager().getSide1(war)) == null) { //side 1 is disbanded
-                        plugin.getWarManager().endWar(war, plugin.getWarManager().getSide2(war));
+                        plugin.getWarManager().endWar(war, plugin.getWarManager().getSide2(war), false);
                     }
                     else if(plugin.getDataManager().getConfig().getConfigurationSection("clans." +
                             plugin.getWarManager().getSide2(war)) == null) { //side 2 is disbanded
-                        plugin.getWarManager().endWar(war, plugin.getWarManager().getSide1(war));
+                        plugin.getWarManager().endWar(war, plugin.getWarManager().getSide1(war), false);
                     }
                 }
 

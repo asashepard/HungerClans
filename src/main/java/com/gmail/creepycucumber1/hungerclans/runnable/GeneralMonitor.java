@@ -89,6 +89,7 @@ public class GeneralMonitor {
 
                     plugin.getPlayerManager().setUpdateTimeLastToNow(player);
 
+                    //daily reward
                     if(plugin.getConfigManager().getConfig().getBoolean("boolean.dailyReward") && !plugin.getPlayerManager().receivedReward(player) &&
                             plugin.getPlayerManager().getTimePlayedToday(player) >= (long) plugin.getConfigManager().getConfig().getInt("integer.dailyRewardMinutes") * 60000) {
 

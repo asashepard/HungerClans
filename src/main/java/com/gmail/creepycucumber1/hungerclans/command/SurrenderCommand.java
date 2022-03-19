@@ -35,45 +35,45 @@ public class SurrenderCommand extends CommandBase {
             return true;
         }
         if(!plugin.getClanManager().isInClan(player)) {
-            player.sendMessage(TextUtil.convertColor("&cYou must be part of a clan to use this command!"));
+            player.sendMessage(TextUtil.convertColor("&7You must be part of a clan to use this command!"));
             return true;
         }
         String clan = plugin.getClanManager().getClan(player);
         if(!plugin.getWarManager().isInWar(clan)) {
-            player.sendMessage(TextUtil.convertColor("&cYour clan is not currently at war!"));
+            player.sendMessage(TextUtil.convertColor("&7Your clan is not currently at war!"));
             return true;
         }
         if(!plugin.getClanManager().getRole(player).equalsIgnoreCase("leader")) {
-            player.sendMessage(TextUtil.convertColor("&cYou must be the clan leader to use this command."));
+            player.sendMessage(TextUtil.convertColor("&7You must be the clan leader to use this command."));
             return true;
         }
 
         if(args.length == 0) {
-            player.sendMessage(TextUtil.convertColor("&cUsage: &o/surrender [opponent]"));
+            player.sendMessage(TextUtil.convertColor("&7Usage: &o/surrender [opponent]"));
             return true;
         }
         String otherClan = args[0];
         if(!plugin.getDataManager().getConfig().getConfigurationSection("clans").getKeys(false).contains(otherClan)) {
-            player.sendMessage(TextUtil.convertColor("&cThat clan (case sensitive) does not exist."));
+            player.sendMessage(TextUtil.convertColor("&7That clan (case sensitive) does not exist."));
             return true;
         }
         String color = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(otherClan));
         if(!plugin.getWarManager().areAtWar(clan, otherClan)) {
-            player.sendMessage(TextUtil.convertColor("&cYour clan is not at war with " + color + otherClan + "."));
+            player.sendMessage(TextUtil.convertColor("&7Your clan is not at war with " + color + otherClan + "&7."));
             return true;
         }
         String war = otherClan + "vs" + clan;
 
-        if(!plugin.getWarManager().getWars(clan).contains(war)) { //clan of sender declared war
-            player.sendMessage(TextUtil.convertColor("&c&oYou &r&cdeclared war against " + color + otherClan + ", &r&cno?"));
+        if(!plugin.getWarManager().getWars(clan).contains(war)) { //clan of sender declared war because the order would be reversed
+            player.sendMessage(TextUtil.convertColor("&4&oYou &r&4declared war against " + color + otherClan + "&r&4, no?"));
             return true;
         }
         int surrenderWait = plugin.getConfigManager().getConfig().getInt("integer.surrenderWait");
         int warLength = plugin.getConfigManager().getConfig().getInt("integer.warLength");
         int okToSurrender = Integer.parseInt(plugin.getWarManager().getEndDay(war)) - (warLength - surrenderWait);
         if(okToSurrender > getToday()) { //war less than X day(s) old
-            player.sendMessage(TextUtil.convertColor("&cPlease wait until the " +
-                     okToSurrender + TextUtil.getSuffix(String.valueOf(okToSurrender)) + " to surrender to " + color + otherClan + "."));
+            player.sendMessage(TextUtil.convertColor("&7Please wait until the &f" +
+                     okToSurrender + TextUtil.getSuffix(String.valueOf(okToSurrender)) + "&7 to surrender to " + color + otherClan + "&7."));
             return true;
         }
         if(args.length == 2 && args[1].equalsIgnoreCase(PASSWORD)) { //ENDS WAR
@@ -82,12 +82,12 @@ public class SurrenderCommand extends CommandBase {
             return true;
         }
         if(plugin.getWarManager().getSide1Points(war) < plugin.getWarManager().getSide2Points(war)) { //clan of sender is winning
-            sendClickableCommand(player, TextUtil.convertColor("&4You are in the lead! Are you sure you want to surrender to " + color + otherClan + " and lose the war? Click here to confirm."),
+            sendClickableCommand(player, TextUtil.convertColor("&4You are in the lead! Are you sure you want to surrender to " + color + otherClan + "&4 and lose the war? Click here to confirm."),
                     "/c surrender " + PASSWORD, TextUtil.convertColor("Surrender to " + color + otherClan));
             return true;
         }
 
-        sendClickableCommand(player, TextUtil.convertColor("&4Are you sure you want to surrender to " + color + otherClan + " and lose the war? Click here to confirm."),
+        sendClickableCommand(player, TextUtil.convertColor("&4Are you sure you want to surrender to " + color + otherClan + "&4 and lose the war? Click here to confirm."),
                 "/c surrender " + PASSWORD, TextUtil.convertColor("Surrender to " + color + otherClan));
 
         return true;
@@ -96,9 +96,7 @@ public class SurrenderCommand extends CommandBase {
     public int getToday() {
         Date currentDate = Calendar.getInstance().getTime();
         DateFormat dayFormat = new SimpleDateFormat("dd");
-        DateFormat monthFormat = new SimpleDateFormat("MM");
-        int currentDay = Integer.parseInt(dayFormat.format(currentDate));
-        return currentDay;
+        return Integer.parseInt(dayFormat.format(currentDate));
     }
 
     public void sendClickableCommand(Player player, String message, String command, String hover) {

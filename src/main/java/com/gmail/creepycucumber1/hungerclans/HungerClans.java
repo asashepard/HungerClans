@@ -113,6 +113,9 @@ public final class HungerClans extends JavaPlugin {
         commands.add(new WarCommand(this));
         commands.add(new SurrenderCommand(this));
         commands.add(new ConfigCommand(this));
+        commands.add(new TimeTopCommand(this));
+        commands.add(new MineTopCommand(this));
+        commands.add(new PlaceTopCommand(this));
         return commands;
     }
 

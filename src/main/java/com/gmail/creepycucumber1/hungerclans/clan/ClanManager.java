@@ -318,9 +318,9 @@ public class ClanManager {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
         ArrayList<String> home = new ArrayList<>();
         home.add(location.getWorld().getName());
-        home.add(String.valueOf((int) location.getX()));
+        home.add(String.valueOf((int) location.getX() + 0.5));
         home.add(String.valueOf((int) location.getY()));
-        home.add(String.valueOf((int) location.getZ()));
+        home.add(String.valueOf((int) location.getZ() + 0.5));
         cfg.set("home", home);
         cfg.set("hasHome", true);
         plugin.getDataManager().saveConfig();

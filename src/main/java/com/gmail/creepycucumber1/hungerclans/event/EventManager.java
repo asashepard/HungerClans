@@ -7,7 +7,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
@@ -176,7 +179,8 @@ public class EventManager implements Listener {
             else if(e.getMessage().toLowerCase().contains("home") && !e.getMessage().toLowerCase().contains("sethome") ||
                     e.getMessage().toLowerCase().contains("tpaccept") ||
                     e.getMessage().toLowerCase().contains("tpask") ||
-                    e.getMessage().toLowerCase().contains("leave")) {
+                    e.getMessage().toLowerCase().contains("leave") ||
+                    e.getMessage().toLowerCase().contains("warp")) {
                 //proximity check
                 for(String war : plugin.getWarManager().getWars(clanName)) {
                     String otherClanName = plugin.getWarManager().getOpposition(war, clanName);
@@ -195,6 +199,16 @@ public class EventManager implements Listener {
             }
         }
 
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onMine(BlockBreakEvent e) {
+        plugin.getPlayerManager().addMinedBlocks(e.getPlayer(), 1);
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlace(BlockPlaceEvent e) {
+        plugin.getPlayerManager().addPlacedBlocks(e.getPlayer(), 1);
     }
 
 }

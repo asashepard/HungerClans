@@ -30,7 +30,7 @@ public class PlayerGUI extends GUI {
         items[3] = white; items[5] = white;
 
         ItemStack green = ItemUtil.createItemStack(Material.GREEN_CONCRETE, "&2Promote",
-                "&7if leader promotes trusted to leader,",
+                "&7if leader: promotes trusted to leader,",
                 "&7leader is demoted");
         items[1] = new GUIItem(green, uuid);
 

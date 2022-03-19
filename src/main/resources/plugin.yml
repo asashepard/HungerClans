@@ -26,3 +26,9 @@ commands:
     description: Configure the HungerClans plugin in-game
     aliases:
       - cconfig
+  timetop:
+    description: Get a leaderboard of the longest-time-played players on the server
+  minetop:
+    description: Get a leaderboard of the players on the server with the most blocks mined
+  placetop:
+    description: Get a leaderboard of the players on the server with the most blocks placed

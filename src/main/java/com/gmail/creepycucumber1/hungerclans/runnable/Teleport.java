@@ -15,10 +15,10 @@ public class Teleport {
         this.plugin = plugin;
     }
 
-    public void teleport(Player player, World world, int x, int y, int z) {
+    public void teleport(Player player, World world, double x, double y, double z) {
 
         Location startPos = player.getLocation();
-        Location telePos = new Location(world, (double) x, (double) y, (double) z);
+        Location telePos = new Location(world, x, y, z);
 
         player.sendMessage(TextUtil.convertColor("&3Teleportation will begin in 5 seconds..."));
 
@@ -28,7 +28,7 @@ public class Teleport {
 
                 Location endPos = player.getLocation();
                 if(!(endPos.distance(startPos) < 2))
-                    player.sendMessage(TextUtil.convertColor("&cYou moved. Teleportation has been canceled."));
+                    player.sendMessage(TextUtil.convertColor("&cYou moved! Teleportation has been canceled."));
                 else
                     player.teleport(telePos);
 

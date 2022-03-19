@@ -37,6 +37,9 @@ public class PlayerManager {
         map.put("lastDamagedByEnemy", (long) 0);
         map.put("lastDamagedByPlayer", (long) 0);
         map.put("timePlayedToday", (long) 0);
+        map.put("totalTimePlayed", (long) 0);
+        map.put("blocksMined", 0);
+        map.put("blocksPlaced", 0);
         map.put("updatedTimeAt", Instant.now().toEpochMilli());
         map.put("receivedReward", false);
         map.put("combatLogged", false);
@@ -84,6 +87,7 @@ public class PlayerManager {
 
     public void resetTimePlayedToday(OfflinePlayer player) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        cfg.set("totalTimePlayed", getTotalTimePlayed(player) + getTimePlayedToday(player));
         cfg.set("timePlayedToday", (long) 0);
         plugin.getDataManager().saveConfig();
     }
@@ -92,6 +96,18 @@ public class PlayerManager {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
         long now = Instant.now().toEpochMilli();
         cfg.set("updatedTimeAt", now);
+        plugin.getDataManager().saveConfig();
+    }
+
+    public void addMinedBlocks(OfflinePlayer player, int blocks) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        cfg.set("blocksMined", getBlocksMined(player) + blocks);
+        plugin.getDataManager().saveConfig();
+    }
+
+    public void addPlacedBlocks(OfflinePlayer player, int blocks) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        cfg.set("blocksPlaced", getBlocksPlaced(player) + blocks);
         plugin.getDataManager().saveConfig();
     }
 
@@ -128,6 +144,11 @@ public class PlayerManager {
         return cfg.getString("joinedClan");
     }
 
+    public long getTotalTimePlayed(OfflinePlayer player) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        return cfg.getLong("totalTimePlayed");
+    }
+
     public long getTimePlayedToday(OfflinePlayer player) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
         return cfg.getLong("timePlayedToday");
@@ -136,6 +157,16 @@ public class PlayerManager {
     public long getUpdateTimeLast(OfflinePlayer player) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
         return cfg.getLong("updatedTimeAt");
+    }
+
+    public int getBlocksMined(OfflinePlayer player) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        return cfg.getInt("blocksMined");
+    }
+
+    public int getBlocksPlaced(OfflinePlayer player) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        return cfg.getInt("blocksPlaced");
     }
 
     public boolean receivedReward(OfflinePlayer player) {

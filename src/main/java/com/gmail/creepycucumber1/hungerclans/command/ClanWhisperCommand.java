@@ -33,7 +33,7 @@ public class ClanWhisperCommand extends CommandBase {
             return true;
         }
         if(!plugin.getClanManager().isInClan(player)) {
-            player.sendMessage(TextUtil.convertColor("&cYou must be part of a clan to use this command!"));
+            player.sendMessage(TextUtil.convertColor("&7You must be part of a clan to use this command!"));
             return true;
         }
         if(args.length == 0) {
