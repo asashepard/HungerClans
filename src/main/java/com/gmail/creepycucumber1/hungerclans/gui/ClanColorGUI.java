@@ -13,7 +13,7 @@ public class ClanColorGUI extends GUI {
     private Player player;
 
     public ClanColorGUI(HungerClans plugin, Player player) {
-        super(plugin, player.getUniqueId(), "Clan Color Editor" +
+        super(plugin, player.getUniqueId(), "§lClan Color Editor" +
                 (plugin.getConfigManager().getConfig().getInt("integer.setColorCost") != 0 ? " - $" + plugin.getConfigManager().getConfig().getInt("integer.setColorCost") : ""), 1);
         this.player = player;
 

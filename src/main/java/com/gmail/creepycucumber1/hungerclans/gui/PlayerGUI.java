@@ -15,7 +15,7 @@ public class PlayerGUI extends GUI {
     private Player player;
 
     public PlayerGUI(HungerClans plugin, Player player, String uuid) {
-        super(plugin, player.getUniqueId(), "Clan Member", 1);
+        super(plugin, player.getUniqueId(), "§lClan Member", 1);
         this.player = player;
 
         ItemStack skull = getSkull(uuid);

@@ -1,0 +1,35 @@
+integer:
+  # cost of clan actions
+  createClanCost: 500
+  declareWarCost: 2500
+  setColorCost: 0
+  setBannerCost: 0
+  setHomeCost: 0
+  # if war won
+  warReward: 5000
+  # war timings
+  warLength: 3
+  surrenderWait: 1
+  declareWait: 7
+  # war score increments
+  killScore: 20
+  deathScore: 10
+  totemScore: 9
+  combatLogScore: 3
+  combatLogRandom: 9
+  # daily reward
+  dailyRewardMinutes: 15
+  dailyReward: 250
+  # combat log timer
+  combatLogSeconds: 15
+boolean:
+  allowClanChat: true
+  allowDeclareWar: true
+  allowSurrender: true
+  # only with respect to wars, only increments score in war - overrides antiCombatLogPlus
+  checkCombatLog: true
+  # with all players, kills perpetrators on rejoin
+  antiCombatLogPlus: false
+  nametags: true
+  dailyReward: true
+

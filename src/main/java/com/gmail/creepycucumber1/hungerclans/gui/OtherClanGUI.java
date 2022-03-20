@@ -19,7 +19,7 @@ public class OtherClanGUI extends GUI {
     private Player player;
 
     public OtherClanGUI(HungerClans plugin, Player player, String clanName) {
-        super(plugin, player.getUniqueId(), "Other Clan", 1);
+        super(plugin, player.getUniqueId(), "§lOther Clan", 1);
         this.player = player;
         ChatColor color = plugin.getClanManager().getColor(clanName);
         String colorCode = ColorUtil.colorToStringCode(color);

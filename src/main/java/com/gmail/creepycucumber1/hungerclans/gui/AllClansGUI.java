@@ -14,7 +14,7 @@ public class AllClansGUI extends GUI {
     private Player player;
 
     public AllClansGUI(HungerClans plugin, Player player) {
-        super(plugin, player.getUniqueId(), "Clan Explorer", (plugin.getClanManager().getClanList().size() > 9 ? 2 : 1));
+        super(plugin, player.getUniqueId(), "§lClan Explorer", (plugin.getClanManager().getClanList().size() > 9 ? 2 : 1));
         this.player = player;
 
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
