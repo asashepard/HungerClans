@@ -4,37 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66c48feb-92b1-464f-a3b7-a52576bd5b4c" name="Changes" comment="update to 1.18.2">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HungerClans-1.0-SNAPSHOT-3-19-22.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/HungerClans.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/HungerClans.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/clan/ClanManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/clan/ClanManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/clan/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/clan/PlayerManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/ClanCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/ClanCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/ConfigCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/ConfigCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/WarCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/WarCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/gui/ClanDashboardGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/gui/ClanDashboardGUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/runnable/GeneralMonitor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/runnable/GeneralMonitor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/runnable/NametagManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/runnable/NametagManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/runnable/Teleport.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/runnable/Teleport.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/clandata.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/clandata.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT-shaded.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/clandata.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/clandata.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/clan/ClanManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/clan/ClanManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/clan/PlayerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/clan/PlayerManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/ClanCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/ClanCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/ConfigCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/ConfigCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/WarCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/WarCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/gui/ClanDashboardGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/gui/ClanDashboardGUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/GeneralMonitor$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/GeneralMonitor$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/GeneralMonitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/GeneralMonitor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/Teleport$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/Teleport$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/Teleport.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/Teleport.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/original-HungerClans-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-HungerClans-1.0-SNAPSHOT.jar" afterDir="false" />
+    <list default="true" id="66c48feb-92b1-464f-a3b7-a52576bd5b4c" name="Changes" comment="improvements">
+      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/NametagManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/NametagManager$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/NametagManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/NametagManager.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +88,14 @@
       <option name="project" value="LOCAL" />
       <updated>1647800612018</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="improvements">
+      <created>1650762159066</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1650762159066</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -135,6 +114,7 @@
     <MESSAGE value="Add warps" />
     <MESSAGE value="fixes, leaderboards" />
     <MESSAGE value="update to 1.18.2" />
-    <option name="LAST_COMMIT_MESSAGE" value="update to 1.18.2" />
+    <MESSAGE value="improvements" />
+    <option name="LAST_COMMIT_MESSAGE" value="improvements" />
   </component>
 </project>

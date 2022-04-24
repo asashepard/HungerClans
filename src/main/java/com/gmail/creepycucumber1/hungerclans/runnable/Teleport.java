@@ -48,10 +48,13 @@ public class Teleport {
                         break;
                     }
 
-                if(!(endPos.distance(startPos) > 2) || tookDamage)
+                if(endPos.distance(startPos) > 2 || tookDamage)
                     player.sendMessage(TextUtil.convertColor("&cYou moved or took damage! Teleportation has been canceled."));
-                else
+                else {
+                    plugin.getEssentials().getUser(player.getUniqueId()).setLastLocation(endPos);
                     player.teleport(telePos);
+                }
+
 
             }
         }, 100);
