@@ -4,7 +4,7 @@ main: com.gmail.creepycucumber1.hungerclans.HungerClans
 api-version: 1.18
 authors: [longbread, ItsGJK]
 description: HungerClans Core
-depend: [NametagEdit, Vault]
+depend: [NametagEdit, Vault, LuckPerms]
 softdepend: [Essentials]
 commands:
   clan:

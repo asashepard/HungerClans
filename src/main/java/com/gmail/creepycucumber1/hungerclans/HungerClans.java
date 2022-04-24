@@ -127,9 +127,7 @@ public final class HungerClans extends JavaPlugin {
             for(String uuid : cfg.getStringList(clan + ".members")) {
                 OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
                 getVault().depositPlayer(player, getClanManager().getPoints(clan));
-                getEssentials().getUser(UUID.fromString(uuid)).addMail("You have received $" + (getClanManager().getPoints(clan) / 2) +
-                        " for being a member of " + getClanManager().getClan(player) + "!");
-                getClanManager().addPoints(clan, (int) (Math.random() * 7.5 + 1));
+                getClanManager().addPoints(clan, (int) (Math.random() * 2.5 + 1));
             }
         }
     }

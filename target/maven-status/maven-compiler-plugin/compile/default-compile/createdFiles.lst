@@ -6,6 +6,7 @@ com\gmail\creepycucumber1\hungerclans\gui\GUI.class
 com\gmail\creepycucumber1\hungerclans\runnable\WarMonitor.class
 com\gmail\creepycucumber1\hungerclans\runnable\GeneralMonitor$1.class
 com\gmail\creepycucumber1\hungerclans\command\CommandBase.class
+com\gmail\creepycucumber1\hungerclans\runnable\Teleport$2.class
 com\gmail\creepycucumber1\hungerclans\util\ItemUtil.class
 com\gmail\creepycucumber1\hungerclans\clan\ClanManager.class
 com\gmail\creepycucumber1\hungerclans\gui\AllClansGUI.class

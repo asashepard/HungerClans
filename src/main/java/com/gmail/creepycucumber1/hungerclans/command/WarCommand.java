@@ -22,11 +22,11 @@ public class WarCommand extends CommandBase {
 
         if(args.length == 0) {
             if(!plugin.getClanManager().isInClan(player)) {
-                player.sendMessage(TextUtil.convertColor("&cYou aren't in a clan! Use &o/war all &r&c to see all current wars."));
+                player.sendMessage(TextUtil.convertColor("&cYou aren't in a clan! Use &o/war all&r&c to see all current wars."));
                 return true;
             }
             if(!plugin.getWarManager().isInWar(plugin.getClanManager().getClan(player))) {
-                player.sendMessage(TextUtil.convertColor("&cYour clan is not currently at war. Use &o/war all &r&c to see all current wars."));
+                player.sendMessage(TextUtil.convertColor("&cYour clan is not currently at war. Use &o/war all&r&c to see all current wars."));
                 return true;
             }
 

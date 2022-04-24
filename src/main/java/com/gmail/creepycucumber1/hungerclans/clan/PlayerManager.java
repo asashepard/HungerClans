@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class PlayerManager {
     private HungerClans plugin;
@@ -79,9 +80,10 @@ public class PlayerManager {
         plugin.getDataManager().saveConfig();
     }
 
-    public void setTimePlayedToday(OfflinePlayer player, long playtime) {
+    public void updateTimePlayed(OfflinePlayer player) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
-        cfg.set("timePlayedToday", playtime);
+        cfg.set("timePlayedToday", getTimePlayedToday(player) + (Instant.now().toEpochMilli()) - getUpdateTimeLast(player));
+        cfg.set("totalTimePlayed", getTotalTimePlayed(player) + (Instant.now().toEpochMilli()) - getUpdateTimeLast(player));
         plugin.getDataManager().saveConfig();
     }
 
@@ -97,6 +99,20 @@ public class PlayerManager {
         long now = Instant.now().toEpochMilli();
         cfg.set("updatedTimeAt", now);
         plugin.getDataManager().saveConfig();
+    }
+
+    public boolean checkUpdate() {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("date");
+        String day = String.valueOf(cfg.get("update"));
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("dd");
+        String currentDay = dateFormat.format(date);
+        if(!day.equals(currentDay)) {
+            cfg.set("update", currentDay);
+            plugin.getDataManager().saveConfig();
+            return true;
+        }
+        return false;
     }
 
     public void addMinedBlocks(OfflinePlayer player, int blocks) {

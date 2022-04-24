@@ -29,7 +29,7 @@ public class ClanDashboardGUI extends GUI {
         bannerMeta.setDisplayName(TextUtil.convertColor(colorCode + "&l" + clanName + " &r" + colorCode + "[" + plugin.getClanManager().getCode(clanName) + "]"));
         ArrayList<String> bannerLore = new ArrayList<>();
         if(plugin.getClanManager().getMotto(clanName).length() > 0)
-            bannerLore.add(TextUtil.convertColor("&f&o\"" + plugin.getClanManager().getMotto(clanName) + "\""));
+            bannerLore.add(TextUtil.convertColor("&f&o\"" + plugin.getClanManager().getMotto(clanName) + "&f&o\""));
         bannerMeta.setLore(bannerLore);
         banner.setItemMeta(bannerMeta);
         items[13] = new GUIItem(banner, "banner");

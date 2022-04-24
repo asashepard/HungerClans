@@ -9,7 +9,9 @@ import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -283,7 +285,12 @@ public class ClanManager {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." +
                 plugin.getClanManager().getClan(p));
 
-        cfg.set("banner", p.getInventory().getItemInMainHand());
+        ItemStack banner = new ItemStack(p.getInventory().getItemInMainHand());
+        ItemMeta meta = banner.getItemMeta();
+        meta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+        banner.setItemMeta(meta);
+
+        cfg.set("banner", banner);
 
         if(p.getInventory().getItemInMainHand().getItemMeta().hasDisplayName() &&
                 !p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().toLowerCase().contains("banner")) {

@@ -65,10 +65,9 @@ public class ClanCommand extends CommandBase {
                 player.sendMessage(TextUtil.convertColor("&7Usage: &o/c create [name]"));
                 return true;
             }
-            if(!player.hasPermission("hungercore.sponsor")) {
-                sendClickableLink(player, TextUtil.convertColor("&7At the moment, you must be a sponsor to create a clan. " +
-                                "Click here to go to shop.hungermc.com"),
-                        "shop.hungermc.com", "shop.hungermc.com");
+            if(!player.hasPermission("hungerclans.createclan")) {
+                sendClickableLink(player, TextUtil.convertColor("&cYou do not have permission to create a clan. Contact a server administrator if you believe this is in error"),
+                        "shop.hungermc.com", "");
                 return true;
             }
 
@@ -78,7 +77,7 @@ public class ClanCommand extends CommandBase {
             clanName = clanName.substring(0, clanName.length() - 1);
 
             plugin.getClanManager().createNewClan(player, clanName);
-        } //sponsor
+        } //supporter
         else if(args[0].equalsIgnoreCase("list")) {
             //list clans
             player.sendMessage(TextUtil.convertColor("&3&lClan List:"));

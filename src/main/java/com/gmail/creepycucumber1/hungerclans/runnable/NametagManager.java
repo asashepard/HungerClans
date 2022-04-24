@@ -36,12 +36,12 @@ public class NametagManager {
                                 "nte player " + p.getName() + " prefix ''");
                         return;
                     }
-                    boolean isAdmin = p.isOp() || p.getGameMode().equals(GameMode.CREATIVE);
+                    boolean isAdmin = p.hasPermission("hungercore.adminmode");
 
                     //suffix
                     if(isAdmin)
                         plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
-                                "nte player " + p.getName() + " suffix ' &4{AdM}'");
+                                "nte player " + p.getName() + " suffix ' &4⚡'");
                     else
                         plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
                                 "nte player " + p.getName() + " suffix ''");
@@ -59,7 +59,7 @@ public class NametagManager {
 
                 }
             }
-        }, 0, 20);
+        }, 0, 40);
 
     }
 
