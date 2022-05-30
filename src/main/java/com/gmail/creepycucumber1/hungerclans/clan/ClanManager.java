@@ -27,7 +27,7 @@ public class ClanManager {
 
     public void createNewClan(Player player, String clanName) {
         if(isInClan(player)) {
-            player.sendMessage("&4&lCLANS &8» &cYou are already in a clan!"); return;
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou are already in a clan!")); return;
         }
         int cost = plugin.getConfigManager().getConfig().getInt("integer.createClanCost");
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
