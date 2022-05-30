@@ -2,6 +2,7 @@ package com.gmail.creepycucumber1.hungerclans.command;
 
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
+import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -71,10 +72,15 @@ public class ConfigCommand extends CommandBase {
 
     public void sendConfigHelp(CommandSender sender) {
         sender.sendMessage("Clan configuration options:");
-        String i = "Integer value: ";
-        String b = "Boolean value: ";
-        for(String str : iOptions) i = i + " " + str;
-        for(String str : bOptions) b = b + " " + str;
+        String i = "- Integer value - \n";
+        String b = "- Boolean value - \n";
+        for(String str : iOptions) {
+            i += ChatColor.WHITE + " " + str + ": " + ChatColor.YELLOW + plugin.getConfigManager().getConfig().getInt("integer." + str) + "\n";
+        }
+        for(String str : bOptions) {
+            boolean value = plugin.getConfigManager().getConfig().getBoolean("boolean." + str);
+            b += ChatColor.WHITE + " " + str + ": " + (value ? ChatColor.DARK_GREEN + "true" : ChatColor.DARK_RED + "false");
+        }
         sender.sendMessage(i);
         sender.sendMessage(b);
     }

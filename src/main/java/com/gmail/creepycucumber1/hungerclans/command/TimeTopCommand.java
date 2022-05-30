@@ -54,9 +54,20 @@ public class TimeTopCommand extends CommandBase {
                 "&7(page " + page + " of " + (((list.size() - 1) / 10) + 1) + ")\n"));
         for(int i = index; i < index + 10; i++) {
             if(i > list.size() - 1) return true;
-            player.sendMessage(TextUtil.convertColor("&a" + (i + 1) + ". &f" + map.get(list.get(i))));
+            player.sendMessage(TextUtil.convertColor("&a" + (i + 1) + ". &f" + map.get(list.get(i)) +
+                    " &7(tier " + getLevel(list.get(i)) + ")"));
         }
 
         return true;
+    }
+
+    private int getLevel(long time) {
+        if(time >= 4320000000L) return 7;
+        else if(time >= 2160000000L) return 6;
+        else if(time >= 864000000L) return 5;
+        else if(time >= 432000000L) return 4;
+        else if(time >= 86400000L) return 3;
+        else if(time >= 3600000L) return 2;
+        return 1;
     }
 }

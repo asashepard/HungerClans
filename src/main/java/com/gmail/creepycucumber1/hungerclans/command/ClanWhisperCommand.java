@@ -24,6 +24,10 @@ public class ClanWhisperCommand extends CommandBase {
             return true;
         }
         Player player = (Player) sender;
+        if(!plugin.getConfigManager().getConfig().getBoolean("boolean.clans")) {
+            player.sendMessage(TextUtil.convertColor("&cClans have not been enabled."));
+            return true;
+        }
         if(!plugin.getConfigManager().getConfig().getBoolean("boolean.allowClanChat")) {
             player.sendMessage(TextUtil.convertColor("&cClan chat has been muted."));
             return true;

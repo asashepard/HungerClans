@@ -23,6 +23,7 @@ integer:
   # combat log timer
   combatLogSeconds: 15
 boolean:
+  clans: false
   allowClanChat: true
   allowDeclareWar: true
   allowSurrender: true

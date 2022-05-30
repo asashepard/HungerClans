@@ -32,6 +32,11 @@ public class ClanCommand extends CommandBase {
             return true;
         }
         Player player = (Player) sender;
+        if(!plugin.getConfigManager().getConfig().getBoolean("boolean.clans")) {
+            player.sendMessage(TextUtil.convertColor("&cClans have not been enabled."));
+            return true;
+        }
+
         boolean inClan = plugin.getClanManager().isInClan(player);
         Map<String, Integer> roleMap = new HashMap<>();
         roleMap.put("leader", 3);

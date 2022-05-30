@@ -39,30 +39,26 @@ public class ClanManager {
             if(existingName.toLowerCase().contains(clanName.toLowerCase()) ||
                     clanName.toLowerCase().contains(existingName.toLowerCase()) ||
                     clanName.substring(0, 4).equalsIgnoreCase(existingName.substring(0, 4))) {
-                player.sendMessage(TextUtil.convertColor("That clan name is too similar to another!"));
+                player.sendMessage(TextUtil.convertColor("&7That clan name is too similar to another!"));
                 return;
             }
-        if(clanName.length() < 4) {
-            player.sendMessage(TextUtil.convertColor("That clan name is too short!"));
+        if(stripSpaces(clanName).length() < 4) {
+            player.sendMessage(TextUtil.convertColor("&7That clan name is too short!"));
             return;
         }
-        if(clanName.length() > 16) {
-            player.sendMessage(TextUtil.convertColor("That clan name is too long!"));
-            return;
-        }
-        if(clanName.substring(0, 4).contains(" ")) {
-            player.sendMessage(TextUtil.convertColor("The first four characters of your clan name must not include spaces."));
+        if(stripSpaces(clanName).length() > 18) {
+            player.sendMessage(TextUtil.convertColor("&7That clan name is too long!"));
             return;
         }
         if(!clanName.matches("^[ A-Za-z]+$")) {
-            player.sendMessage(TextUtil.convertColor("A clan name must only have letters and spaces!"));
+            player.sendMessage(TextUtil.convertColor("&7A clan name must only have letters and spaces!"));
             return;
         }
         List<String> bannedNames = List.of("join", "leave", "gabe", "hayes", "xarkenz", "longbread", "nigg", "fag",
                 "cunt", "burn jews", "fuck", "shit", "clan", "amogus");
         for(String str : bannedNames)
             if(clanName.toLowerCase().contains(str)) {
-                player.sendMessage(TextUtil.convertColor("Please think of something more creative."));
+                player.sendMessage(TextUtil.convertColor("&7Please think of something more creative."));
                 return;
             }
 
@@ -70,7 +66,7 @@ public class ClanManager {
 
         //create map with info and add to data file section
         //clan code
-        String clanCode = clanName.substring(0, 4).toUpperCase();
+        String clanCode = getClanCode(clanName);
         //clan color
         List<ChatColor> COLORS = List.of(ChatColor.DARK_GRAY, ChatColor.GREEN, ChatColor.YELLOW, ChatColor.AQUA,
                 ChatColor.LIGHT_PURPLE, ChatColor.GOLD, ChatColor.BLUE, ChatColor.DARK_GREEN, ChatColor.RED);
@@ -366,6 +362,21 @@ public class ClanManager {
         cfg.set("noDeclare", noDeclare);
 
         plugin.getDataManager().saveConfig();
+    }
+
+    private String stripSpaces(String str) {
+        return str.replaceAll("\\s", "");
+    }
+
+    private String stripVowels(String str) {
+        return str.replaceAll("[aeiou]", "");
+    }
+
+    private String getClanCode(String str) {
+        String stripped = stripSpaces(stripVowels(str));
+        if(stripped.length() > 4)
+            return stripped.substring(0, 4).toUpperCase();
+        return stripSpaces(str).substring(0, 4).toUpperCase();
     }
 
 }

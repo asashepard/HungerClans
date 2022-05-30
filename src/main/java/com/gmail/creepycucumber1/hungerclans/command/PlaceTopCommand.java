@@ -29,7 +29,7 @@ public class PlaceTopCommand extends CommandBase {
 
         HashMap<Integer, String> map = new HashMap<>(); //time played, player name
         int placed;
-        int total = 0;
+        long total = 0;
         for(String uuidString : plugin.getDataManager().getConfig().getConfigurationSection("players").getKeys(false)) {
             OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(uuidString));
             placed = plugin.getPlayerManager().getBlocksPlaced(player);
