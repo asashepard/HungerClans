@@ -28,12 +28,12 @@ public class ClanCommand extends CommandBase {
     public boolean execute(CommandSender sender, String[] args) {
 
         if(!(sender instanceof Player)) {
-            sender.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be a player to use this command!"));
+            sender.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must be a player to use this command!"));
             return true;
         }
         Player player = (Player) sender;
         if(!plugin.getConfigManager().getConfig().getBoolean("boolean.clans")) {
-            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cClans have not been enabled."));
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cClans have not been enabled."));
             return true;
         }
 
@@ -48,7 +48,7 @@ public class ClanCommand extends CommandBase {
             if(inClan)
                 plugin.getGUIManager().openGUI(player, new ClanDashboardGUI(plugin, player));
             else
-                sendClickableCommand(player, TextUtil.convertColor("&4CLANS &8» &cYou are NOT in a clan, so you don't have a dashboard to view." +
+                sendClickableCommand(player, TextUtil.convertColor("&4&lCLANS &8» &cYou are NOT in a clan, so you don't have a dashboard to view." +
                         " Use &o/c create [clan name] &r&cto make one or use &o/c help &r&cto view commands!"), "/c help", "Clans Help");
 
         }
@@ -67,11 +67,11 @@ public class ClanCommand extends CommandBase {
         else if(args[0].equalsIgnoreCase("create")) {
             //make new clan, add to data file
             if(args.length < 2) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &7Usage: &o/c create [name]"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &7Usage: &o/c create [name]"));
                 return true;
             }
             if(!player.hasPermission("hungerclans.createclan")) {
-                sendClickableLink(player, TextUtil.convertColor("&4CLANS &8» &cYou do not have permission to create a clan. Contact a server administrator if you believe this is in error"),
+                sendClickableLink(player, TextUtil.convertColor("&4&lCLANS &8» &cYou do not have permission to create a clan. Contact a server administrator if you believe this is in error"),
                         "shop.hungermc.com", "");
                 return true;
             }
@@ -108,7 +108,7 @@ public class ClanCommand extends CommandBase {
                         break;
                     }
                 if(!match) {
-                    player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThere is no clan with the name \"&f" + clan + "&7\"."));
+                    player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThere is no clan with the name \"&f" + clan + "&7\"."));
                     return true;
                 }
 
@@ -121,7 +121,7 @@ public class ClanCommand extends CommandBase {
                 return true;
             }
             if(!inClan) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou aren't in a clan!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan!"));
                 return true;
             }
             String clan = plugin.getClanManager().getClan(player);
@@ -134,7 +134,7 @@ public class ClanCommand extends CommandBase {
         } //all
         else if(args[0].equalsIgnoreCase("color")) {
             if(!inClan) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou aren't in a clan!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan!"));
                 return true;
             }
             String role = plugin.getClanManager().getRole(player);
@@ -143,147 +143,147 @@ public class ClanCommand extends CommandBase {
                 plugin.getGUIManager().openGUI(player, new ClanColorGUI(plugin, player));
 
             } else {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be trusted or the clan leader to change the clan color."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must be trusted or the clan leader to change the clan color."));
             }
             return true;
         } //trusted/leader
         else if(args[0].equalsIgnoreCase("banner")) {
             if(!inClan) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou aren't in a clan!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan!"));
                 return true;
             }
             if(!plugin.getClanManager().getRole(player).equalsIgnoreCase("leader")) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be the clan leader to change your clan banner."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must be the clan leader to change your clan banner."));
                 return true;
             }
             int cost = plugin.getConfigManager().getConfig().getInt("integer.setBannerCost");
             if(cost != 0 && plugin.getVault().getBalance(player) < cost) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must have &f$" + cost + " &cto set your clan banner."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must have &f$" + cost + " &cto set your clan banner."));
                 return true;
             }
 
             plugin.getClanManager().setBanner(player);
             plugin.getVault().withdrawPlayer(player, cost);
-            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &3Successfully changed your clan banner!"));
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Successfully changed your clan banner!"));
             if(cost != 0) player.sendMessage(TextUtil.convertColor("&7Balance: &f$" + plugin.getVault().getBalance(player)));
 
         } //leader
         else if(args[0].equalsIgnoreCase("promote")) {
             if(!inClan) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou aren't in a clan!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan!"));
                 return true;
             }
             String clanName = plugin.getClanManager().getClan(player);
             ChatColor color = plugin.getClanManager().getColor(clanName);
             if(args.length != 2) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cPlease specify a player to promote."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease specify a player to promote."));
                 return true;
             }
             try {
                 OfflinePlayer p = Bukkit.getOfflinePlayer(args[1]);
             } catch (Exception e) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThere exists no player of that name."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThere exists no player of that name."));
                 return true;
             }
             OfflinePlayer p = Bukkit.getOfflinePlayer(args[1]);
             if(!plugin.getClanManager().getMembers(clanName).contains(p.getUniqueId().toString())) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThat player isn't in your clan!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat player isn't in your clan!"));
             }
             String senderRole = plugin.getClanManager().getRole(player);
             String receiverRole = plugin.getClanManager().getRole(p);
             if(roleMap.get(senderRole) <= roleMap.get(receiverRole)) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThat player is of equal or greater rank!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat player is of equal or greater rank!"));
                 return true;
             }
             if(receiverRole.equals("member")) {
                 plugin.getClanManager().addRole(Bukkit.getOfflinePlayer(args[1]), "trusted");
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &3Promoted "
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Promoted "
                         + Bukkit.getOfflinePlayer(args[1]).getName() +
                         " to &b[trusted]&3."));
                 if(p.isOnline())
-                    p.getPlayer().sendMessage(TextUtil.convertColor("&4CLANS &8» &3You have been promoted to &b[trusted] &3in &l" +
+                    p.getPlayer().sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3You have been promoted to &b[trusted] &3in &l" +
                             color + clanName + "&r&3 by &7" + player.getName() + "&3."));
             }
             if(receiverRole.equals("trusted")) {
                 plugin.getClanManager().addRole(Bukkit.getOfflinePlayer(args[1]), "leader");
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &3Promoted &7"
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Promoted &7"
                         + Bukkit.getOfflinePlayer(args[1]).getName() +
                         " &3to &b[leader]&3. You are now &b[trusted]&3."));
                 if(p.isOnline())
-                    p.getPlayer().sendMessage(TextUtil.convertColor("&4CLANS &8» &3You have been promoted to &b[leader] &3in &l" +
+                    p.getPlayer().sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3You have been promoted to &b[leader] &3in &l" +
                             color + clanName + "&r&3 by &7" + player.getName() + "&3."));
             }
         } //higher role
         else if(args[0].equalsIgnoreCase("demote")) {
             if(!inClan) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou aren't in a clan!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan!"));
                 return true;
             }
             String clanName = plugin.getClanManager().getClan(player);
             ChatColor color = plugin.getClanManager().getColor(clanName);
             if(args.length != 2) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cPlease specify a player to demote."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease specify a player to demote."));
                 return true;
             }
             try {
                 OfflinePlayer p = Bukkit.getOfflinePlayer(args[1]);
             } catch (Exception e) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThere exists no player of that name."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThere exists no player of that name."));
                 return true;
             }
             OfflinePlayer p = Bukkit.getOfflinePlayer(args[1]);
             if(!plugin.getClanManager().getMembers(clanName).contains(p.getUniqueId().toString())) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThat player isn't in your clan!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat player isn't in your clan!"));
             }
             String senderRole = plugin.getClanManager().getRole(player);
             String receiverRole = plugin.getClanManager().getRole(p);
             if(roleMap.get(senderRole) <= roleMap.get(receiverRole)) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThat player is of equal or greater rank!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat player is of equal or greater rank!"));
                 return true;
             }
             if(receiverRole.equals("member")) {
                 plugin.getClanManager().removeRole(p, "member");
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &3Removed the &b[member] &3role from &7"
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Removed the &b[member] &3role from &7"
                         + p.getName() +
                         "&3 and kicked them from the clan."));
                 if(p.isOnline())
-                    p.getPlayer().sendMessage(TextUtil.convertColor("&4CLANS &8» &4You have been kicked from &l" +
+                    p.getPlayer().sendMessage(TextUtil.convertColor("&4&lCLANS &8» &4You have been kicked from &l" +
                             color + clanName + "&r&4 by &7" + player.getName() + "&4."));
             }
             if(receiverRole.equals("trusted")) {
                 plugin.getClanManager().removeRole(p, "trusted");
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &3Demoted &7" + p.getName() +
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Demoted &7" + p.getName() +
                         "&3 to &b[member]&3."));
                 if(p.isOnline())
-                    p.getPlayer().sendMessage(TextUtil.convertColor("&4CLANS &8» &4You have been demoted to &c[member] &4in &l" +
+                    p.getPlayer().sendMessage(TextUtil.convertColor("&4&lCLANS &8» &4You have been demoted to &c[member] &4in &l" +
                             color + clanName + "&r&4 by &7" + player.getName()) + "&4.");
             }
         } //higher role
         else if(args[0].equalsIgnoreCase("kick")) {
             if(!inClan) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou aren't in a clan!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan!"));
                 return true;
             }
             String clanName = plugin.getClanManager().getClan(player);
             ChatColor color = plugin.getClanManager().getColor(clanName);
             if(args.length != 2) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cPlease specify a player to kick."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease specify a player to kick."));
                 return true;
             }
             try {
                 OfflinePlayer p = Bukkit.getOfflinePlayer(args[1]);
             } catch (Exception e) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThere exists no player of that name."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThere exists no player of that name."));
                 return true;
             }
             OfflinePlayer p = Bukkit.getOfflinePlayer(args[1]);
             if(!plugin.getClanManager().getMembers(clanName).contains(p.getUniqueId().toString())) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThat player isn't in your clan!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat player isn't in your clan!"));
             }
             String senderRole = plugin.getClanManager().getRole(player);
             String receiverRole = plugin.getClanManager().getRole(p);
             if(roleMap.get(senderRole) <= roleMap.get(receiverRole)) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThat player is of equal or greater rank!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat player is of equal or greater rank!"));
                 return true;
             }
 
@@ -293,26 +293,26 @@ public class ClanCommand extends CommandBase {
                 plugin.getClanManager().removeRole(p, "trusted");
                 plugin.getClanManager().removeRole(p, "member");
             }
-            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &3Kicked player &7" + Bukkit.getOfflinePlayer(UUID.fromString(args[1])).getName() +
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Kicked player &7" + Bukkit.getOfflinePlayer(UUID.fromString(args[1])).getName() +
                     "&3 from the clan."));
             if(p.isOnline())
-                p.getPlayer().sendMessage(TextUtil.convertColor("&4CLANS &8» &4You have been kicked from &l" +
+                p.getPlayer().sendMessage(TextUtil.convertColor("&4&lCLANS &8» &4You have been kicked from &l" +
                         color + clanName + "&r&4 by &7" + player.getName() + "&4."));
         } //higher role
         else if(args[0].equalsIgnoreCase("leave")) {
             if(!inClan) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &7You aren't in a clan!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &7You aren't in a clan!"));
                 return true;
             }
             String clanName = plugin.getClanManager().getClan(player);
             String senderRole = plugin.getClanManager().getRole(player);
 
             if(args.length == 2 && args[1].equalsIgnoreCase(PASSWORD)) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &3You have left the clan."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3You have left the clan."));
                 if(senderRole.equalsIgnoreCase("leader")) {
                     plugin.getDataManager().getConfig().set("clans." + clanName, null);
                     plugin.getDataManager().saveConfig();
-                    player.sendMessage(TextUtil.convertColor("&4CLANS &8» &3The clan has been disbanded."));
+                    player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3The clan has been disbanded."));
                 }
                 else if(senderRole.equalsIgnoreCase("trusted")) {
                     plugin.getClanManager().removeRole(player, "trusted");
@@ -328,51 +328,51 @@ public class ClanCommand extends CommandBase {
             if(senderRole.equalsIgnoreCase("leader")) {
                 int members = plugin.getClanManager().getMembers(clanName).size();
                 if(members != 1)
-                    player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou can't leave a clan where you are leader: promote someone first!"));
+                    player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou can't leave a clan where you are leader: promote someone first!"));
                 else
-                    sendClickableCommand(player, TextUtil.convertColor("&4CLANS &8» &4Are you sure you want to go? The clan will be disbanded. Click here to confirm."),
+                    sendClickableCommand(player, TextUtil.convertColor("&4&lCLANS &8» &4Are you sure you want to go? The clan will be disbanded. Click here to confirm."),
                             "/c leave " + PASSWORD, "Leave Clan");
                 return true;
             }
-            sendClickableCommand(player, TextUtil.convertColor("&4CLANS &8» &4Are you sure you want to go? &rClick here to confirm."),
+            sendClickableCommand(player, TextUtil.convertColor("&4&lCLANS &8» &4Are you sure you want to go? &rClick here to confirm."),
                     "/c leave " + PASSWORD, "Leave Clan");
             return true;
 
         } //member/trusted/leader (CONSOLE)
         else if(args[0].equalsIgnoreCase("invite")) {
             if(!inClan) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou aren't in a clan!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan!"));
                 return true;
             }
             String clanName = plugin.getClanManager().getClan(player);
             ChatColor color = plugin.getClanManager().getColor(clanName);
             String role = plugin.getClanManager().getRole(player);
             if(role.equalsIgnoreCase("member")) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be trusted or the clan leader to send an invite."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must be trusted or the clan leader to send an invite."));
                 return true;
             }
             if(plugin.getClanManager().getMembers(clanName).size() >= 9) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cClans have a maximum size of 9 members. Kick someone or complain to an admin."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cClans have a maximum size of 9 members. Kick someone or complain to an admin."));
                 return true;
             }
             if(args.length != 2) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cPlease specify a player to invite."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease specify a player to invite."));
                 return true;
             }
             try {
                 OfflinePlayer invited = Bukkit.getOfflinePlayer(args[1]);
             } catch (Exception e) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThere exists no player of that name."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThere exists no player of that name."));
                 return true;
             }
             OfflinePlayer invited = Bukkit.getOfflinePlayer(args[1]);
             if(!invited.isOnline()) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cPlease specify one player to invite."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease specify one player to invite."));
                 return true;
             }
-            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &3Invite sent to &7" + invited.getName() + "&3."));
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Invite sent to &7" + invited.getName() + "&3."));
             sendClickableCommand(invited.getPlayer(),
-                    "&4CLANS &8» &3You have been invited to &l" + color + clanName + "&r&b - click to accept.",
+                    "&4&lCLANS &8» &3You have been invited to &l" + color + clanName + "&r&b - click to accept.",
                     "/c join " + clanName + " " + PASSWORD,
                     "Join Clan");
 
@@ -380,19 +380,19 @@ public class ClanCommand extends CommandBase {
         else if(args[0].equalsIgnoreCase("join")) {
             if(!args[2].equalsIgnoreCase(PASSWORD)) return true; //secret password
             if(plugin.getClanManager().isInClan(player)) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou are already in a clan! Leave to join another."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou are already in a clan! Leave to join another."));
                 return true;
             }
             plugin.getClanManager().addMember(player, args[1]);
         } //CONSOLE
         else if(args[0].equalsIgnoreCase("home")) {
             if(!inClan) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou aren't in a clan!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan!"));
                 return true;
             }
             String clanName = plugin.getClanManager().getClan(player);
             if(!plugin.getClanManager().getHasHome(clanName)) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYour clan doesn't have a home - ask your leader to set one."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYour clan doesn't have a home - ask your leader to set one."));
                 return true;
             }
             World world = Bukkit.getWorld(plugin.getClanManager().getHome(clanName).get(0));
@@ -404,23 +404,23 @@ public class ClanCommand extends CommandBase {
         } //member/trusted/leader
         else if(args[0].equalsIgnoreCase("sethome")) {
             if(!inClan) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou aren't in a clan!"));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan!"));
                 return true;
             }
             String clanName = plugin.getClanManager().getClan(player);
             if(!plugin.getClanManager().getRole(player).equalsIgnoreCase("leader")) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be the clan leader to set the clan home."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must be the clan leader to set the clan home."));
                 return true;
             }
             int cost = plugin.getConfigManager().getConfig().getInt("integer.setHomeCost");
             if(cost != 0 && plugin.getVault().getBalance(player) < cost) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must have &f$" + cost + "&c to set your clan home."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must have &f$" + cost + "&c to set your clan home."));
                 return true;
             }
 
             plugin.getClanManager().setHome(clanName, player.getLocation());
             plugin.getVault().withdrawPlayer(player, cost);
-            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &3Successfully set the clan home to your location."));
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Successfully set the clan home to your location."));
             if(cost != 0) player.sendMessage(TextUtil.convertColor("&7Balance: &f$" + plugin.getVault().getBalance(player)));
             return true;
         } //leader

@@ -15,18 +15,18 @@ public class WarCommand extends CommandBase {
     public boolean execute(CommandSender sender, String[] args) {
 
         if (!(sender instanceof Player)) {
-            sender.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be a player to use this command!"));
+            sender.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must be a player to use this command!"));
             return true;
         }
         Player player = (Player) sender;
 
         if(args.length == 0) {
             if(!plugin.getClanManager().isInClan(player)) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou aren't in a clan! Use &o/war all&r&c to see all current wars."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan! Use &o/war all&r&c to see all current wars."));
                 return true;
             }
             if(!plugin.getWarManager().isInWar(plugin.getClanManager().getClan(player))) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYour clan is not currently at war. Use &o/war all&r&c to see all current wars."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYour clan is not currently at war. Use &o/war all&r&c to see all current wars."));
                 return true;
             }
 
@@ -42,7 +42,7 @@ public class WarCommand extends CommandBase {
                 sendWarMessage(player, war, false);
             }
             if(plugin.getDataManager().getConfig().getConfigurationSection("wars").getKeys(false).size() == 0) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThere are currently no active wars."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThere are currently no active wars."));
             }
             return true;
         }

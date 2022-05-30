@@ -48,12 +48,12 @@ public class ClanColorGUI extends GUI {
 
         int cost = plugin.getConfigManager().getConfig().getInt("integer.setColorCost");
         if(cost != 0 && plugin.getVault().getBalance(player) < cost) {
-            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must have $" + cost + " to set your clan color."));
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must have $" + cost + " to set your clan color."));
             return;
         }
 
         plugin.getClanManager().setColor(clanName, item.getId());
-        player.sendMessage(TextUtil.convertColor("&4CLANS &8» &3Successfully set your clan color to " +
+        player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Successfully set your clan color to " +
                 ColorUtil.colorToStringCode(ColorUtil.colorFromString(item.getId())) + item.getId() + "!"));
         plugin.getVault().withdrawPlayer(p, cost);
         if(cost != 0) player.sendMessage(TextUtil.convertColor("&7Balance: $" + plugin.getVault().getBalance(p)));

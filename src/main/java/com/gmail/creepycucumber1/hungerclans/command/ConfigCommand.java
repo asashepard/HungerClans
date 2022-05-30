@@ -23,7 +23,7 @@ public class ConfigCommand extends CommandBase {
         if(sender instanceof Player) {
             Player player = (Player) sender;
             if(!player.hasPermission("hungerclans.staff")) {
-                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou don't have permission to execute this command."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou don't have permission to execute this command."));
                 return true;
             }
         }

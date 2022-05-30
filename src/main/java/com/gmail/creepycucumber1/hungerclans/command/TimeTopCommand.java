@@ -21,7 +21,7 @@ public class TimeTopCommand extends CommandBase {
     public boolean execute(CommandSender sender, String[] args) {
 
         if(!(sender instanceof Player)) {
-            sender.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be a player to use this command!"));
+            sender.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must be a player to use this command!"));
             return true;
         }
         Player player = (Player) sender;
@@ -43,7 +43,7 @@ public class TimeTopCommand extends CommandBase {
                 page = Math.abs(Integer.parseInt(args[0]));
             } catch (NumberFormatException ignored) {}
         if(page > ((list.size() - 1) / 10) + 1) {
-            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThere aren't yet " + page + " pages of this " +
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThere aren't yet " + page + " pages of this " +
                     (((list.size() - 1) / 10) + 1) + "-page leaderboard!"));
             return true;
         }
