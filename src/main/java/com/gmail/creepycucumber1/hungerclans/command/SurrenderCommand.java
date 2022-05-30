@@ -26,25 +26,25 @@ public class SurrenderCommand extends CommandBase {
     public boolean execute(CommandSender sender, String[] args) {
 
         if(!(sender instanceof Player)) {
-            sender.sendMessage(TextUtil.convertColor("&cYou must be a player to use this command!"));
+            sender.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be a player to use this command!"));
             return true;
         }
         Player player = (Player) sender;
         if(!plugin.getConfigManager().getConfig().getBoolean("boolean.allowSurrender")) {
-            player.sendMessage(TextUtil.convertColor("&cSurrendering has been turned off."));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cSurrendering has been turned off."));
             return true;
         }
         if(!plugin.getClanManager().isInClan(player)) {
-            player.sendMessage(TextUtil.convertColor("&7You must be part of a clan to use this command!"));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be part of a clan to use this command!"));
             return true;
         }
         String clan = plugin.getClanManager().getClan(player);
         if(!plugin.getWarManager().isInWar(clan)) {
-            player.sendMessage(TextUtil.convertColor("&7Your clan is not currently at war!"));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYour clan is not currently at war!"));
             return true;
         }
         if(!plugin.getClanManager().getRole(player).equalsIgnoreCase("leader")) {
-            player.sendMessage(TextUtil.convertColor("&7You must be the clan leader to use this command."));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be the clan leader to use this command."));
             return true;
         }
 
@@ -54,40 +54,40 @@ public class SurrenderCommand extends CommandBase {
         }
         String otherClan = args[0];
         if(!plugin.getDataManager().getConfig().getConfigurationSection("clans").getKeys(false).contains(otherClan)) {
-            player.sendMessage(TextUtil.convertColor("&7That clan (case sensitive) does not exist."));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThat clan (case sensitive) does not exist."));
             return true;
         }
         String color = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(otherClan));
         if(!plugin.getWarManager().areAtWar(clan, otherClan)) {
-            player.sendMessage(TextUtil.convertColor("&7Your clan is not at war with " + color + otherClan + "&7."));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYour clan is not at war with " + color + otherClan + "&c."));
             return true;
         }
         String war = otherClan + "vs" + clan;
 
         if(!plugin.getWarManager().getWars(clan).contains(war)) { //clan of sender declared war because the order would be reversed
-            player.sendMessage(TextUtil.convertColor("&4&oYou &r&4declared war against " + color + otherClan + "&r&4, no?"));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &4&oYou &r&4declared war against " + color + otherClan + "&r&4, no?"));
             return true;
         }
         int surrenderWait = plugin.getConfigManager().getConfig().getInt("integer.surrenderWait");
         int warLength = plugin.getConfigManager().getConfig().getInt("integer.warLength");
         int okToSurrender = Integer.parseInt(plugin.getWarManager().getEndDay(war)) - (warLength - surrenderWait);
         if(okToSurrender > getToday()) { //war less than X day(s) old
-            player.sendMessage(TextUtil.convertColor("&7Please wait until the &f" +
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &7Please wait until the &f" +
                      okToSurrender + TextUtil.getSuffix(String.valueOf(okToSurrender)) + "&7 to surrender to " + color + otherClan + "&7."));
             return true;
         }
         if(args.length == 2 && args[1].equalsIgnoreCase(PASSWORD)) { //ENDS WAR
             plugin.getWarManager().endWar(war, otherClan, true);
-            player.sendMessage(TextUtil.convertColor("&3You have surrendered to " + color + otherClan + "&3."));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &3You have surrendered to " + color + otherClan + "&3."));
             return true;
         }
         if(plugin.getWarManager().getSide1Points(war) < plugin.getWarManager().getSide2Points(war)) { //clan of sender is winning
-            sendClickableCommand(player, TextUtil.convertColor("&4You are in the lead! Are you sure you want to surrender to " + color + otherClan + "&4 and lose the war? Click here to confirm."),
+            sendClickableCommand(player, TextUtil.convertColor("&4CLANS &8» &4You are in the lead! Are you sure you want to surrender to " + color + otherClan + "&4 and lose the war? Click here to confirm."),
                     "/c surrender " + PASSWORD, TextUtil.convertColor("Surrender to " + color + otherClan));
             return true;
         }
 
-        sendClickableCommand(player, TextUtil.convertColor("&4Are you sure you want to surrender to " + color + otherClan + "&4 and lose the war? Click here to confirm."),
+        sendClickableCommand(player, TextUtil.convertColor("&4CLANS &8» &4Are you sure you want to surrender to " + color + otherClan + "&4 and lose the war? Click here to confirm."),
                 "/c surrender " + PASSWORD, TextUtil.convertColor("Surrender to " + color + otherClan));
 
         return true;

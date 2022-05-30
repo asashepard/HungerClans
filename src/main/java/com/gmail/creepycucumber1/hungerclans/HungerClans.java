@@ -100,7 +100,7 @@ public final class HungerClans extends JavaPlugin {
             if(c.getCommand().equalsIgnoreCase(label) || (c.getAliases() != null && c.getAliases().contains(label))) {
                 boolean result = c.execute(sender, args);
                 if(!result)
-                    sender.sendMessage(TextUtil.convertColor("&cInvalid command usage!\n&7/" + label + " " + c.getUsage()));
+                    sender.sendMessage(TextUtil.convertColor("&4CLANS &8» &cInvalid command usage!\n&7/" + label + " " + c.getUsage()));
             }
 
         return true;

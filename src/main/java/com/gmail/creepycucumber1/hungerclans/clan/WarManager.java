@@ -83,7 +83,7 @@ public class WarManager {
             OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
             if(oPlayer.isOnline()) {
                 Player player = (Player) oPlayer;
-                player.sendMessage(TextUtil.convertColor("&aCongratulations, your clan won a war against " + color + loser + "&a! &3" +
+                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &aCongratulations, your clan won a war against " + color + loser + "&a! &3" +
                         "You have received &7$" + reward + " &3as a result. The score was &e" + side1score + " &3- &e" + side2score + "&3."));
             }
             else {
@@ -98,7 +98,7 @@ public class WarManager {
             OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
             if(oPlayer.isOnline()) {
                 Player player = (Player) oPlayer;
-                player.sendMessage(TextUtil.convertColor("&4Your clan lost a war against " + wColor + winner + "&4. " +
+                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &4Your clan lost a war against " + wColor + winner + "&4. " +
                         "The score was &e" + side1score + " &4- &e" + side2score + "&4."));
             }
             else {
@@ -131,7 +131,7 @@ public class WarManager {
             OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
             if(oPlayer.isOnline()) {
                 Player player = (Player) oPlayer;
-                player.sendMessage(TextUtil.convertColor("&aCongratulations, your clan won a war! &3" +
+                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &aCongratulations, your clan won a war! &3" +
                         (surrender ? "The other team, " + loser + " surrendered." : "You won so decisively, the other team ceased to exist!") +
                         " The score was &e" + side1score + " &3- &e" + side2score + "&3. You have received &7$" + reward + " &3as a result."));
             }
@@ -150,7 +150,7 @@ public class WarManager {
                 OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
                 if(oPlayer.isOnline()) {
                     Player player = (Player) oPlayer;
-                    player.sendMessage(TextUtil.convertColor("&4Your clan surrendered and lost a war against " + wColor + winner + "&4."));
+                    player.sendMessage(TextUtil.convertColor("&4CLANS &8» &4Your clan surrendered and lost a war against " + wColor + winner + "&4."));
                 }
                 else {
                     plugin.getEssentials().getUser(UUID.fromString(uuid)).addMail("Your clan surrendered and lost a war against " + winner + ".");

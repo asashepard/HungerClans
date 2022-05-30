@@ -20,24 +20,24 @@ public class ClanWhisperCommand extends CommandBase {
     public boolean execute(CommandSender sender, String[] args) {
 
         if(!(sender instanceof Player)) {
-            sender.sendMessage(TextUtil.convertColor("&cYou must be a player to use this command!"));
+            sender.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be a player to use this command!"));
             return true;
         }
         Player player = (Player) sender;
         if(!plugin.getConfigManager().getConfig().getBoolean("boolean.clans")) {
-            player.sendMessage(TextUtil.convertColor("&cClans have not been enabled."));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cClans have not been enabled."));
             return true;
         }
         if(!plugin.getConfigManager().getConfig().getBoolean("boolean.allowClanChat")) {
-            player.sendMessage(TextUtil.convertColor("&cClan chat has been muted."));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cClan chat has been muted."));
             return true;
         }
         if(plugin.getEssentials().getUser(player.getUniqueId()).isMuted()) {
-            player.sendMessage(TextUtil.convertColor("&cYou are muted."));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou are muted."));
             return true;
         }
         if(!plugin.getClanManager().isInClan(player)) {
-            player.sendMessage(TextUtil.convertColor("&7You must be part of a clan to use this command!"));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be part of a clan to use this command!"));
             return true;
         }
         if(args.length == 0) {

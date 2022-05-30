@@ -65,24 +65,24 @@ public class OtherClanGUI extends GUI {
         } else if(item.getItem().getType().equals(Material.GREEN_CONCRETE)) {
             p.closeInventory();
             if(plugin.getWarManager().areAtWar(plugin.getClanManager().getClan(p), item.getItemId())) {
-                p.sendMessage(TextUtil.convertColor("&cPeace? But you are at war! Peace was never an option."));
+                p.sendMessage(TextUtil.convertColor("&4CLANS &8» &cPeace? But you are at war! Peace was never an option."));
                 return;
             }
             plugin.getGUIManager().openGUI(p, new AllClansGUI(plugin, p));
         } else if(item.getItem().getType().equals(Material.RED_CONCRETE)) {
             p.closeInventory();
             if(!plugin.getConfigManager().getConfig().getBoolean("boolean.allowDeclareWar")) {
-                p.sendMessage(TextUtil.convertColor("&cWar declaration has been turned off."));
+                p.sendMessage(TextUtil.convertColor("&4CLANS &8» &cWar declaration has been turned off."));
                 return;
             }
             if(!plugin.getClanManager().getRole(p).equalsIgnoreCase("leader")) {
-                p.sendMessage(TextUtil.convertColor("&cYou must be the clan leader to declare war."));
+                p.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be the clan leader to declare war."));
                 return;
             }
 
             int cost = plugin.getConfigManager().getConfig().getInt("integer.declareWarCost");
             if(cost != 0 && plugin.getVault().getBalance(p) < cost) {
-                p.sendMessage(TextUtil.convertColor("&cYou must have $" + cost + " to declare war."));
+                p.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must have $" + cost + " to declare war."));
                 return;
             }
 
@@ -90,7 +90,7 @@ public class OtherClanGUI extends GUI {
             String otherClan = item.getItemId();
 
             if(plugin.getWarManager().areAtWar(clan, otherClan)) {
-                p.sendMessage(TextUtil.convertColor("&4You are already at war with " +
+                p.sendMessage(TextUtil.convertColor("&4CLANS &8» &4You are already at war with " +
                         ColorUtil.colorToStringCode(plugin.getClanManager().getColor(otherClan)) +
                         item.getItemId() + "&r&4! Are you winning yet?"));
                 return;
@@ -101,7 +101,7 @@ public class OtherClanGUI extends GUI {
                 String ends = plugin.getClanManager().getDeclareAgainDay(clan, otherClan);
                 String suffix = TextUtil.getSuffix(ends);
 
-                p.sendMessage(TextUtil.convertColor("&cPlease wait until the " + ends + suffix + " to declare war against " +
+                p.sendMessage(TextUtil.convertColor("&4CLANS &8» &cPlease wait until the " + ends + suffix + " to declare war against " +
                         ColorUtil.colorToStringCode(plugin.getClanManager().getColor(otherClan)) + otherClan + " &cagain."));
                 return;
 
@@ -112,7 +112,7 @@ public class OtherClanGUI extends GUI {
             notifyOfWar(clan, otherClan, true);
             notifyOfWar(otherClan, clan, false);
             plugin.getVault().withdrawPlayer(p, cost);
-            p.sendMessage(TextUtil.convertColor("&4Declared war on " +
+            p.sendMessage(TextUtil.convertColor("&4CLANS &8» &4Declared war on " +
                     ColorUtil.colorToStringCode(plugin.getClanManager().getColor(item.getItemId())) +
                     item.getItemId() + "&r&4! Go get 'em!"));
             if(cost != 0) player.sendMessage(TextUtil.convertColor("&7Balance: $" + plugin.getVault().getBalance(p)));
@@ -130,9 +130,9 @@ public class OtherClanGUI extends GUI {
             if(player.isOnline()) {
                 Player p = (Player) player;
                 if(declared)
-                    p.sendMessage(TextUtil.convertColor("&4Prepare for war! Your clan has declared war against " + color + otherClan + "&4!"));
+                    p.sendMessage(TextUtil.convertColor("&4CLANS &8» &4Prepare for war! Your clan has declared war against " + color + otherClan + "&4!"));
                 else
-                    p.sendMessage(TextUtil.convertColor("&4Prepare for war! " + color + otherClan + " has declared war against you!"));
+                    p.sendMessage(TextUtil.convertColor("&4CLANS &8» &4Prepare for war! " + color + otherClan + " has declared war against you!"));
             }
             else {
                 if(declared)

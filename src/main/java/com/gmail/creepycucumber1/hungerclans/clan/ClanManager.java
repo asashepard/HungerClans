@@ -27,38 +27,38 @@ public class ClanManager {
 
     public void createNewClan(Player player, String clanName) {
         if(isInClan(player)) {
-            player.sendMessage("You are already in a clan!"); return;
+            player.sendMessage("&4CLANS &8» &cYou are already in a clan!"); return;
         }
         int cost = plugin.getConfigManager().getConfig().getInt("integer.createClanCost");
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
         if(cost != 0 && plugin.getVault().getBalance(player) < cost) {
-            player.sendMessage(TextUtil.convertColor("&cYou must have $" + cost + " to create a clan."));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must have $" + cost + " to create a clan."));
             return;
         }
         for(String existingName : cfg.getKeys(false))
             if(existingName.toLowerCase().contains(clanName.toLowerCase()) ||
                     clanName.toLowerCase().contains(existingName.toLowerCase()) ||
                     clanName.substring(0, 4).equalsIgnoreCase(existingName.substring(0, 4))) {
-                player.sendMessage(TextUtil.convertColor("&7That clan name is too similar to another!"));
+                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThat clan name is too similar to another!"));
                 return;
             }
         if(stripSpaces(clanName).length() < 4) {
-            player.sendMessage(TextUtil.convertColor("&7That clan name is too short!"));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThat clan name is too short!"));
             return;
         }
         if(stripSpaces(clanName).length() > 18) {
-            player.sendMessage(TextUtil.convertColor("&7That clan name is too long!"));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cThat clan name is too long!"));
             return;
         }
         if(!clanName.matches("^[ A-Za-z]+$")) {
-            player.sendMessage(TextUtil.convertColor("&7A clan name must only have letters and spaces!"));
+            player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cA clan name must only have letters and spaces!"));
             return;
         }
         List<String> bannedNames = List.of("join", "leave", "gabe", "hayes", "xarkenz", "longbread", "nigg", "fag",
                 "cunt", "burn jews", "fuck", "shit", "clan", "amogus");
         for(String str : bannedNames)
             if(clanName.toLowerCase().contains(str)) {
-                player.sendMessage(TextUtil.convertColor("&7Please think of something more creative."));
+                player.sendMessage(TextUtil.convertColor("&4CLANS &8» &cPlease think of something more creative, you swine."));
                 return;
             }
 
@@ -112,7 +112,7 @@ public class ClanManager {
 
         plugin.getPlayerManager().setJoinedClanToNow(player);
         plugin.getVault().withdrawPlayer(player, cost);
-        player.sendMessage(TextUtil.convertColor("&3You have successfully created a clan!"));
+        player.sendMessage(TextUtil.convertColor("&4CLANS &8» &3You have successfully created a clan!"));
     }
 
     //PLAYER METHODS
@@ -275,7 +275,7 @@ public class ClanManager {
 
     public void setBanner(Player p) {
         if(!p.getInventory().getItemInMainHand().toString().toLowerCase().contains("banner")) {
-            p.sendMessage(TextUtil.convertColor("You must be holding a banner in your main hand."));
+            p.sendMessage(TextUtil.convertColor("&4CLANS &8» &cYou must be holding a banner in your main hand."));
             return;
         }
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." +
