@@ -367,7 +367,11 @@ public class ClanCommand extends CommandBase {
             }
             OfflinePlayer invited = Bukkit.getOfflinePlayer(args[1]);
             if(!invited.isOnline()) {
-                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease specify one player to invite."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease specify one online player to invite."));
+                return true;
+            }
+            if(plugin.getClanManager().isInClan(invited) && plugin.getClanManager().getClan(invited).equals(plugin.getClanManager().getClan(player))) {
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat player is already part of your clan."));
                 return true;
             }
             player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Invite sent to &7" + invited.getName() + "&3."));
@@ -383,6 +387,8 @@ public class ClanCommand extends CommandBase {
                 player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou are already in a clan! Leave to join another."));
                 return true;
             }
+            ChatColor color = plugin.getClanManager().getColor(args[1]);
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3You are now part of " + color + args[1] + "&3!"));
             plugin.getClanManager().addMember(player, args[1]);
         } //CONSOLE
         else if(args[0].equalsIgnoreCase("home")) {
