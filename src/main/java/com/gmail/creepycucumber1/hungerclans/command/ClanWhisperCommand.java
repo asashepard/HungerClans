@@ -14,7 +14,6 @@ public class ClanWhisperCommand extends CommandBase {
     public ClanWhisperCommand(HungerClans plugin) {
         super(plugin, "clanwhisper", "Message only members of your clan", "", "clanmessage", "cw", "cmsg", "ctell");
     }
-    private final List<String> blockedWords = Arrays.asList("nigger", "faggot", "nigga", "burn jews", " fag ");
 
     @Override
     public boolean execute(CommandSender sender, String[] args) {
@@ -49,6 +48,10 @@ public class ClanWhisperCommand extends CommandBase {
         for(int i = 0; i < args.length; i++)
             message += args[i] + " ";
         message = message.substring(0, message.length() - 1);
+        if(filter(message)) {
+            Bukkit.getLogger().info(player.getName() + "'s message was blocked: " + message);
+            message = "*******";
+        }
         message = TextUtil.convertColor("&3[Clan Chat] &b" + player.getName() + " &8» &f" + message);
         String clan = plugin.getClanManager().getClan(player);
 
@@ -69,7 +72,7 @@ public class ClanWhisperCommand extends CommandBase {
 
     private boolean filter(String msg){
         msg = " " + msg.toLowerCase() + " ";
-        for(String s : blockedWords){
+        for(String s : TextUtil.blockedWords){
             if(msg.toLowerCase().contains(s)){
                 return true;
             }

@@ -80,7 +80,7 @@ public class ClanDashboardGUI extends GUI {
     public ItemStack getSkull(String uuid) {
         ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
-        skullMeta.setOwningPlayer(player);
+        skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
         skullMeta.setDisplayName(TextUtil.convertColor("&2" + Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName() + " &7[" +
                 plugin.getClanManager().getRole(Bukkit.getOfflinePlayer(UUID.fromString(uuid))) + "]"));
         ArrayList<String> lore = new ArrayList<>();

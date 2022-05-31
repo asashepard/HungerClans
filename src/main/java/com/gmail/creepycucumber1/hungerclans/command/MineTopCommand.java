@@ -27,16 +27,17 @@ public class MineTopCommand extends CommandBase {
         }
         Player player = (Player) sender;
 
-        HashMap<Integer, String> map = new HashMap<>(); //time played, player name
-        int mined;
+        HashMap<Double, String> map = new HashMap<>(); //time played, player name
+        double mined;
         long total = 0;
         for(String uuidString : plugin.getDataManager().getConfig().getConfigurationSection("players").getKeys(false)) {
             OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(uuidString));
             mined = plugin.getPlayerManager().getBlocksMined(player);
-            map.put(mined, p.getName());
             total += mined;
+            while(map.containsKey(mined)) mined += Math.random();
+            map.put(mined, p.getName());
         }
-        ArrayList<Integer> list = new ArrayList<>(map.keySet());
+        ArrayList<Double> list = new ArrayList<>(map.keySet());
         Collections.sort(list);
         Collections.reverse(list);
 
@@ -46,7 +47,7 @@ public class MineTopCommand extends CommandBase {
                 page = Math.abs(Integer.parseInt(args[0]));
             } catch (NumberFormatException ignored) {}
         if(page > ((list.size() - 1) / 10) + 1) {
-            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThere aren't yet " + page + " pages of this " +
+            player.sendMessage(TextUtil.convertColor("&cThere aren't yet " + page + " pages of this " +
                     (((list.size() - 1) / 10) + 1) + "-page leaderboard!"));
             return true;
         }
@@ -59,7 +60,7 @@ public class MineTopCommand extends CommandBase {
         if(page == 1) player.sendMessage(TextUtil.convertColor("&7&oServer total: " + d.format(total) + " blocks"));
         for(int i = index; i < index + 10; i++) {
             if(i > list.size() - 1) return true;
-            player.sendMessage(TextUtil.convertColor("&a" + (i + 1) + ". &7" + map.get(list.get(i)) + "&8 - &f" + d.format(list.get(i)) + " blocks"));
+            player.sendMessage(TextUtil.convertColor("&a" + (i + 1) + ". &7" + map.get(list.get(i)) + "&8 - &f" + d.format((int) Math.floor(list.get(i))) + " blocks"));
         }
 
         return true;

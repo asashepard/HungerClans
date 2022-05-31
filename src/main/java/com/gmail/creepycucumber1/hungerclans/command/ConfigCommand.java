@@ -79,7 +79,7 @@ public class ConfigCommand extends CommandBase {
         }
         for(String str : bOptions) {
             boolean value = plugin.getConfigManager().getConfig().getBoolean("boolean." + str);
-            b += ChatColor.WHITE + " " + str + ": " + (value ? ChatColor.DARK_GREEN + "true" : ChatColor.DARK_RED + "false");
+            b += ChatColor.WHITE + " " + str + ": " + (value ? ChatColor.DARK_GREEN + "true" : ChatColor.DARK_RED + "false") + "\n";
         }
         sender.sendMessage(i);
         sender.sendMessage(b);

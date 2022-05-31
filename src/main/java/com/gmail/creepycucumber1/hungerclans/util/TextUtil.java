@@ -11,10 +11,19 @@ import net.md_5.bungee.api.ChatColor;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 
 public class TextUtil {
+
+    public static final List<String> blockedWords = Arrays.asList("nigger", "faggot", "nigga", "burn jews", "fag", " anal", " anus", " arse", " ass ",
+            "ballsack", "balls", "bastard", "bitch ", "biatch", "blowjob", "blow job", "boner", "boob", "bugger", "bum", "butt", "buttplug", "clitoris",
+            "cock", "coon", "crap", "cunt", "damn", "dick", "dildo", "dyke", "feck", "fellate", "fellatio", "felching", "fuck", "f u c k",
+            "fudgepacker", "fudge packer", "flange", "goddamn", "hell", "homo", "jerk", "jizz", "knobend", "knob end", "labia", "lmfao",
+            "muff", "penis", "piss", "poop", "prick", "pube", "pussy", "queer", "scrotum", "sex", "shit", "s hit", "sh1t", "slut", "smegma",
+            "spunk", "tit", "tosser", "turd", "twat", "vagina", "wank", "whore", "wtf");
+
     public static String convertColor(String s){
         return ChatColor.translateAlternateColorCodes('&', s);
     }

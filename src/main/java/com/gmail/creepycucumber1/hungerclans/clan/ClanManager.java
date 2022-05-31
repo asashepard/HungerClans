@@ -3,10 +3,7 @@ package com.gmail.creepycucumber1.hungerclans.clan;
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
 import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemFlag;
@@ -54,10 +51,12 @@ public class ClanManager {
             player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cA clan name must only have letters and spaces!"));
             return;
         }
-        List<String> bannedNames = List.of("join", "leave", "gabe", "hayes", "xarkenz", "longbread", "nigg", "fag",
-                "cunt", "burn jews", "fuck", "shit", "clan", "amogus");
+        List<String> bannedNames = new ArrayList<>(List.of("join", "leave", "gabe", "hayes", "xarkenz", "longbread", "nigg", "fag",
+                "cunt", "burn jews", "fuck", "shit", "clan", "amogus"));
+        bannedNames.addAll(TextUtil.blockedWords);
         for(String str : bannedNames)
             if(clanName.toLowerCase().contains(str)) {
+                Bukkit.getLogger().info(player.getName() + "'s clan name blocked: " + clanName);
                 player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease think of something more creative, you swine."));
                 return;
             }
