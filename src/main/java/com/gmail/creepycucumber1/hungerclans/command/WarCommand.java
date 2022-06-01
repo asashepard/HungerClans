@@ -19,6 +19,10 @@ public class WarCommand extends CommandBase {
             return true;
         }
         Player player = (Player) sender;
+        if(!plugin.getConfigManager().getConfig().getBoolean("boolean.wars")) {
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cWars are not enabled."));
+            return true;
+        }
 
         if(args.length == 0) {
             if(!plugin.getClanManager().isInClan(player)) {
