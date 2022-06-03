@@ -1,10 +1,10 @@
 package com.gmail.creepycucumber1.hungerclans.discord;
 
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
+import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import github.scarsz.discordsrv.api.Subscribe;
 import github.scarsz.discordsrv.api.events.DiscordReadyEvent;
 import github.scarsz.discordsrv.dependencies.jda.api.JDA;
-import github.scarsz.discordsrv.dependencies.jda.api.Permission;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.Guild;
 import github.scarsz.discordsrv.dependencies.jda.api.entities.Member;
 import github.scarsz.discordsrv.util.DiscordUtil;
@@ -13,9 +13,7 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.awt.*;
 
 public class DiscordManager implements Listener {
 
@@ -103,28 +101,11 @@ public class DiscordManager implements Listener {
             if(guild.getRolesByName(role, true).isEmpty()) { //no Discord role exists for clan
                 Bukkit.getLogger().info("Clan Discord role " + role + " does not exist. Creating...");
 
-                guild.createRole().setName(role).queue();
+                Color color = Color.getHSBColor(
+                        (int) (Math.random() * 360), (int) (Math.random() * 50) + 50, (int) (Math.random() * 50) + 50
+                );
+                guild.createRole().setName(role).setColor(color).queue();
 
-                //make text channel
-                List<Permission> goodPermissions = Arrays.asList(Permission.VIEW_CHANNEL, Permission.CREATE_INSTANT_INVITE,
-                        Permission.MESSAGE_TTS, Permission.USE_PUBLIC_THREADS, Permission.MESSAGE_EMBED_LINKS,
-                        Permission.MESSAGE_ATTACH_FILES, Permission.MESSAGE_ADD_REACTION, Permission.MESSAGE_EXT_EMOJI,
-                        Permission.MESSAGE_EXT_STICKER, Permission.MESSAGE_HISTORY, Permission.MESSAGE_WRITE);
-                List<Permission> badPermissions = Arrays.asList(Permission.MANAGE_PERMISSIONS, Permission.MANAGE_CHANNEL,
-                        Permission.MANAGE_WEBHOOKS, Permission.MANAGE_THREADS, Permission.USE_PRIVATE_THREADS,
-                        Permission.MESSAGE_MENTION_EVERYONE, Permission.MANAGE_EMOTES, Permission.MANAGE_SERVER,
-                        Permission.USE_SLASH_COMMANDS, Permission.BAN_MEMBERS, Permission.KICK_MEMBERS);
-                List<Permission> allPermissions = new ArrayList<>(goodPermissions);
-                allPermissions.addAll(badPermissions);
-
-                Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
-                    long roleID = guild.getRolesByName(role, true).get(0).getIdLong();
-                    long everyoneRoleID = Long.parseLong(plugin.getConfigManager().getConfig().getString("discord.everyoneID"));
-                    guild.createTextChannel(role.substring(5)).setParent(guild.getCategoriesByName("clans", true).get(0))
-                            .addRolePermissionOverride(roleID, goodPermissions, badPermissions)
-                            .addRolePermissionOverride(everyoneRoleID, List.of(), allPermissions).queue();
-
-                }, 40);
             }
 
             String discordID = plugin.getPlayerManager().getDiscordID(p);

@@ -4,20 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66c48feb-92b1-464f-a3b7-a52576bd5b4c" name="Changes" comment="discord roles permissions">
+    <list default="true" id="66c48feb-92b1-464f-a3b7-a52576bd5b4c" name="Changes" comment="add text channel creation">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/discord/DiscordManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/discord/DiscordManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT-shaded.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/HungerClans.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/HungerClans.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/clan/ClanManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/clan/ClanManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/clan/PlayerManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/clan/PlayerManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/ClanCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/ClanCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/ConfigCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/ConfigCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/event/EventManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/event/EventManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/original-HungerClans-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-HungerClans-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/util/ColorUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/util/ColorUtil.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -155,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654217368641</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="add text channel creation">
+      <created>1654229289329</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1654229289329</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -182,6 +179,7 @@
     <MESSAGE value="war config option" />
     <MESSAGE value="chat conformity" />
     <MESSAGE value="discord roles permissions" />
-    <option name="LAST_COMMIT_MESSAGE" value="discord roles permissions" />
+    <MESSAGE value="add text channel creation" />
+    <option name="LAST_COMMIT_MESSAGE" value="add text channel creation" />
   </component>
 </project>

@@ -11,6 +11,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
+import java.awt.*;
+
 public class ColorUtil {
     public static String colorToString(ChatColor color) {
         if (color == ChatColor.GRAY) return null;
@@ -72,6 +74,37 @@ public class ColorUtil {
             return new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
         }
         return new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
+    }
+
+    public static Color toAwtColor(ChatColor color) {
+        if (ChatColor.DARK_GRAY.equals(color)) {
+            return Color.DARK_GRAY;
+        } else if (ChatColor.AQUA.equals(color)) {
+            return Color.CYAN;
+        } else if (ChatColor.LIGHT_PURPLE.equals(color)) {
+            return Color.MAGENTA;
+        } else if (ChatColor.GOLD.equals(color)) {
+            return Color.ORANGE;
+        } else if (ChatColor.YELLOW.equals(color)) {
+            return Color.YELLOW;
+        } else if (ChatColor.WHITE.equals(color)) {
+            return Color.WHITE;
+        } else if (ChatColor.DARK_AQUA.equals(color)) {
+            return Color.getHSBColor(192, 100, 46);
+        } else if (ChatColor.DARK_PURPLE.equals(color)) {
+            return Color.getHSBColor(295, 100, 46);
+        } else if (ChatColor.BLUE.equals(color)) {
+            return Color.BLUE;
+        } else if (ChatColor.DARK_GREEN.equals(color)) {
+            return Color.getHSBColor(115, 100, 51);
+        } else if (ChatColor.GREEN.equals(color)) {
+            return Color.GREEN;
+        } else if (ChatColor.RED.equals(color)) {
+            return Color.RED;
+        } else if (ChatColor.BLACK.equals(color)) {
+            return Color.BLACK;
+        }
+        return Color.GRAY;
     }
 
     public static String colorToStringCode(ChatColor color){
