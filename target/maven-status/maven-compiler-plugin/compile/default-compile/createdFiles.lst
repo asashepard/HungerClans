@@ -1,5 +1,6 @@
 com\gmail\creepycucumber1\hungerclans\clan\PlayerManager.class
 com\gmail\creepycucumber1\hungerclans\command\ClanCommand.class
+com\gmail\creepycucumber1\hungerclans\discord\JDAListener.class
 com\gmail\creepycucumber1\hungerclans\util\ColorUtil.class
 com\gmail\creepycucumber1\hungerclans\event\EventManager.class
 com\gmail\creepycucumber1\hungerclans\gui\GUI.class
@@ -12,6 +13,7 @@ com\gmail\creepycucumber1\hungerclans\clan\ClanManager.class
 com\gmail\creepycucumber1\hungerclans\gui\AllClansGUI.class
 com\gmail\creepycucumber1\hungerclans\gui\PlayerGUI.class
 com\gmail\creepycucumber1\hungerclans\runnable\GeneralMonitor$2.class
+com\gmail\creepycucumber1\hungerclans\command\LinkDiscordCommand.class
 com\gmail\creepycucumber1\hungerclans\clan\WarManager.class
 com\gmail\creepycucumber1\hungerclans\gui\ClanDashboardGUI.class
 com\gmail\creepycucumber1\hungerclans\runnable\Teleport.class
@@ -32,6 +34,7 @@ com\gmail\creepycucumber1\hungerclans\runnable\Teleport$1.class
 com\gmail\creepycucumber1\hungerclans\gui\OtherClanGUI.class
 com\gmail\creepycucumber1\hungerclans\command\ConfigCommand.class
 com\gmail\creepycucumber1\hungerclans\command\ClanWhisperCommand.class
+com\gmail\creepycucumber1\hungerclans\discord\DiscordManager.class
 com\gmail\creepycucumber1\hungerclans\gui\GUIItem.class
 com\gmail\creepycucumber1\hungerclans\HungerClans.class
 com\gmail\creepycucumber1\hungerclans\command\SurrenderCommand.class
