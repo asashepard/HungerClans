@@ -18,8 +18,11 @@ public class ClanManager {
 
     private HungerClans plugin;
 
+    private ArrayList<String> clansThisStartup;
+
     public ClanManager(HungerClans plugin) {
         this.plugin = plugin;
+        clansThisStartup = new ArrayList<>(getClanList());
     }
 
     public void createNewClan(Player player, String clanName) {
@@ -52,7 +55,7 @@ public class ClanManager {
             return;
         }
         List<String> bannedNames = new ArrayList<>(List.of("join", "leave", "gabe", "hayes", "xarkenz", "longbread", "nigg", "fag",
-                "cunt", "burn jews", "fuck", "shit", "clan", "amogus"));
+                "cunt", "burn jews", "fuck", "shit", "clan", "none", "amogus"));
         bannedNames.addAll(TextUtil.blockedWords);
         for(String str : bannedNames)
             if(clanName.toLowerCase().contains(str)) {
@@ -62,6 +65,7 @@ public class ClanManager {
             }
 
         plugin.getDataManager().getConfig().createSection("clans." + clanName);
+        clansThisStartup.add(clanName);
 
         //create map with info and add to data file section
         //clan code
@@ -69,7 +73,7 @@ public class ClanManager {
         //clan color
         List<ChatColor> COLORS = List.of(ChatColor.DARK_GRAY, ChatColor.GREEN, ChatColor.YELLOW, ChatColor.AQUA,
                 ChatColor.LIGHT_PURPLE, ChatColor.GOLD, ChatColor.BLUE, ChatColor.DARK_GREEN, ChatColor.RED);
-        String clanColor = ColorUtil.colorToString(COLORS.get((int) (Math.random() * COLORS.size() + 1)));
+        String clanColor = ColorUtil.colorToString(COLORS.get((int) (Math.random() * COLORS.size())));
         //clan motto
         String motto = "";
         //roles
@@ -112,6 +116,7 @@ public class ClanManager {
         plugin.getPlayerManager().setJoinedClanToNow(player);
         plugin.getVault().withdrawPlayer(player, cost);
         player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3You have successfully created a clan!"));
+        plugin.getDiscordManager().updateUserRoles(player);
     }
 
     //PLAYER METHODS
@@ -128,13 +133,13 @@ public class ClanManager {
     }
 
     public String getClan(OfflinePlayer player) {
-        if(!isInClan(player)) return null;
+        if(!isInClan(player)) return "none";
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
         for(String str : cfg.getKeys(false))
             for(String uuid : (ArrayList<String>) plugin.getDataManager().getConfig().get("clans." + str + ".members"))
                 if(uuid.equals(player.getUniqueId().toString()))
                     return str;
-        return null;
+        return "none";
     }
 
     public String getRole(OfflinePlayer player) {
@@ -163,6 +168,7 @@ public class ClanManager {
 
         cfg.set(clanName + ".members", members);
         plugin.getDataManager().saveConfig();
+        plugin.getDiscordManager().updateUserRoles(player);
     }
 
     public void addRole(OfflinePlayer player, String role) {
@@ -196,6 +202,7 @@ public class ClanManager {
             cfg.set(clanName + ".members", members);
         }
         plugin.getDataManager().saveConfig();
+        plugin.getDiscordManager().updateUserRoles(player);
     }
 
     //CLAN AND OTHER METHODS
@@ -203,6 +210,10 @@ public class ClanManager {
     public ArrayList<String> getClanList() {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
         return new ArrayList<>(cfg.getKeys(false));
+    }
+
+    public ArrayList<String> getClansThisStartup() {
+        return clansThisStartup;
     }
 
     public ChatColor getColor(String clanName) {

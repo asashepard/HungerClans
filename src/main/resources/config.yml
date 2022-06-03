@@ -34,4 +34,5 @@ boolean:
   antiCombatLogPlus: false
   nametags: true
   dailyReward: true
-
+discord:
+  guildID: '691398262501933116'

@@ -42,6 +42,8 @@ public class EventManager implements Listener {
             player.setHealth(0.0D);
             plugin.getPlayerManager().setCombatLogged(player,false);
         }
+
+        plugin.getDiscordManager().updateUserRoles(player);
     }
 
     @EventHandler

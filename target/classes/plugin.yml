@@ -5,7 +5,7 @@ api-version: 1.18
 authors: [longbread, ItsGJK]
 description: HungerClans Core
 depend: [NametagEdit, Vault, LuckPerms]
-softdepend: [Essentials]
+softdepend: [Essentials, DiscordSRV]
 commands:
   clan:
     description: Manage clans
@@ -32,3 +32,5 @@ commands:
     description: Get a leaderboard of the players on the server with the most blocks mined
   placetop:
     description: Get a leaderboard of the players on the server with the most blocks placed
+  linkdiscord:
+    description: Link a discord account

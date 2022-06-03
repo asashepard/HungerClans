@@ -44,6 +44,7 @@ public class PlayerManager {
         map.put("updatedTimeAt", Instant.now().toEpochMilli());
         map.put("receivedReward", false);
         map.put("combatLogged", false);
+        map.put("discordID", "none");
 
         plugin.getDataManager().getConfig().createSection("players." + uuid, map);
         plugin.getDataManager().saveConfig();
@@ -139,6 +140,12 @@ public class PlayerManager {
         plugin.getDataManager().saveConfig();
     }
 
+    public void setDiscordID(OfflinePlayer player, String discordID) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        cfg.set("discordID", discordID);
+        plugin.getDataManager().saveConfig();
+    }
+
     //getter
     public long getLastDamagedByEnemy(OfflinePlayer player) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
@@ -193,6 +200,11 @@ public class PlayerManager {
     public boolean getCombatLogged(OfflinePlayer player) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
         return cfg.getBoolean("combatLogged");
+    }
+
+    public String getDiscordID(OfflinePlayer player) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("players." + player.getUniqueId().toString());
+        return cfg.getString("discordID");
     }
 
 }

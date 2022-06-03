@@ -32,6 +32,10 @@ public class ConfigCommand extends CommandBase {
             sendConfigHelp(sender);
             return true;
         }
+        if(args[0].equalsIgnoreCase("reload") && sender.hasPermission("huncerclans.staff")) {
+            sender.sendMessage("Reloading HungerClans config...");
+            plugin.getConfigManager().reloadConfig();
+        }
         else if(args.length != 2) {
             sender.sendMessage("Usage: /clanconfig [option] [value]");
             return true;

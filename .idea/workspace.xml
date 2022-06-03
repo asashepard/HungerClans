@@ -4,10 +4,69 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66c48feb-92b1-464f-a3b7-a52576bd5b4c" name="Changes" comment="war config option">
+    <list default="true" id="66c48feb-92b1-464f-a3b7-a52576bd5b4c" name="Changes" comment="chat conformity">
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_discordsrv_discordsrv_1_25_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_alexheretic_dynamics_4_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_alexheretic_fluent_2_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_kevinsawicki_http_request_6_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_github_zafarkhaja_java_semver_0_9_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_neovisionaries_nv_websocket_client_2_14.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_squareup_okhttp3_okhttp_3_13_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_squareup_okio_okio_1_17_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_vdurmont_emoji_java_5_1_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_11.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_8_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__dev_vankka_MCDiscordReserializer_4_2_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__dev_vankka_SimpleAST_2_2_7.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__github_scarsz_configuralize_1_3_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__me_scarsz_jdaappender_1_0_SNAPSHOT.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_dv8tion_JDA_4_3_0_349.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_nbt_4_9_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_platform_api_4_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_platform_bukkit_4_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_platform_facet_4_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_platform_viaversion_4_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_bungeecord_4_0_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_kyori_adventure_text_serializer_gson_legacy_impl_4_9_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_trove4j_trove4j_3_0_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_collections4_4_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_5.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bstats_bstats_base_2_2_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_bstats_bstats_bukkit_2_2_1.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_json_json_20170516.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_minidns_minidns_client_1_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_minidns_minidns_core_1_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_minidns_minidns_dnssec_1_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_minidns_minidns_hla_1_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_minidns_minidns_iterative_resolver_1_0_0.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_25.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_jdk14_1_7_25.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_5_2_7_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_5_2_7_RELEASE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/LinkDiscordCommand.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/discord/DiscordManager.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/discord/JDAListener.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__io_papermc_paper_paper_api_1_18_2_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__io_papermc_paper_paper_api_1_18_2_R0_1_SNAPSHOT.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_18_2_R0_1_SNAPSHOT.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_spigotmc_spigot_api_1_18_2_R0_1_SNAPSHOT.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/HungerClans.iml" beforeDir="false" afterPath="$PROJECT_DIR$/HungerClans.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/HungerClans.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/HungerClans.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/clan/ClanManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/clan/ClanManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/clan/PlayerManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/clan/PlayerManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/ClanCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/ClanCommand.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/ConfigCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/ConfigCommand.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/event/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/event/EventManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/WarCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/WarCommand.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT-shaded.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/config.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/config.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/plugin.yml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/plugin.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/original-HungerClans-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-HungerClans-1.0-SNAPSHOT.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -131,7 +190,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654062215795</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="chat conformity">
+      <created>1654191146003</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1654191146003</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -156,6 +222,7 @@
     <MESSAGE value="leaderboards + banned words" />
     <MESSAGE value="invite fixes" />
     <MESSAGE value="war config option" />
-    <option name="LAST_COMMIT_MESSAGE" value="war config option" />
+    <MESSAGE value="chat conformity" />
+    <option name="LAST_COMMIT_MESSAGE" value="chat conformity" />
   </component>
 </project>

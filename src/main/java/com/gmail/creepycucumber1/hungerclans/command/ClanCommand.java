@@ -48,8 +48,8 @@ public class ClanCommand extends CommandBase {
             if(inClan)
                 plugin.getGUIManager().openGUI(player, new ClanDashboardGUI(plugin, player));
             else
-                sendClickableCommand(player, TextUtil.convertColor("&4&lCLANS &8» &cYou are NOT in a clan, so you don't have a dashboard to view." +
-                        " Use &o/c create [clan name] &r&cto make one or use &o/c help &r&cto view commands!"), "/c help", "Clans Help");
+                sendClickableCommand(player, TextUtil.convertColor("&4&lCLANS &8» &cYou are not in a clan, so you don't have a dashboard to view." +
+                        " Use &o/c create [clan name] &r&cto make one or use &o/c help &r&cto view commands."), "/c help", "Clans Help");
 
         }
         else if(args[0].equalsIgnoreCase("help")) {
@@ -298,6 +298,7 @@ public class ClanCommand extends CommandBase {
             if(p.isOnline())
                 p.getPlayer().sendMessage(TextUtil.convertColor("&4&lCLANS &8» &4You have been kicked from &l" +
                         color + clanName + "&r&4 by &7" + player.getName() + "&4."));
+            plugin.getDiscordManager().updateUserRoles(p);
         } //higher role
         else if(args[0].equalsIgnoreCase("leave")) {
             if(!inClan) {
@@ -322,6 +323,7 @@ public class ClanCommand extends CommandBase {
                     plugin.getClanManager().removeRole(player, "member");
                 }
                 plugin.getPlayerManager().removeJoinedClan(player);
+                plugin.getDiscordManager().updateUserRoles(player);
                 return true;
             }
 

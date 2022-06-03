@@ -8,10 +8,12 @@ import com.gmail.creepycucumber1.hungerclans.data.ConfigManager;
 import com.gmail.creepycucumber1.hungerclans.data.DataManager;
 import com.gmail.creepycucumber1.hungerclans.event.EventManager;
 import com.gmail.creepycucumber1.hungerclans.gui.GUIManager;
+import com.gmail.creepycucumber1.hungerclans.discord.DiscordManager;
 import com.gmail.creepycucumber1.hungerclans.runnable.NametagManager;
 import com.gmail.creepycucumber1.hungerclans.runnable.Teleport;
 import com.gmail.creepycucumber1.hungerclans.runnable.GeneralMonitor;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
+import github.scarsz.discordsrv.DiscordSRV;
 import net.ess3.api.IEssentials;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
@@ -41,16 +43,17 @@ public final class HungerClans extends JavaPlugin {
     private NametagManager nametagManager;
     private GeneralMonitor generalMonitor;
     private Teleport teleport;
+    private DiscordManager discordManager;
 
     @Override
     public void onEnable() {
         // Plugin startup logic
 
-        clanManager = new ClanManager(this);
-        warManager = new WarManager(this);
-        playerManager = new PlayerManager(this);
         dataManager = new DataManager(this);
         configManager = new ConfigManager(this);
+        clanManager = new ClanManager(this);
+        playerManager = new PlayerManager(this);
+        warManager = new WarManager(this);
         guiManager = new GUIManager(this);
 
         nametagManager = new NametagManager(this);
@@ -60,6 +63,9 @@ public final class HungerClans extends JavaPlugin {
         nametagManager.nametag();
         generalMonitor.monitorWars();
         generalMonitor.monitorPlayers();
+
+        this.discordManager = new DiscordManager(this);
+        DiscordSRV.api.subscribe(discordManager);
 
         commands = new ArrayList<>(registerCommands());
 
@@ -91,6 +97,7 @@ public final class HungerClans extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        DiscordSRV.api.unsubscribe(discordManager);
         getLogger().info("HungerClans has been disabled.");
     }
 
@@ -100,7 +107,7 @@ public final class HungerClans extends JavaPlugin {
             if(c.getCommand().equalsIgnoreCase(label) || (c.getAliases() != null && c.getAliases().contains(label))) {
                 boolean result = c.execute(sender, args);
                 if(!result)
-                    sender.sendMessage(TextUtil.convertColor("&4CLANS &8» &cInvalid command usage!\n&7/" + label + " " + c.getUsage()));
+                    sender.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cInvalid command usage!\n&7/" + label + " " + c.getUsage()));
             }
 
         return true;
@@ -116,6 +123,7 @@ public final class HungerClans extends JavaPlugin {
         commands.add(new TimeTopCommand(this));
         commands.add(new MineTopCommand(this));
         commands.add(new PlaceTopCommand(this));
+        commands.add(new LinkDiscordCommand(this));
         return commands;
     }
 
@@ -152,6 +160,9 @@ public final class HungerClans extends JavaPlugin {
     }
     public ConfigManager getConfigManager() {
         return configManager;
+    }
+    public DiscordManager getDiscordManager() {
+        return discordManager;
     }
     public GUIManager getGUIManager() {
         return guiManager;
