@@ -33,6 +33,9 @@ Features:
   - Score System
   - Rewards through VaultAPI
 - Nametag configuration through NametagAPI
+- Discord integration with DiscordSRV API
+  - Link Discord account
+  - Automatic clan roles
 - Configuration options (see /src/main/resources/config.yml)
   - Configurable daily rewards
   - Configurable combat log detection and punishment
