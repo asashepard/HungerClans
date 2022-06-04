@@ -7,9 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class ClanWhisperCommand extends CommandBase {
     public ClanWhisperCommand(HungerClans plugin) {
         super(plugin, "clanwhisper", "Message only members of your clan", "", "clanmessage", "cw", "cmsg", "ctell");

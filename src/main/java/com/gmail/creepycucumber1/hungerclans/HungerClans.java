@@ -17,7 +17,6 @@ import github.scarsz.discordsrv.DiscordSRV;
 import net.ess3.api.IEssentials;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.ConfigurationSection;
@@ -27,7 +26,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.UUID;
 
 public final class HungerClans extends JavaPlugin {
 
@@ -90,8 +88,6 @@ public final class HungerClans extends JavaPlugin {
         PluginManager pm = Bukkit.getServer().getPluginManager();
         pm.registerEvents(new EventManager(this), this);
 
-        this.rewardClanMembers();
-
         getLogger().info("HungerClans has started.");
     }
 
@@ -125,19 +121,6 @@ public final class HungerClans extends JavaPlugin {
         commands.add(new PlaceTopCommand(this));
         commands.add(new LinkDiscordCommand(this));
         return commands;
-    }
-
-    private void rewardClanMembers() {
-        int day = Calendar.getInstance().getTime().getDay();
-        if(day % 3 != 0) return;
-        ConfigurationSection cfg = getDataManager().getConfig().getConfigurationSection("clans");
-        for(String clan : cfg.getKeys(false)) {
-            for(String uuid : cfg.getStringList(clan + ".members")) {
-                OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
-                getVault().depositPlayer(player, getClanManager().getPoints(clan));
-                getClanManager().addPoints(clan, (int) (Math.random() * 2.5 + 1));
-            }
-        }
     }
 
     public IEssentials getEssentials() {

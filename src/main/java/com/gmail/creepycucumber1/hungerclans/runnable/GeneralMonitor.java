@@ -1,14 +1,12 @@
 package com.gmail.creepycucumber1.hungerclans.runnable;
 
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
-import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.UUID;
@@ -71,6 +69,7 @@ public class GeneralMonitor {
                         plugin.getPlayerManager().resetTimePlayedToday(Bukkit.getOfflinePlayer(UUID.fromString(uuid)));
                         plugin.getPlayerManager().setReceivedReward(Bukkit.getOfflinePlayer(UUID.fromString(uuid)), false);
                     }
+                    rewardClanMembers();
                     Bukkit.getLogger().info("Daily playtime reset.");
                 }
 
@@ -127,6 +126,14 @@ public class GeneralMonitor {
 
     private void addPermission(Player p, String permission) {
         plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "lp user " + p.getName() + " permission set " + permission + " true");
+    }
+
+    private void rewardClanMembers() {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
+        for(String clan : cfg.getKeys(false)) {
+            int members = cfg.getStringList(clan + ".members").size();
+            plugin.getClanManager().addPoints(clan, (int) (Math.random() * (1.7 * members) + 10));
+        }
     }
 
 }

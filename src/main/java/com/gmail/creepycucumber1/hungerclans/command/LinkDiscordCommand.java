@@ -2,7 +2,6 @@ package com.gmail.creepycucumber1.hungerclans.command;
 
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
-import github.scarsz.discordsrv.dependencies.jda.api.entities.User;
 import github.scarsz.discordsrv.util.DiscordUtil;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
@@ -34,17 +33,17 @@ public class LinkDiscordCommand extends CommandBase {
         }
 
         if(player.hasPermission("hungercore.staff") && args.length > 0) {
-            if(args[0].equalsIgnoreCase("edit")) {
+            if(args[0].equalsIgnoreCase("update")) {
                 if(args.length == 3) {
                     OfflinePlayer p = Bukkit.getOfflinePlayer(args[1]);
                     plugin.getPlayerManager().setDiscordID(p, args[2]);
-                    player.sendMessage("Change made.");
+                    player.sendMessage("Change made for " + p.getName() + " -> " + args[2] + ". Roles re-evaluated.");
                     plugin.getDiscordManager().updateUserRoles(p);
                     return true;
                 }
                 else if(args.length == 2) {
                     OfflinePlayer p = Bukkit.getOfflinePlayer(args[1]);
-                    player.sendMessage("Roles updated.");
+                    player.sendMessage("Roles re-evaluated for " + p.getName() + ".");
                     plugin.getDiscordManager().updateUserRoles(p);
                     return true;
                 }
@@ -53,12 +52,29 @@ public class LinkDiscordCommand extends CommandBase {
                     return true;
                 }
             }
+            else if(args[0].equalsIgnoreCase("check")) {
+                if(args.length == 2) {
+                    OfflinePlayer p = Bukkit.getOfflinePlayer(args[1]);
+                    String tag = "no account";
+                    try {
+                        tag = DiscordUtil.getJda().getUserById(plugin.getPlayerManager().getDiscordID(p)).getAsTag();
+                    } catch (Exception e) {
+                        Bukkit.getLogger().info("Error in HungerClans:linkDiscord | param = 'check'");
+                        tag += " *error*";
+                    }
+                    player.sendMessage("Player " + p.getName() + " is linked to " + tag + ".");
+                }
+            }
+        }
+        if(args[0].equalsIgnoreCase("refresh")) {
+            plugin.getDiscordManager().updateUserRoles(player);
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Your discord linkage has been re-evaluated."));
         }
 
         if(!(plugin.getPlayerManager().getDiscordID(player).equals("none"))) { //already linked account
             player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou already have linked the discord account " +
                     plugin.getPlayerManager().getDiscordID(player) +
-                    ". Contact an administrator if there is an issue."));
+                    ". Contact an administrator if you believe this to be an error."));
             return true;
         }
 
@@ -72,20 +88,23 @@ public class LinkDiscordCommand extends CommandBase {
         try {
             discordID = DiscordUtil.getJda().getUserByTag(tag).getIdLong();
         } catch (Exception exception) {
-            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat discord tag was not recognized. Is the account in the server?"));
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat discord tag was not recognized. Has the account joined the server? " +
+                    "Join at discord.hungermc.com."));
             return true;
         }
 
         for(OfflinePlayer op : Bukkit.getOfflinePlayers()) {
             String otherDiscordID = plugin.getPlayerManager().getDiscordID(op);
             if(String.valueOf(discordID).equals(otherDiscordID)) {
-                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cAnother player has already linked to that discord account."));
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cAnother player, " + op.getName() + ", has already linked to " +
+                        "that discord account. Contact a staff member if you believe this to be an error."));
                 return true;
             }
         }
 
         sendClickableCommand(player,
-                TextUtil.convertColor("&4&lCLANS &8» &3Click here to confirm account link with " + tag + "."),
+                TextUtil.convertColor("&4&lCLANS &8» &3Click here to confirm permanent account link with " + tag + ". " +
+                        "Linking to an account that is not yours may require staff action."),
                 "/linkdiscord " + tag + " confirm",
                 "Confirm (Irreversible)");
 

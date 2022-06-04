@@ -5,6 +5,7 @@ import com.gmail.creepycucumber1.hungerclans.util.ItemUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
@@ -40,12 +41,13 @@ public class PlayerGUI extends GUI {
 
     }
 
-    public ItemStack getSkull(String uuid) {
+    private ItemStack getSkull(String uuid) {
         ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
+        OfflinePlayer skullOwner = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
-        skullMeta.setOwningPlayer(player);
-        skullMeta.setDisplayName(TextUtil.convertColor("&2" + Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName() + " &7[" +
-                plugin.getClanManager().getRole(Bukkit.getOfflinePlayer(UUID.fromString(uuid))) + "]"));
+        skullMeta.setOwningPlayer(skullOwner);
+        skullMeta.setDisplayName(TextUtil.convertColor("&2" + skullOwner.getName() + " &7[" +
+                plugin.getClanManager().getRole(skullOwner) + "]"));
         skull.setItemMeta(skullMeta);
         return skull;
     }

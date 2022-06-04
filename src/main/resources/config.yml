@@ -17,13 +17,13 @@ integer:
   totemScore: 9
   combatLogScore: 3
   combatLogRandom: 9
-  # daily reward
+  # rewards
   dailyRewardMinutes: 15
   dailyReward: 250
   # combat log timer
   combatLogSeconds: 15
 boolean:
-  clans: false
+  clans: true
   wars: false
   allowClanChat: true
   allowDeclareWar: true
@@ -36,4 +36,5 @@ boolean:
   dailyReward: true
 discord:
   guildID: '691398262501933116'
-  everyoneID: '788188623798665217'
+time:
+  day: -1

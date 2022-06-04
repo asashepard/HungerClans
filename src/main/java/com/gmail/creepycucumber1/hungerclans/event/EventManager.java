@@ -15,6 +15,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -44,6 +45,11 @@ public class EventManager implements Listener {
         }
 
         plugin.getDiscordManager().updateUserRoles(player);
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent e) {
+        plugin.getGUIManager().onLeave(e.getPlayer());
     }
 
     @EventHandler
@@ -82,7 +88,7 @@ public class EventManager implements Listener {
         ArrayList<String> wars = plugin.getWarManager().getWars(clanName);
         for(String war : wars) {
             String opposition = plugin.getWarManager().getOpposition(war, clanName);
-            plugin.getWarManager().addPoints(war, opposition, plugin.getConfigManager().getConfig().getInt("integer.deathScore"));
+            plugin.getWarManager().addScore(war, opposition, plugin.getConfigManager().getConfig().getInt("integer.deathScore"));
         }
         if(player.getKiller() == null) return;
         Player killer = player.getKiller();
@@ -90,7 +96,7 @@ public class EventManager implements Listener {
         for(String war : wars) {
             String opposition = plugin.getWarManager().getOpposition(war, clanName);
             if(plugin.getClanManager().getClan(killer).equalsIgnoreCase(opposition)) {
-                plugin.getWarManager().addPoints(war, opposition,
+                plugin.getWarManager().addScore(war, opposition,
                         plugin.getConfigManager().getConfig().getInt("integer.killScore") - plugin.getConfigManager().getConfig().getInt("integer.deathScore"));
                 return;
             }
@@ -110,7 +116,7 @@ public class EventManager implements Listener {
         ArrayList<String> wars = plugin.getWarManager().getWars(clanName);
         for(String war : wars) {
             String opposition = plugin.getWarManager().getOpposition(war, clanName);
-            plugin.getWarManager().addPoints(war, opposition, plugin.getConfigManager().getConfig().getInt("integer.totemScore"));
+            plugin.getWarManager().addScore(war, opposition, plugin.getConfigManager().getConfig().getInt("integer.totemScore"));
         }
     }
 
@@ -151,7 +157,7 @@ public class EventManager implements Listener {
                 }
             }
             if(combatLogged)
-                plugin.getWarManager().addPoints(war, otherClanName,
+                plugin.getWarManager().addScore(war, otherClanName,
                         plugin.getConfigManager().getConfig().getInt("integer.combatLogScore") + (int) (Math.random() * plugin.getConfigManager().getConfig().getInt("integer.combatLogRandom") + 1));
         }
         if(combatLogged) {
@@ -211,6 +217,11 @@ public class EventManager implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlace(BlockPlaceEvent e) {
         plugin.getPlayerManager().addPlacedBlocks(e.getPlayer(), 1);
+    }
+
+    @EventHandler
+    public void onInventoryClose(InventoryCloseEvent e){
+        plugin.getGUIManager().onClose(Bukkit.getPlayer(e.getPlayer().getUniqueId()), e.getView());
     }
 
 }

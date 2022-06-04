@@ -71,12 +71,6 @@ public class WarManager {
         int difference = plugin.getClanManager().getPoints(winner) - plugin.getClanManager().getPoints(loser);
         int reward = plugin.getConfigManager().getConfig().getInt("integer.warReward");
 
-        if(winner.equalsIgnoreCase("draw")) {
-            plugin.getClanManager().addPoints(winner, 20);
-            plugin.getClanManager().addPoints(winner, 20);
-            return;
-        }
-
         String color = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(loser));
         // WON by time and points
         for(String uuid : plugin.getDataManager().getConfig().getConfigurationSection("clans." + winner).getStringList("members")) {
@@ -109,9 +103,6 @@ public class WarManager {
 
         int bonus = Math.abs(difference) / 50;
         int rand = (int) (Math.random() * 50 + 1);
-
-        plugin.getClanManager().addPoints(winner, (difference > 0 ? 150 + rand : 150 + rand + bonus));
-        plugin.getClanManager().removePoints(loser, (difference > 0 ? 45 - (rand / 2) : 20 - (rand / 4)));
 
         cfg.set(war, null);
         plugin.getDataManager().saveConfig();
@@ -157,14 +148,12 @@ public class WarManager {
                 }
             }
         }
-        int rand = (int) (Math.random() * 50 + 1);
-        plugin.getClanManager().addPoints(winner, 150 + rand);
 
         cfg.set(war, null);
         plugin.getDataManager().saveConfig();
     }
 
-    public void addPoints(String war, String side, int amount) {
+    public void addScore(String war, String side, int amount) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("wars." + war);
 
         if(isSide1(war, side))

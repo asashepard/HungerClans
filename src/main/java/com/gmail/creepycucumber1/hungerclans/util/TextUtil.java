@@ -9,10 +9,7 @@ package com.gmail.creepycucumber1.hungerclans.util;
 
 import net.md_5.bungee.api.ChatColor;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 
 public class TextUtil {

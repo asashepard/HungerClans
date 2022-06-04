@@ -321,12 +321,6 @@ public class ClanManager {
         plugin.getDataManager().saveConfig();
     }
 
-    public void removePoints(String clanName, int points) {
-        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
-        cfg.set("points", cfg.getInt("points") - points);
-        plugin.getDataManager().saveConfig();
-    }
-
     public void setHome(String clanName, Location location) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
         ArrayList<String> home = new ArrayList<>();

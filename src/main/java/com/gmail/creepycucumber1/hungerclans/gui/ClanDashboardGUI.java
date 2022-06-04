@@ -21,6 +21,7 @@ public class ClanDashboardGUI extends GUI {
         this.player = player;
         String clanName = plugin.getClanManager().getClan(player);
         ChatColor color = plugin.getClanManager().getColor(clanName);
+        ArrayList<String> members = plugin.getClanManager().getMembers(clanName);
         String colorCode = ColorUtil.colorToStringCode(color);
         String role = plugin.getClanManager().getRole(player);
 
@@ -34,7 +35,7 @@ public class ClanDashboardGUI extends GUI {
         banner.setItemMeta(bannerMeta);
         items[13] = new GUIItem(banner, "banner");
 
-        ItemStack viewInfo = ItemUtil.createItemStack(Material.PAPER, "&7Members: &f" + plugin.getClanManager().getMembers(clanName).size(),
+        ItemStack viewInfo = ItemUtil.createItemStack(Material.PAPER, "&7Members: &f" + members.size(),
                 "&7Points: &e" + plugin.getClanManager().getPoints(clanName),
                 "&7Color: " + color + ColorUtil.colorToString(color),
                 "&7Created: &f" + plugin.getClanManager().getCreated(clanName));
@@ -52,8 +53,8 @@ public class ClanDashboardGUI extends GUI {
         ItemStack viewClans = ItemUtil.createItemStack(Material.SPYGLASS, "&7View All Clans");
         items[16] = new GUIItem(viewClans, "clans");
 
-        for(int i = 0; i < plugin.getClanManager().getMembers(clanName).size(); i++) {
-            String uuid = plugin.getClanManager().getMembers(clanName).get(i);
+        for(int i = 0; i < members.size(); i++) {
+            String uuid = members.get(i);
             ItemStack skull = getSkull(uuid);
             int slot = 27 + i;
             items[slot] = new GUIItem(skull, uuid);
@@ -79,13 +80,24 @@ public class ClanDashboardGUI extends GUI {
 
     public ItemStack getSkull(String uuid) {
         ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
+        OfflinePlayer skullOwner = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
         SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
-        skullMeta.setOwningPlayer(Bukkit.getOfflinePlayer(uuid));
-        skullMeta.setDisplayName(TextUtil.convertColor("&2" + Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName() + " &7[" +
-                plugin.getClanManager().getRole(Bukkit.getOfflinePlayer(UUID.fromString(uuid))) + "]"));
+        skullMeta.setOwningPlayer(skullOwner);
+        skullMeta.setDisplayName(TextUtil.convertColor("&2" + skullOwner.getName() + " &7[" +
+                plugin.getClanManager().getRole(skullOwner) + "]"));
         ArrayList<String> lore = new ArrayList<>();
-        lore.add(TextUtil.convertColor("&7Joined: &f" + plugin.getPlayerManager().getJoinedClan(Bukkit.getOfflinePlayer(UUID.fromString(uuid)))));
+        lore.add(TextUtil.convertColor("&7Joined: &f" + plugin.getPlayerManager().getJoinedClan(skullOwner)));
         skullMeta.setLore(lore);
+        skull.setItemMeta(skullMeta);
+        return skull;
+    }
+
+    public ItemStack getSkull(OfflinePlayer player) {
+        ItemStack skull = new ItemStack(Material.PLAYER_HEAD, 1);
+        SkullMeta skullMeta = (SkullMeta) skull.getItemMeta();
+        skullMeta.setOwningPlayer(player);
+        skullMeta.setDisplayName(TextUtil.convertColor("&2" + player.getName() + " &7[" +
+                plugin.getClanManager().getRole(player) + "]"));
         skull.setItemMeta(skullMeta);
         return skull;
     }
