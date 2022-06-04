@@ -23,8 +23,8 @@ public class AllClansGUI extends GUI {
             String clanName = clansList.get(i);
             ItemStack banner = plugin.getClanManager().getBanner(clanName);
             ItemMeta bannerMeta = banner.getItemMeta();
-            bannerMeta.setDisplayName(TextUtil.convertColor(ColorUtil.colorToStringCode(plugin.getClanManager().getColor(clanName)) + "&l" + clanName +
-                    "&r" + ColorUtil.colorToStringCode(plugin.getClanManager().getColor(clanName)) +
+            bannerMeta.setDisplayName(TextUtil.convertColor(plugin.getClanManager().getColor(clanName) + "&l" + clanName +
+                    "&r" + plugin.getClanManager().getColor(clanName) +
                     " [" + plugin.getClanManager().getCode(clanName) + "]"));
             ArrayList<String> bannerLore = new ArrayList<>();
             bannerLore.add(TextUtil.convertColor("&7 - Points: &e" + plugin.getClanManager().getPoints(clanName)));

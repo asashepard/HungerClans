@@ -4,6 +4,7 @@ import com.gmail.creepycucumber1.hungerclans.HungerClans;
 import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.ItemUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -17,17 +18,16 @@ public class ClanDashboardGUI extends GUI {
     private Player player;
 
     public ClanDashboardGUI(HungerClans plugin, Player player) {
-        super(plugin, player.getUniqueId(), ColorUtil.colorToStringCode(plugin.getClanManager().getColor(plugin.getClanManager().getClan(player))) + "&lClan Dashboard", 4);
+        super(plugin, player.getUniqueId(), plugin.getClanManager().getColor(plugin.getClanManager().getClan(player)) + "&lClan Dashboard", 4);
         this.player = player;
         String clanName = plugin.getClanManager().getClan(player);
         ChatColor color = plugin.getClanManager().getColor(clanName);
         ArrayList<String> members = plugin.getClanManager().getMembers(clanName);
-        String colorCode = ColorUtil.colorToStringCode(color);
         String role = plugin.getClanManager().getRole(player);
 
         ItemStack banner = plugin.getClanManager().getBanner(clanName);
         ItemMeta bannerMeta = banner.getItemMeta();
-        bannerMeta.setDisplayName(TextUtil.convertColor(colorCode + "&l" + clanName + " &r" + colorCode + "[" + plugin.getClanManager().getCode(clanName) + "]"));
+        bannerMeta.setDisplayName(TextUtil.convertColor(color + "&l" + clanName + " &r" + color + "[" + plugin.getClanManager().getCode(clanName) + "]"));
         ArrayList<String> bannerLore = new ArrayList<>();
         if(plugin.getClanManager().getMotto(clanName).length() > 0)
             bannerLore.add(TextUtil.convertColor("&f&o\"" + plugin.getClanManager().getMotto(clanName) + "&f&o\""));
@@ -37,7 +37,7 @@ public class ClanDashboardGUI extends GUI {
 
         ItemStack viewInfo = ItemUtil.createItemStack(Material.PAPER, "&7Members: &f" + members.size(),
                 "&7Points: &e" + plugin.getClanManager().getPoints(clanName),
-                "&7Color: " + color + ColorUtil.colorToString(color),
+                "&7Color: " + color + color.getName(),
                 "&7Created: &f" + plugin.getClanManager().getCreated(clanName));
         ItemStack changeColor = ItemUtil.createItemStack(Material.PAINTING, TextUtil.toRainbow("Change Clan Color"));
         if(role.equalsIgnoreCase("trusted") || role.equalsIgnoreCase("leader")) {

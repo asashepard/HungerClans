@@ -9,8 +9,8 @@ package com.gmail.creepycucumber1.hungerclans.runnable;
 
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
 import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class NametagManager {
@@ -47,10 +47,11 @@ public class NametagManager {
 
                     //prefix
                     if(plugin.getClanManager().isInClan(p)) {
-                        String clanCode = plugin.getClanManager().getCode(plugin.getClanManager().getClan(p));
-                        ChatColor color = plugin.getClanManager().getColor(plugin.getClanManager().getClan(p));
+                        String clanName = plugin.getClanManager().getClan(p);
+                        String clanCode = plugin.getClanManager().getCode(clanName);
+                        ChatColor color = plugin.getClanManager().getColor(clanName);
                         plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
-                                "nte player " + p.getName() + " prefix '" + ColorUtil.colorToStringCode(color) +
+                                "nte player " + p.getName() + " prefix '" + color +
                                         "[" + clanCode.toUpperCase() + "] &f'");
                     } else
                         plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),

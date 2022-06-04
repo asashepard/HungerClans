@@ -45,32 +45,32 @@ public class ColorUtil {
         return "lightGray";
     }
 
-    public static ItemStack colorToGlass(ChatColor color) {
-        if (ChatColor.DARK_GRAY.equals(color)) {
+    public static ItemStack colorToGlass(net.md_5.bungee.api.ChatColor color) {
+        if (net.md_5.bungee.api.ChatColor.DARK_GRAY.equals(color)) {
             return new ItemStack(Material.GRAY_STAINED_GLASS_PANE);
-        } else if (ChatColor.AQUA.equals(color)) {
+        } else if (net.md_5.bungee.api.ChatColor.AQUA.equals(color)) {
             return new ItemStack(Material.CYAN_STAINED_GLASS_PANE);
-        } else if (ChatColor.LIGHT_PURPLE.equals(color)) {
+        } else if (net.md_5.bungee.api.ChatColor.LIGHT_PURPLE.equals(color)) {
             return new ItemStack(Material.MAGENTA_STAINED_GLASS_PANE);
-        } else if (ChatColor.GOLD.equals(color)) {
+        } else if (net.md_5.bungee.api.ChatColor.GOLD.equals(color)) {
             return new ItemStack(Material.ORANGE_STAINED_GLASS_PANE);
-        } else if (ChatColor.YELLOW.equals(color)) {
+        } else if (net.md_5.bungee.api.ChatColor.YELLOW.equals(color)) {
             return new ItemStack(Material.YELLOW_STAINED_GLASS_PANE);
-        } else if (ChatColor.WHITE.equals(color)) {
+        } else if (net.md_5.bungee.api.ChatColor.WHITE.equals(color)) {
             return new ItemStack(Material.WHITE_STAINED_GLASS_PANE);
-        } else if (ChatColor.DARK_AQUA.equals(color)) {
+        } else if (net.md_5.bungee.api.ChatColor.DARK_AQUA.equals(color)) {
             return new ItemStack(Material.BLUE_STAINED_GLASS_PANE);
-        } else if (ChatColor.DARK_PURPLE.equals(color)) {
+        } else if (net.md_5.bungee.api.ChatColor.DARK_PURPLE.equals(color)) {
             return new ItemStack(Material.PURPLE_STAINED_GLASS_PANE);
-        } else if (ChatColor.BLUE.equals(color)) {
+        } else if (net.md_5.bungee.api.ChatColor.BLUE.equals(color)) {
             return new ItemStack(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
-        } else if (ChatColor.DARK_GREEN.equals(color)) {
+        } else if (net.md_5.bungee.api.ChatColor.DARK_GREEN.equals(color)) {
             return new ItemStack(Material.GREEN_STAINED_GLASS_PANE);
-        } else if (ChatColor.GREEN.equals(color)) {
+        } else if (net.md_5.bungee.api.ChatColor.GREEN.equals(color)) {
             return new ItemStack(Material.LIME_STAINED_GLASS_PANE);
-        } else if (ChatColor.RED.equals(color)) {
+        } else if (net.md_5.bungee.api.ChatColor.RED.equals(color)) {
             return new ItemStack(Material.RED_STAINED_GLASS_PANE);
-        } else if (ChatColor.BLACK.equals(color)) {
+        } else if (net.md_5.bungee.api.ChatColor.BLACK.equals(color)) {
             return new ItemStack(Material.BLACK_STAINED_GLASS_PANE);
         }
         return new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE);
@@ -107,73 +107,57 @@ public class ColorUtil {
         return Color.GRAY;
     }
 
-    public static String colorToStringCode(ChatColor color){
-        if(color == ChatColor.GRAY) return "&7";
+    public static net.md_5.bungee.api.ChatColor colorFromString(String s){
+        if(s==null) return net.md_5.bungee.api.ChatColor.GRAY;
 
-        if (ChatColor.DARK_GRAY.equals(color)) {
-            return "&8";
-        } else if (ChatColor.AQUA.equals(color)) {
-            return "&b";
-        } else if (ChatColor.LIGHT_PURPLE.equals(color)) {
-            return "&d";
-        } else if (ChatColor.YELLOW.equals(color)) {
-            return "&e";
-        } else if (ChatColor.GOLD.equals(color)) {
-            return "&6";
-        } else if (ChatColor.WHITE.equals(color)) {
-            return "&f";
-        } else if (ChatColor.DARK_AQUA.equals(color)) {
-            return "&3";
-        } else if (ChatColor.DARK_PURPLE.equals(color)) {
-            return "&5";
-        } else if (ChatColor.BLUE.equals(color)) {
-            return "&9";
-        } else if (ChatColor.DARK_GREEN.equals(color)) {
-            return "&2";
-        } else if (ChatColor.GREEN.equals(color)) {
-            return "&a";
-        } else if (ChatColor.RED.equals(color)) {
-            return "&c";
-        } else if (ChatColor.BLACK.equals(color)) {
-            return "&0";
+        if(s.startsWith("#")){
+            return net.md_5.bungee.api.ChatColor.of(s);
         }
-        return "&7";
+        else if(s.equals("")){
+            return net.md_5.bungee.api.ChatColor.GRAY;
+        }
+        else{
+            switch(s){
+                case "lightGray":
+                    return net.md_5.bungee.api.ChatColor.GRAY;
+                case "gray":
+                    return net.md_5.bungee.api.ChatColor.DARK_GRAY;
+                case "pink":
+                    return net.md_5.bungee.api.ChatColor.of("#fb91ff");
+                case "green":
+                    return net.md_5.bungee.api.ChatColor.GREEN;
+                case "yellow":
+                    return net.md_5.bungee.api.ChatColor.YELLOW;
+                case "aqua":
+                    return net.md_5.bungee.api.ChatColor.AQUA;
+                case "magenta":
+                    return net.md_5.bungee.api.ChatColor.LIGHT_PURPLE;
+                case "orange":
+                    return net.md_5.bungee.api.ChatColor.GOLD;
+                case "white":
+                    return net.md_5.bungee.api.ChatColor.WHITE;
+                case "cyan":
+                    return net.md_5.bungee.api.ChatColor.DARK_AQUA;
+                case "purple":
+                    return net.md_5.bungee.api.ChatColor.DARK_PURPLE;
+                case "blue":
+                    return net.md_5.bungee.api.ChatColor.BLUE;
+                case "brown":
+                    return net.md_5.bungee.api.ChatColor.of("#8f7257");
+                case "darkGreen":
+                    return net.md_5.bungee.api.ChatColor.DARK_GREEN;
+                case "red":
+                    return net.md_5.bungee.api.ChatColor.RED;
+                case "black":
+                    return net.md_5.bungee.api.ChatColor.BLACK;
+                default:
+                    return net.md_5.bungee.api.ChatColor.GRAY;
+            }
+        }
     }
 
-    public static ChatColor colorFromString(String s){
-        if(s==null) return ChatColor.GRAY;
-
-        switch(s){
-            case "gray":
-                return ChatColor.DARK_GRAY;
-            case "green":
-                return ChatColor.GREEN;
-            case "yellow":
-                return ChatColor.YELLOW;
-            case "aqua":
-                return ChatColor.AQUA;
-            case "magenta":
-                return ChatColor.LIGHT_PURPLE;
-            case "orange":
-                return ChatColor.GOLD;
-            case "white":
-                return ChatColor.WHITE;
-            case "cyan":
-                return ChatColor.DARK_AQUA;
-            case "purple":
-                return ChatColor.DARK_PURPLE;
-            case "blue":
-                return ChatColor.BLUE;
-            case "darkGreen":
-                return ChatColor.DARK_GREEN;
-            case "red":
-                return ChatColor.RED;
-            case "black":
-                return ChatColor.BLACK;
-            default:
-                return ChatColor.GRAY;
-        }
-
+    public static net.md_5.bungee.api.ChatColor getColor(String hex){
+        return net.md_5.bungee.api.ChatColor.of(hex);
     }
 
 }

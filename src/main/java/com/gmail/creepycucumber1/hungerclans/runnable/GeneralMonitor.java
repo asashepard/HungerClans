@@ -130,9 +130,11 @@ public class GeneralMonitor {
 
     private void rewardClanMembers() {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
+        int base = plugin.getConfigManager().getConfig().getInt("integer.clanPointBase");
+        int boost = plugin.getConfigManager().getConfig().getInt("integer.clanMemberBoost");
         for(String clan : cfg.getKeys(false)) {
             int members = cfg.getStringList(clan + ".members").size();
-            plugin.getClanManager().addPoints(clan, (int) (Math.random() * (1.7 * members) + 10));
+            plugin.getClanManager().addPoints(clan, (int) (Math.random() * (boost / 10.0 * members) + base));
         }
     }
 

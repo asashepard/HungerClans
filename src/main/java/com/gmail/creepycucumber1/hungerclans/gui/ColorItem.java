@@ -7,7 +7,7 @@
 
 package com.gmail.creepycucumber1.hungerclans.gui;
 
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.inventory.ItemStack;
 
 public class ColorItem extends GUIItem {

@@ -1,8 +1,12 @@
 package com.gmail.creepycucumber1.hungerclans.command;
 
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
-import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -41,23 +45,28 @@ public class ClanWhisperCommand extends CommandBase {
             return true;
         }
 
-        String message = "";
-        for(int i = 0; i < args.length; i++)
-            message += args[i] + " ";
-        message = message.substring(0, message.length() - 1);
-        if(filter(message)) {
-            Bukkit.getLogger().info(player.getName() + "'s message was blocked: " + message);
-            message = "*******";
+        String text = "";
+        for(String arg : args) text += arg + " ";
+        text = text.substring(0, text.length() - 1);
+        while(filter(text)[0] > -2) {
+            int[] filter = filter(text);
+            Bukkit.getLogger().info(player.getName() + "'s message was blocked: " + text);
+            if(filter[0] != -1) text = text.substring(0, filter[0]) + "****" + text.substring(filter[0] + filter[1]);
+            else text = "****";
         }
-        message = TextUtil.convertColor("&3[Clan Chat] &b" + player.getName() + " &8» &f" + message);
-        String clan = plugin.getClanManager().getClan(player);
+        String message = TextUtil.convertColor("&3[Clan Chat] &b" + (plugin.getClanManager().getRole(player).equals("leader") ? "♠ " : "")
+                + player.getName() + " &8» &f" + text);
+        TextComponent toSend = new TextComponent(message);
+        toSend.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("Copy").create()));
+        toSend.setClickEvent(new ClickEvent(ClickEvent.Action.COPY_TO_CLIPBOARD, text));
 
+        String clan = plugin.getClanManager().getClan(player);
         for(Player p : Bukkit.getOnlinePlayers())
             if(plugin.getClanManager().isInClan(p) &&
                     plugin.getClanManager().getClan(p).equalsIgnoreCase(clan))
-                p.sendMessage(message);
+                p.sendMessage(toSend);
 
-        String color = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(clan));
+        ChatColor color = plugin.getClanManager().getColor(clan);
         for(Player admin : Bukkit.getOnlinePlayers())
             if(plugin.getEssentials().getUser(admin.getUniqueId()).isSocialSpyEnabled())
                 admin.sendMessage(TextUtil.convertColor("&7[" + color + clan + "&7]" + message.split("]")[1]));
@@ -67,14 +76,15 @@ public class ClanWhisperCommand extends CommandBase {
         return true;
     }
 
-    private boolean filter(String msg){
-        msg = " " + msg.toLowerCase() + " ";
+    private int[] filter(String msg){
+        String m = " " + msg.toLowerCase() + " ";
         for(String s : TextUtil.blockedWords){
-            if(msg.toLowerCase().contains(s)){
-                return true;
+            if(m.contains(s)){
+                if(msg.contains(s)) return new int[]{msg.indexOf(s), s.length()};
+                return new int[]{-1, -1};
             }
         }
 
-        return false;
+        return new int[]{-2, -2};
     }
 }

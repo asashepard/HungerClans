@@ -4,8 +4,8 @@ import com.gmail.creepycucumber1.hungerclans.HungerClans;
 import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.ItemUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
@@ -22,12 +22,11 @@ public class OtherClanGUI extends GUI {
         super(plugin, player.getUniqueId(), "§lOther Clan", 1);
         this.player = player;
         ChatColor color = plugin.getClanManager().getColor(clanName);
-        String colorCode = ColorUtil.colorToStringCode(color);
         int members = plugin.getClanManager().getMembers(clanName).size();
 
         ItemStack banner = plugin.getClanManager().getBanner(clanName);
         ItemMeta bannerMeta = banner.getItemMeta();
-        bannerMeta.setDisplayName(TextUtil.convertColor(colorCode + "&l" + clanName + " &r" + colorCode + "[" + plugin.getClanManager().getCode(clanName) + "]"));
+        bannerMeta.setDisplayName(TextUtil.convertColor(color + "&l" + clanName + " &r" + color + "[" + plugin.getClanManager().getCode(clanName) + "]"));
         ArrayList<String> bannerLore = new ArrayList<>();
         bannerLore.add(TextUtil.convertColor("&7 - Members: &f" + members));
         if(plugin.getClanManager().getMotto(clanName).length() > 0)
@@ -91,7 +90,7 @@ public class OtherClanGUI extends GUI {
 
             if(plugin.getWarManager().areAtWar(clan, otherClan)) {
                 p.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &4You are already at war with " +
-                        ColorUtil.colorToStringCode(plugin.getClanManager().getColor(otherClan)) +
+                        plugin.getClanManager().getColor(otherClan) +
                         item.getItemId() + "&r&4! Are you winning yet?"));
                 return;
             }
@@ -102,7 +101,7 @@ public class OtherClanGUI extends GUI {
                 String suffix = TextUtil.getSuffix(ends);
 
                 p.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease wait until the " + ends + suffix + " to declare war against " +
-                        ColorUtil.colorToStringCode(plugin.getClanManager().getColor(otherClan)) + otherClan + " &cagain."));
+                        plugin.getClanManager().getColor(otherClan)) + otherClan + " &cagain.");
                 return;
 
             }
@@ -113,7 +112,7 @@ public class OtherClanGUI extends GUI {
             notifyOfWar(otherClan, clan, false);
             plugin.getVault().withdrawPlayer(p, cost);
             p.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &4Declared war on " +
-                    ColorUtil.colorToStringCode(plugin.getClanManager().getColor(item.getItemId())) +
+                    plugin.getClanManager().getColor(item.getItemId()) +
                     item.getItemId() + "&r&4! Go get 'em!"));
             if(cost != 0) player.sendMessage(TextUtil.convertColor("&7Balance: $" + plugin.getVault().getBalance(p)));
 
@@ -121,7 +120,7 @@ public class OtherClanGUI extends GUI {
     }
 
     public void notifyOfWar(String clan, String otherClan, boolean declared) {
-        String color = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(otherClan));
+        ChatColor color = plugin.getClanManager().getColor(otherClan);
         for(String str : plugin.getClanManager().getMembers(clan)) {
             OfflinePlayer player = Bukkit.getOfflinePlayer(UUID.fromString(str));
 

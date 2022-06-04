@@ -67,11 +67,11 @@ public class WarCommand extends CommandBase {
                 you2 = TextUtil.convertColor(" &3(you)");
         }
 
-        player.sendMessage(TextUtil.convertColor("&3&l> WAR: " + ColorUtil.colorToStringCode(plugin.getClanManager().getColor(side1)) + side1 + you1 +
-                " &3vs " + ColorUtil.colorToStringCode(plugin.getClanManager().getColor(side2)) + side2 + you2 + "&3&l <"));
-        player.sendMessage(TextUtil.convertColor("&7 - Points for " + ColorUtil.colorToStringCode(plugin.getClanManager().getColor(side1)) + side1 +
+        player.sendMessage(TextUtil.convertColor("&3&l> WAR: " + plugin.getClanManager().getColor(side1) + side1 + you1 +
+                " &3vs " + plugin.getClanManager().getColor(side2) + side2 + you2 + "&3&l <"));
+        player.sendMessage(TextUtil.convertColor("&7 - Points for " + plugin.getClanManager().getColor(side1) + side1 +
                 ": &e" + plugin.getWarManager().getSide1Points(war)));
-        player.sendMessage(TextUtil.convertColor("&7 - Points for " + ColorUtil.colorToStringCode(plugin.getClanManager().getColor(side2)) + side2 +
+        player.sendMessage(TextUtil.convertColor("&7 - Points for " + plugin.getClanManager().getColor(side2) + side2 +
                 ": &e" + plugin.getWarManager().getSide2Points(war)));
 
         String ends = plugin.getWarManager().getEndDay(war);

@@ -163,7 +163,7 @@ public class EventManager implements Listener {
         if(combatLogged) {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendMessage(TextUtil.convertColor("&9&lCOMBAT LOG &8» &f" + player.getName() +
-                        ColorUtil.colorToStringCode(plugin.getClanManager().getColor(clanName)) + " [" +
+                        plugin.getClanManager().getColor(clanName) + " [" +
                         plugin.getClanManager().getCode(clanName) + "] &7left during battle!"));
             }
             Bukkit.getLogger().info("COMBAT LOG » " + player.getName() + " [" +

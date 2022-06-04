@@ -5,12 +5,13 @@ import com.gmail.creepycucumber1.hungerclans.gui.ClanColorGUI;
 import com.gmail.creepycucumber1.hungerclans.gui.ClanDashboardGUI;
 import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
+import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -18,6 +19,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ClanCommand extends CommandBase {
     public ClanCommand(HungerClans plugin) {
@@ -88,7 +91,7 @@ public class ClanCommand extends CommandBase {
             player.sendMessage(TextUtil.convertColor("&3&lClan List:"));
             ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
             for(String str : cfg.getKeys(false)) { //clans
-                ChatColor color = ColorUtil.colorFromString(cfg.getString(str + ".color"));
+                net.md_5.bungee.api.ChatColor color = ColorUtil.colorFromString(cfg.getString(str + ".color"));
                 player.sendMessage(TextUtil.convertColor(" &7- " + color + str + " [" + cfg.getString(str + ".code") + "]"));
             }
         } //all
@@ -113,7 +116,7 @@ public class ClanCommand extends CommandBase {
                 }
 
                 player.sendMessage(TextUtil.convertColor("&3&lMembers of " +
-                        ColorUtil.colorToStringCode(plugin.getClanManager().getColor(clan)) + "&l" + clan + "&3:"));
+                        plugin.getClanManager().getColor(clan) + "&l" + clan + "&3:"));
                 ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clan);
                 for(String uuid : (ArrayList<String>) cfg.get("members"))
                     player.sendMessage(TextUtil.convertColor(" &7- &f" + Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName() +
@@ -126,7 +129,7 @@ public class ClanCommand extends CommandBase {
             }
             String clan = plugin.getClanManager().getClan(player);
             player.sendMessage(TextUtil.convertColor("&3&lMembers of " +
-                    ColorUtil.colorToStringCode(plugin.getClanManager().getColor(clan)) + "&l" +  clan + "&3:"));
+                    plugin.getClanManager().getColor(clan) + "&l" +  clan + "&3:"));
             ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clan);
             for(String uuid : (ArrayList<String>) cfg.get("members"))
                 player.sendMessage(TextUtil.convertColor(" &7- &f" + Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName() +
@@ -139,6 +142,26 @@ public class ClanCommand extends CommandBase {
             }
             String role = plugin.getClanManager().getRole(player);
             if(role.equalsIgnoreCase("trusted") || role.equalsIgnoreCase("leader")) {
+
+                if(args.length == 2 && args[1].startsWith("#")) { //hex code
+                    String hexCode = args[1];
+                    Pattern pattern = Pattern.compile("^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$");
+                    Matcher matcher = pattern.matcher(hexCode);
+                    if(!matcher.find()) {
+                        player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease use a valid HEX code prefixed with #!\n" +
+                                "Or type /c color without anything to access a simple GUI!"));
+                        return true;
+                    }
+                    String clanName = plugin.getClanManager().getClan(player);
+                    plugin.getClanManager().setColor(clanName, hexCode);
+                    player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Successfully set your clan color to " +
+                            ChatColor.of(hexCode) + hexCode + "&3!"));
+
+                    int cost = plugin.getConfigManager().getConfig().getInt("integer.setColorCost");
+                    plugin.getVault().withdrawPlayer(player, cost);
+
+                    return true;
+                }
 
                 plugin.getGUIManager().openGUI(player, new ClanColorGUI(plugin, player));
 
@@ -174,7 +197,7 @@ public class ClanCommand extends CommandBase {
                 return true;
             }
             String clanName = plugin.getClanManager().getClan(player);
-            ChatColor color = plugin.getClanManager().getColor(clanName);
+            net.md_5.bungee.api.ChatColor color = plugin.getClanManager().getColor(clanName);
             if(args.length != 2) {
                 player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease specify a player to promote."));
                 return true;
@@ -220,7 +243,7 @@ public class ClanCommand extends CommandBase {
                 return true;
             }
             String clanName = plugin.getClanManager().getClan(player);
-            ChatColor color = plugin.getClanManager().getColor(clanName);
+            net.md_5.bungee.api.ChatColor color = plugin.getClanManager().getColor(clanName);
             if(args.length != 2) {
                 player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease specify a player to demote."));
                 return true;
@@ -265,7 +288,7 @@ public class ClanCommand extends CommandBase {
                 return true;
             }
             String clanName = plugin.getClanManager().getClan(player);
-            ChatColor color = plugin.getClanManager().getColor(clanName);
+            net.md_5.bungee.api.ChatColor color = plugin.getClanManager().getColor(clanName);
             if(args.length != 2) {
                 player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease specify a player to kick."));
                 return true;
@@ -347,7 +370,7 @@ public class ClanCommand extends CommandBase {
                 return true;
             }
             String clanName = plugin.getClanManager().getClan(player);
-            ChatColor color = plugin.getClanManager().getColor(clanName);
+            net.md_5.bungee.api.ChatColor color = plugin.getClanManager().getColor(clanName);
             String role = plugin.getClanManager().getRole(player);
             if(role.equalsIgnoreCase("member")) {
                 player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must be trusted or the clan leader to send an invite."));
@@ -389,7 +412,7 @@ public class ClanCommand extends CommandBase {
                 player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou are already in a clan! Leave to join another."));
                 return true;
             }
-            ChatColor color = plugin.getClanManager().getColor(args[1]);
+            net.md_5.bungee.api.ChatColor color = plugin.getClanManager().getColor(args[1]);
             player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3You are now part of " + color + args[1] + "&3!"));
             plugin.getClanManager().addMember(player, args[1]);
         } //CONSOLE

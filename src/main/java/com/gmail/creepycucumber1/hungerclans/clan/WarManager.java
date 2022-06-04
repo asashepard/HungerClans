@@ -3,6 +3,7 @@ package com.gmail.creepycucumber1.hungerclans.clan;
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
 import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
+import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.ConfigurationSection;
@@ -71,7 +72,7 @@ public class WarManager {
         int difference = plugin.getClanManager().getPoints(winner) - plugin.getClanManager().getPoints(loser);
         int reward = plugin.getConfigManager().getConfig().getInt("integer.warReward");
 
-        String color = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(loser));
+        ChatColor color = plugin.getClanManager().getColor(loser);
         // WON by time and points
         for(String uuid : plugin.getDataManager().getConfig().getConfigurationSection("clans." + winner).getStringList("members")) {
             OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
@@ -88,7 +89,7 @@ public class WarManager {
         }
         // LOST by time and points
         for(String uuid : plugin.getDataManager().getConfig().getConfigurationSection("clans." + loser).getStringList("members")) {
-            String wColor = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(winner));
+            ChatColor wColor = plugin.getClanManager().getColor(winner);
             OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
             if(oPlayer.isOnline()) {
                 Player player = (Player) oPlayer;
@@ -136,7 +137,7 @@ public class WarManager {
 
         // LOST by surrender
         if(surrender) {
-            String wColor = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(winner));
+            ChatColor wColor = plugin.getClanManager().getColor(winner);
             for(String uuid : plugin.getDataManager().getConfig().getConfigurationSection("clans." + loser).getStringList("members")) {
                 OfflinePlayer oPlayer = Bukkit.getOfflinePlayer(UUID.fromString(uuid));
                 if(oPlayer.isOnline()) {

@@ -20,6 +20,8 @@ integer:
   # rewards
   dailyRewardMinutes: 15
   dailyReward: 250
+  clanPointBase: 10
+  clanMemberBoost: 17
   # combat log timer
   combatLogSeconds: 15
 boolean:

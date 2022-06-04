@@ -3,6 +3,7 @@ package com.gmail.creepycucumber1.hungerclans.command;
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
 import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
@@ -57,7 +58,7 @@ public class SurrenderCommand extends CommandBase {
             player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat clan (case sensitive) does not exist."));
             return true;
         }
-        String color = ColorUtil.colorToStringCode(plugin.getClanManager().getColor(otherClan));
+        ChatColor color = plugin.getClanManager().getColor(otherClan);
         if(!plugin.getWarManager().areAtWar(clan, otherClan)) {
             player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYour clan is not at war with " + color + otherClan + "&c."));
             return true;

@@ -216,7 +216,7 @@ public class ClanManager {
         return clansThisStartup;
     }
 
-    public ChatColor getColor(String clanName) {
+    public net.md_5.bungee.api.ChatColor getColor(String clanName) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
         String colorStr = cfg.getString("color");
         return ColorUtil.colorFromString(colorStr);
