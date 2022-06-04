@@ -19,6 +19,7 @@ Commands:
 - /war
 - /war all
 - /surrender [clan name]
+- /linkdiscord [Discord tag]
 - /clanconfig OR /cconfig [key] [value]
 
 Features:
