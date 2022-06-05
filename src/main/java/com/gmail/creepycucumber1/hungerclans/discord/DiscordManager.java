@@ -148,6 +148,15 @@ public class DiscordManager implements Listener {
 
             }
 
+            Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+                if(!plugin.getClanManager().getClanList().contains(clanName)) { //clan was deleted
+
+                    Bukkit.getLogger().info("Clan Discord role " + role + " is being deleted...");
+                    guild.getRolesByName(role, true).get(0).delete().queue();
+
+                }
+            }, 40);
+
         });
 
     }

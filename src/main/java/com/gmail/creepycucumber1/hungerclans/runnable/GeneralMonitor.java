@@ -1,6 +1,7 @@
 package com.gmail.creepycucumber1.hungerclans.runnable;
 
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
+import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -112,6 +113,7 @@ public class GeneralMonitor {
                             plugin.getPlayerManager().getTimePlayedToday(player) >= (long) plugin.getConfigManager().getConfig().getInt("integer.dailyRewardMinutes") * 60000) {
 
                         int reward = plugin.getConfigManager().getConfig().getInt("integer.dailyReward");
+                        if(reward != 0) player.sendMessage(TextUtil.convertColor("&aWelcome to a new day on &lHunger&2&lMC&r&a. Take this &2$" + reward + "&a for your journey."));
                         plugin.getVault().depositPlayer(player, reward);
                         plugin.getPlayerManager().setReceivedReward(player, true);
 

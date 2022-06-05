@@ -56,7 +56,7 @@ public class ClanCommand extends CommandBase {
 
         }
         else if(args[0].equalsIgnoreCase("help")) {
-            player.sendMessage(TextUtil.convertColor("&3&lClan Commands: &r\n" +
+            player.sendMessage(TextUtil.convertColor("&4&lClan Commands: &r\n" +
                     " &8- &r&o/c create [clan name] &r&7| create a new clan&r\n" +
                     " &8- &r&o/c list &r&7| list existing clans&r\n" +
                     " &8- &r&o/c members [clan name] &r&7| list members of a clan&r\n" +
@@ -74,8 +74,9 @@ public class ClanCommand extends CommandBase {
                 return true;
             }
             if(!player.hasPermission("hungerclans.createclan")) {
-                sendClickableLink(player, TextUtil.convertColor("&4&lCLANS &8» &cYou do not have permission to create a clan. Contact a server administrator if you believe this is in error"),
-                        "shop.hungermc.com", "");
+                sendClickableLink(player, TextUtil.convertColor("&4&lCLANS &8» &cYou do not have permission to create a clan. " +
+                                "Contact a server administrator if you believe this is in error, or click here."),
+                        "shop.hungermc.com", "Go to shop.hungermc.com");
                 return true;
             }
 
@@ -88,7 +89,7 @@ public class ClanCommand extends CommandBase {
         } //supporter
         else if(args[0].equalsIgnoreCase("list")) {
             //list clans
-            player.sendMessage(TextUtil.convertColor("&3&lClan List:"));
+            player.sendMessage(TextUtil.convertColor("&4&lClan List:"));
             ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
             for(String str : cfg.getKeys(false)) { //clans
                 net.md_5.bungee.api.ChatColor color = ColorUtil.colorFromString(cfg.getString(str + ".color"));

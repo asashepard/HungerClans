@@ -78,7 +78,9 @@ public class LinkDiscordCommand extends CommandBase {
             return true;
         }
 
-        String tag = args[0];
+        String tag = "";
+        for(String arg : args) tag += " " + arg;
+        tag = tag.substring(1);
         if(tag.split("#").length != 2 || tag.split("#")[1].length() != 4) {
             player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease enter a valid discord tag such as example#0123"));
             return true;
