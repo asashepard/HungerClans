@@ -317,7 +317,7 @@ public class ClanCommand extends CommandBase {
                 plugin.getClanManager().removeRole(p, "trusted");
                 plugin.getClanManager().removeRole(p, "member");
             }
-            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Kicked player &7" + Bukkit.getOfflinePlayer(UUID.fromString(args[1])).getName() +
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Kicked player &7" + args[1] + "." +
                     "&3 from the clan."));
             if(p.isOnline())
                 p.getPlayer().sendMessage(TextUtil.convertColor("&4&lCLANS &8» &4You have been kicked from &l" +

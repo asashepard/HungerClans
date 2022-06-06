@@ -180,7 +180,7 @@ public class EventManager implements Listener {
         String clanName = plugin.getClanManager().getClan(player);
 
         if(plugin.getWarManager().isInWar(clanName)) {
-            if(e.getMessage().equalsIgnoreCase("/suicide")) {
+            if(e.getMessage().contains("suicide")) {
                 player.sendMessage(TextUtil.convertColor("&cYou're in war, so fight!"));
                 e.setCancelled(true);
             }

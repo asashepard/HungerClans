@@ -84,27 +84,27 @@ public class GeneralMonitor {
                     //chat symbol
                     if(!player.hasPermission("hungerclans.timeplayed.1h") && time >= 3600000L) {
                         addPermission(player, "hungerclans.timeplayed.1h");
-                        plugin.getVault().depositPlayer(player, 500);
+                        //plugin.getVault().depositPlayer(player, 500);
                     }
                     else if(!player.hasPermission("hungerclans.timeplayed.1d") && time >= 86400000L) {
                         addPermission(player, "hungerclans.timeplayed.1d");
-                        plugin.getVault().depositPlayer(player, 5000);
+                        //plugin.getVault().depositPlayer(player, 5000);
                     }
                     else if(!player.hasPermission("hungerclans.timeplayed.5d") && time >= 432000000L) {
                         addPermission(player, "hungerclans.timeplayed.5d");
-                        plugin.getVault().depositPlayer(player, 10000);
+                        //plugin.getVault().depositPlayer(player, 10000);
                     }
                     else if(!player.hasPermission("hungerclans.timeplayed.10d") && time >= 864000000L) {
                         addPermission(player, "hungerclans.timeplayed.10d");
-                        plugin.getVault().depositPlayer(player, 30000);
+                        //plugin.getVault().depositPlayer(player, 30000);
                     }
                     else if(!player.hasPermission("hungerclans.timeplayed.25d") && time >= 2160000000L) {
                         addPermission(player, "hungerclans.timeplayed.25d");
-                        plugin.getVault().depositPlayer(player, 100000);
+                        //plugin.getVault().depositPlayer(player, 100000);
                     }
                     else if(!player.hasPermission("hungerclans.timeplayed.50d") && time >= 4320000000L) {
                         addPermission(player, "hungerclans.timeplayed.50d");
-                        plugin.getVault().depositPlayer(player, 200000);
+                        //plugin.getVault().depositPlayer(player, 200000);
                     }
 
 

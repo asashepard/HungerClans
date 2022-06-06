@@ -50,8 +50,8 @@ public class ClanManager {
             player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat clan name is too long!"));
             return;
         }
-        if(!clanName.matches("^[ A-Za-z]+$")) {
-            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cA clan name must only have letters and spaces!"));
+        if(!clanName.matches("^[A-Za-z]+$")) {
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cA clan name must only have letters!"));
             return;
         }
         List<String> bannedNames = new ArrayList<>(List.of("join", "leave", "gabe", "hayes", "xarkenz", "longbread", "nigg", "fag",

@@ -28,13 +28,13 @@ public class ConfigCommand extends CommandBase {
             }
         }
 
-        if(args.length == 0 || (args.length == 1 && args[0].equalsIgnoreCase("help"))) {
-            sendConfigHelp(sender);
-            return true;
-        }
         if(args[0].equalsIgnoreCase("reload") && sender.hasPermission("huncerclans.staff")) {
             sender.sendMessage("Reloading HungerClans config...");
             plugin.getConfigManager().reloadConfig();
+        }
+        if(args.length == 1 && args[0].equalsIgnoreCase("help")) {
+            sendConfigHelp(sender);
+            return true;
         }
         else if(args.length != 2) {
             sender.sendMessage("Usage: /clanconfig [option] [value]");
