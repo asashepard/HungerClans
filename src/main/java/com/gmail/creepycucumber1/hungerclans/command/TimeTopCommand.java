@@ -28,10 +28,12 @@ public class TimeTopCommand extends CommandBase {
 
         HashMap<Long, String> map = new HashMap<>(); //time played, player name
         long time;
+        long total = 0L;
         for(String uuidString : plugin.getDataManager().getConfig().getConfigurationSection("players").getKeys(false)) {
             OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(uuidString));
             time = plugin.getPlayerManager().getTotalTimePlayed(p);
             map.put(time, p.getName());
+            total += time;
         }
         ArrayList<Long> list = new ArrayList<>(map.keySet());
         Collections.sort(list);
@@ -52,10 +54,11 @@ public class TimeTopCommand extends CommandBase {
 
         player.sendMessage(TextUtil.convertColor("&2&lLeaderboard:&r&2 Time Played " +
                 "&7(page " + page + " of " + (((list.size() - 1) / 10) + 1) + ")\n"));
+        if(player.hasPermission("hungercore.staff")) player.sendMessage(TextUtil.convertColor("&7&oServer total: " + TextUtil.toHours(total)));
         for(int i = index; i < index + 10; i++) {
             if(i > list.size() - 1) return true;
             player.sendMessage(TextUtil.convertColor("&a" + (i + 1) + ". &f" + map.get(list.get(i)) +
-                    " &7(tier " + getLevel(list.get(i)) + ")"));
+                    " &7(tier " + getLevel(list.get(i)) + ") " + (player.hasPermission("hungercore.staff") ? TextUtil.toHours(list.get(i)) : "")));
         }
 
         return true;

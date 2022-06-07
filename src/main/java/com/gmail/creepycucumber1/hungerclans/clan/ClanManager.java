@@ -159,7 +159,7 @@ public class ClanManager {
     //setter
     public void addMember(OfflinePlayer player, String clanName) {
         if(isInClan(player)) return;
-        if(getMembers(clanName).size() >= 9) return;
+        if(getMembers(clanName).size() >= 18) return;
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
         ArrayList<String> members = new ArrayList<>(cfg.getStringList(clanName + ".members"));
         members.add(player.getUniqueId().toString());

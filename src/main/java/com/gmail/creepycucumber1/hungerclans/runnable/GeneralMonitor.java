@@ -74,42 +74,17 @@ public class GeneralMonitor {
                     Bukkit.getLogger().info("Daily playtime reset.");
                 }
 
+                boolean dailyReward = plugin.getConfigManager().getConfig().getBoolean("boolean.dailyReward");
+
                 for(Player player : Bukkit.getOnlinePlayers()) {
 
                     plugin.getPlayerManager().updateTimePlayed(player);
                     plugin.getPlayerManager().setUpdateTimeLastToNow(player);
 
-                    long time = plugin.getPlayerManager().getTotalTimePlayed(player);
-
-                    //chat symbol
-                    if(!player.hasPermission("hungerclans.timeplayed.1h") && time >= 3600000L) {
-                        addPermission(player, "hungerclans.timeplayed.1h");
-                        //plugin.getVault().depositPlayer(player, 500);
-                    }
-                    else if(!player.hasPermission("hungerclans.timeplayed.1d") && time >= 86400000L) {
-                        addPermission(player, "hungerclans.timeplayed.1d");
-                        //plugin.getVault().depositPlayer(player, 5000);
-                    }
-                    else if(!player.hasPermission("hungerclans.timeplayed.5d") && time >= 432000000L) {
-                        addPermission(player, "hungerclans.timeplayed.5d");
-                        //plugin.getVault().depositPlayer(player, 10000);
-                    }
-                    else if(!player.hasPermission("hungerclans.timeplayed.10d") && time >= 864000000L) {
-                        addPermission(player, "hungerclans.timeplayed.10d");
-                        //plugin.getVault().depositPlayer(player, 30000);
-                    }
-                    else if(!player.hasPermission("hungerclans.timeplayed.25d") && time >= 2160000000L) {
-                        addPermission(player, "hungerclans.timeplayed.25d");
-                        //plugin.getVault().depositPlayer(player, 100000);
-                    }
-                    else if(!player.hasPermission("hungerclans.timeplayed.50d") && time >= 4320000000L) {
-                        addPermission(player, "hungerclans.timeplayed.50d");
-                        //plugin.getVault().depositPlayer(player, 200000);
-                    }
-
+                    if(!dailyReward) return;
 
                     //daily reward
-                    if(plugin.getConfigManager().getConfig().getBoolean("boolean.dailyReward") && !plugin.getPlayerManager().receivedReward(player) &&
+                    if(!plugin.getPlayerManager().receivedReward(player) &&
                             plugin.getPlayerManager().getTimePlayedToday(player) >= (long) plugin.getConfigManager().getConfig().getInt("integer.dailyRewardMinutes") * 60000) {
 
                         int reward = plugin.getConfigManager().getConfig().getInt("integer.dailyReward");
@@ -124,10 +99,6 @@ public class GeneralMonitor {
             }
         }, 0, 500);
 
-    }
-
-    private void addPermission(Player p, String permission) {
-        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "lp user " + p.getName() + " permission set " + permission + " true");
     }
 
     private void rewardClanMembers() {

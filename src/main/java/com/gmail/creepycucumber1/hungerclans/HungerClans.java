@@ -53,12 +53,14 @@ public final class HungerClans extends JavaPlugin {
         playerManager = new PlayerManager(this);
         warManager = new WarManager(this);
         guiManager = new GUIManager(this);
+        nametagManager = new NametagManager(this);
 
         nametagManager = new NametagManager(this);
         generalMonitor = new GeneralMonitor(this);
         teleport = new Teleport(this);
 
-        nametagManager.nametag();
+        nametagManager.nametagSlow();
+        nametagManager.nametagCheck();
         generalMonitor.monitorWars();
         generalMonitor.monitorPlayers();
 
@@ -146,6 +148,9 @@ public final class HungerClans extends JavaPlugin {
     }
     public DiscordManager getDiscordManager() {
         return discordManager;
+    }
+    public NametagManager getNametagManager() {
+        return nametagManager;
     }
     public GUIManager getGUIManager() {
         return guiManager;

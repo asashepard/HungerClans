@@ -21,45 +21,74 @@ public class NametagManager {
         this.plugin = plugin;
     }
 
-    public void nametag() {
+    public void nametagSlow() {
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
 
             public void run() {
+
                 for(Player p : Bukkit.getOnlinePlayers()) {
 
-                    if(!plugin.getConfigManager().getConfig().getBoolean("boolean.nametags")) {
-                        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
-                                "nte player " + p.getName() + " suffix ''");
-                        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
-                                "nte player " + p.getName() + " prefix ''");
-                        return;
+                    updateNametag(p);
+
+                }
+
+            }
+        }, 0, 400);
+
+    }
+
+    public void nametagCheck() {
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+
+            public void run() {
+
+                if(!plugin.getConfigManager().getConfig().getBoolean("boolean.nametags")) {
+
+                    for(Player p : Bukkit.getOnlinePlayers()) {
+
+                        if(!plugin.getConfigManager().getConfig().getBoolean("boolean.nametags")) {
+                            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
+                                    "nte player " + p.getName() + " suffix ''");
+                            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
+                                    "nte player " + p.getName() + " prefix ''");
+                            return;
+                        }
+
                     }
-                    boolean isAdmin = p.hasPermission("hungercore.adminmode");
-
-                    //suffix
-                    if(isAdmin)
-                        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
-                                "nte player " + p.getName() + " suffix ' &4⚡'");
-                    else
-                        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
-                                "nte player " + p.getName() + " suffix ''");
-
-                    //prefix
-                    if(plugin.getClanManager().isInClan(p)) {
-                        String clanName = plugin.getClanManager().getClan(p);
-                        String clanCode = plugin.getClanManager().getCode(clanName);
-                        ChatColor color = plugin.getClanManager().getColor(clanName);
-                        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
-                                "nte player " + p.getName() + " prefix '" + color +
-                                        "[" + clanCode.toUpperCase() + "] &f'");
-                    } else
-                        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
-                                "nte player " + p.getName() + " prefix ''");
 
                 }
             }
         }, 0, 40);
+
+    }
+
+    public void updateNametag(Player p) {
+
+        if(!plugin.getConfigManager().getConfig().getBoolean("boolean.nametags")) return;
+
+        boolean isAdmin = p.hasPermission("hungercore.adminmode");
+
+        //suffix
+        if(isAdmin)
+            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
+                    "nte player " + p.getName() + " suffix ' &4⚡'");
+        else
+            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
+                    "nte player " + p.getName() + " suffix ''");
+
+        //prefix
+        if(plugin.getClanManager().isInClan(p)) {
+            String clanName = plugin.getClanManager().getClan(p);
+            String clanCode = plugin.getClanManager().getCode(clanName);
+            ChatColor color = plugin.getClanManager().getColor(clanName);
+            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
+                    "nte player " + p.getName() + " prefix '" + color +
+                            "[" + clanCode.toUpperCase() + "] &f'");
+        } else
+            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
+                    "nte player " + p.getName() + " prefix ''");
 
     }
 

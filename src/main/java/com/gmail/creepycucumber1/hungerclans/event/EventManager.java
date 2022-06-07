@@ -1,7 +1,8 @@
 package com.gmail.creepycucumber1.hungerclans.event;
 
+import com.destroystokyo.paper.event.player.PlayerPostRespawnEvent;
+import com.destroystokyo.paper.event.player.PlayerTeleportEndGatewayEvent;
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
-import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Statistic;
@@ -16,9 +17,7 @@ import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -42,6 +41,27 @@ public class EventManager implements Listener {
         if(plugin.getPlayerManager().getCombatLogged(player)) {
             player.setHealth(0.0D);
             plugin.getPlayerManager().setCombatLogged(player,false);
+        }
+
+        long time = plugin.getPlayerManager().getTotalTimePlayed(player);
+
+        if(time >= 3600000L && !player.hasPermission("hungerclans.timeplayed.1h")) {
+            addPermission(player, "hungerclans.timeplayed.1h");
+        }
+        else if(time >= 86400000L && !player.hasPermission("hungerclans.timeplayed.1d")) {
+            addPermission(player, "hungerclans.timeplayed.1d");
+        }
+        else if(time >= 432000000L && !player.hasPermission("hungerclans.timeplayed.5d")) {
+            addPermission(player, "hungerclans.timeplayed.5d");
+        }
+        else if(time >= 864000000L && !player.hasPermission("hungerclans.timeplayed.10d")) {
+            addPermission(player, "hungerclans.timeplayed.10d");
+        }
+        else if(time >= 2160000000L && !player.hasPermission("hungerclans.timeplayed.25d")) {
+            addPermission(player, "hungerclans.timeplayed.25d");
+        }
+        else if(time >= 4320000000L && !player.hasPermission("hungerclans.timeplayed.50d")) {
+            addPermission(player, "hungerclans.timeplayed.50d");
         }
 
         plugin.getDiscordManager().updateUserRoles(player);
@@ -222,6 +242,36 @@ public class EventManager implements Listener {
     @EventHandler
     public void onInventoryClose(InventoryCloseEvent e){
         plugin.getGUIManager().onClose(Bukkit.getPlayer(e.getPlayer().getUniqueId()), e.getView());
+    }
+
+    //nametag update events
+    @EventHandler
+    public void onChangeDimension(PlayerChangedWorldEvent e) {
+        plugin.getNametagManager().updateNametag(e.getPlayer());
+    }
+
+    @EventHandler
+    public void onEnterServer(PlayerJoinEvent e) {
+        plugin.getNametagManager().updateNametag(e.getPlayer());
+    }
+
+    @EventHandler
+    public void onTeleport(PlayerTeleportEvent e) {
+        plugin.getNametagManager().updateNametag(e.getPlayer());
+    }
+
+    @EventHandler
+    public void onTeleportEndGateway(PlayerTeleportEndGatewayEvent e) {
+        plugin.getNametagManager().updateNametag(e.getPlayer());
+    }
+
+    @EventHandler
+    public void onPlayerRespawn(PlayerPostRespawnEvent e) {
+        plugin.getNametagManager().updateNametag(e.getPlayer());
+    }
+
+    private void addPermission(Player p, String permission) {
+        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "lp user " + p.getName() + " permission set " + permission + " true");
     }
 
 }

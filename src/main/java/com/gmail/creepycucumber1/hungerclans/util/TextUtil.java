@@ -74,4 +74,9 @@ public class TextUtil {
 
         return sb.substring(0, sb.length()-1);
     }
+
+    public static String toHours(long time) {
+        String str = time / 1000D / 60 / 60 + "";
+        return str.split("\\.")[0] + "." + str.split("\\.")[1].substring(0, 2) + " hours";
+    }
 }

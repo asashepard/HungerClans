@@ -70,6 +70,12 @@ public class OtherClanGUI extends GUI {
             plugin.getGUIManager().openGUI(p, new AllClansGUI(plugin, p));
         } else if(item.getItem().getType().equals(Material.RED_CONCRETE)) {
             p.closeInventory();
+
+            if(!plugin.getConfigManager().getConfig().getBoolean("wars")) {
+                p.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cWars are not enabled."));
+                return;
+            }
+
             if(!plugin.getConfigManager().getConfig().getBoolean("boolean.allowDeclareWar")) {
                 p.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cWar declaration has been turned off."));
                 return;

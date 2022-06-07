@@ -3,12 +3,14 @@ package com.gmail.creepycucumber1.hungerclans.gui;
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
 import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class AllClansGUI extends GUI {
     private Player player;
@@ -27,11 +29,15 @@ public class AllClansGUI extends GUI {
                     "&r" + plugin.getClanManager().getColor(clanName) +
                     " [" + plugin.getClanManager().getCode(clanName) + "]"));
             ArrayList<String> bannerLore = new ArrayList<>();
-            bannerLore.add(TextUtil.convertColor("&7 - Points: &e" + plugin.getClanManager().getPoints(clanName)));
-            bannerLore.add(TextUtil.convertColor("&7 - Members: &f" + plugin.getClanManager().getMembers(clanName).size()));
-            bannerLore.add(TextUtil.convertColor("&7 - Created: &f" + plugin.getClanManager().getCreated(clanName)));
             if(plugin.getClanManager().getMotto(clanName).length() > 0)
                 bannerLore.add(TextUtil.convertColor("&f&o\"" + plugin.getClanManager().getMotto(clanName) + "\""));
+            bannerLore.add(TextUtil.convertColor("&7 - Points: &e" + plugin.getClanManager().getPoints(clanName)));
+            int online = 0;
+            ArrayList<String> members = plugin.getClanManager().getMembers(clanName);
+            for(String member : members)
+                if(Bukkit.getOfflinePlayer(UUID.fromString(member)).isOnline()) online++;
+            bannerLore.add(TextUtil.convertColor("&7 - Members: &f" + members.size() + " &a(" + online + " online)"));
+            bannerLore.add(TextUtil.convertColor("&7 - Created: &f" + plugin.getClanManager().getCreated(clanName)));
             bannerMeta.setLore(bannerLore);
             banner.setItemMeta(bannerMeta);
             items[i] = new GUIItem(banner, clanName);

@@ -377,8 +377,8 @@ public class ClanCommand extends CommandBase {
                 player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must be trusted or the clan leader to send an invite."));
                 return true;
             }
-            if(plugin.getClanManager().getMembers(clanName).size() >= 9) {
-                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cClans have a maximum size of 9 members. Kick someone or complain to an admin."));
+            if(plugin.getClanManager().getMembers(clanName).size() >= 18) {
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cClans have a maximum size of 18 members. Kick someone or complain to an admin."));
                 return true;
             }
             if(args.length != 2) {
