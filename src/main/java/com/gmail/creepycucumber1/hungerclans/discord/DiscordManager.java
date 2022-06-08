@@ -37,6 +37,22 @@ public class DiscordManager implements Listener {
     public void updateUserRoles(OfflinePlayer player) {
         JDA jda = DiscordUtil.getJda();
 
+        plugin.getClanManager().getClansThisStartup().forEach(clanName -> {
+            if(plugin.getClanManager().getClan(player).equalsIgnoreCase(clanName)) { //player in clan
+                addPermission(player, "hungerclans.clan." + clanName.replaceAll(" ", "-"));
+            }
+            else { //player not in clan
+                removePermission(player, "hungerclans.clan." + clanName.replaceAll(" ", "-"));
+            }
+        });
+
+        if(plugin.getClanManager().getRole(player).equalsIgnoreCase("leader")) {
+            addPermission(player, "hungerclans.leader");
+        }
+        else {
+            removePermission(player, "hungerclans.leader");
+        }
+
         String discordID = plugin.getPlayerManager().getDiscordID(player);
         if(discordID.equals("none")) {
             Bukkit.getLogger().info("[HungerClans: updateUserRoles] Discord account undetected for " + player.getName());
@@ -54,15 +70,6 @@ public class DiscordManager implements Listener {
             Bukkit.getLogger().info("[HungerClans: updateUserRoles] Discord account " + discordID + " not detected in server. Did the account leave?");
             return;
         }
-
-        plugin.getClanManager().getClansThisStartup().forEach(clanName -> {
-            if(plugin.getClanManager().getClan(player).equalsIgnoreCase(clanName)) { //player in clan
-                addPermission(player, "hungerclans.clan." + clanName.replaceAll(" ", "-"));
-            }
-            else { //player not in clan
-                removePermission(player, "hungerclans.clan." + clanName.replaceAll(" ", "-"));
-            }
-        });
 
         if(player.isOnline()) {
             Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {

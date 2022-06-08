@@ -76,7 +76,7 @@ public class TextUtil {
     }
 
     public static String toHours(long time) {
-        String str = time / 1000D / 60 / 60 + "";
+        String str = time / (1000D * 60 * 60) + "";
         return str.split("\\.")[0] + "." + str.split("\\.")[1].substring(0, 2) + " hours";
     }
 }

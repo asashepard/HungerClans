@@ -32,7 +32,7 @@ public class PlaceTopCommand extends CommandBase {
         long total = 0;
         for(String uuidString : plugin.getDataManager().getConfig().getConfigurationSection("players").getKeys(false)) {
             OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(uuidString));
-            placed = plugin.getPlayerManager().getBlocksPlaced(player);
+            placed = plugin.getPlayerManager().getBlocksPlaced(p);
             total += placed;
             while(map.containsKey(placed)) placed += Math.random();
             map.put(placed, p.getName());

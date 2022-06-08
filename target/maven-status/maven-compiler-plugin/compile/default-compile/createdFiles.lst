@@ -1,6 +1,7 @@
 com\gmail\creepycucumber1\hungerclans\clan\PlayerManager.class
 com\gmail\creepycucumber1\hungerclans\command\ClanCommand.class
 com\gmail\creepycucumber1\hungerclans\discord\JDAListener.class
+com\gmail\creepycucumber1\hungerclans\runnable\NametagManager$2.class
 com\gmail\creepycucumber1\hungerclans\util\ColorUtil.class
 com\gmail\creepycucumber1\hungerclans\event\EventManager.class
 com\gmail\creepycucumber1\hungerclans\gui\GUI.class

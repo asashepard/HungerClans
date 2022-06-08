@@ -13,6 +13,8 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.awt.*;
+
 public class NametagManager {
 
     private HungerClans plugin;
@@ -60,7 +62,7 @@ public class NametagManager {
 
                 }
             }
-        }, 0, 40);
+        }, 0, 100);
 
     }
 
@@ -83,9 +85,10 @@ public class NametagManager {
             String clanName = plugin.getClanManager().getClan(p);
             String clanCode = plugin.getClanManager().getCode(clanName);
             ChatColor color = plugin.getClanManager().getColor(clanName);
+            boolean isLeader = plugin.getClanManager().getRole(p).equalsIgnoreCase("leader");
             plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
                     "nte player " + p.getName() + " prefix '" + color +
-                            "[" + clanCode.toUpperCase() + "] &f'");
+                             clanCode.toUpperCase() + ChatColor.of(new Color(70, 70, 70)) + (isLeader ? " ♠" : " |") + " &f'");
         } else
             plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),
                     "nte player " + p.getName() + " prefix ''");

@@ -10,7 +10,6 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.milkbowl.vault.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
@@ -65,7 +64,8 @@ public class ClanCommand extends CommandBase {
                     " &8- &r&o/c [promote/demote/kick/invite] [player] &r&7| manage&r\n" +
                     " &8- &r&o/c leave &r&7| leave clan&r\n" +
                     " &8- &r&o/c [home/sethome] &r&7| teleport to a shared home&r\n" +
-                    " &8- &r&o/[cw/cmsg] &r&7| privately message clan members&r"));
+                    " &8- &r&o/[cw/cmsg] &r&7| privately message clan members&r\n" +
+                    " &8- &r&o/c trust &r&7| trust clan members in a claim&r"));
         } //all
         else if(args[0].equalsIgnoreCase("create")) {
             //make new clan, add to data file
@@ -456,6 +456,38 @@ public class ClanCommand extends CommandBase {
             if(cost != 0) player.sendMessage(TextUtil.convertColor("&7Balance: &f$" + plugin.getVault().getBalance(player)));
             return true;
         } //leader
+        else if(args[0].equalsIgnoreCase("trust") || args[0].equalsIgnoreCase("t")) {
+            if(!inClan) {
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan!"));
+                return true;
+            }
+            Bukkit.getServer().dispatchCommand(player, "trust clan " + plugin.getClanManager().getClan(player));
+        } //claim owner
+        else if(args[0].equalsIgnoreCase("untrust")) {
+            if(!inClan) {
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan!"));
+                return true;
+            }
+            Bukkit.getServer().dispatchCommand(player, "untrust clan");
+        } //claim owner
+        else {
+            OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
+            String clanName = "none";
+            try {
+                clanName = plugin.getClanManager().getClan(p);
+            }
+            catch (Exception ignored) {}
+            if(clanName.equalsIgnoreCase("none")) {
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &7Player " + args[0] + " isn't in a clan."));
+                return true;
+            }
+            ChatColor color = plugin.getClanManager().getColor(clanName);
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &7Player &a" + args[0] + "&7 is of the clan " + color + clanName + "&7."));
+            sendClickableCommand(player, TextUtil.convertColor("&7Click here to view all members of the clan."),
+                    "/c members " + clanName,
+                    "Members of " + clanName);
+            return true;
+        }
 
         return true;
     }

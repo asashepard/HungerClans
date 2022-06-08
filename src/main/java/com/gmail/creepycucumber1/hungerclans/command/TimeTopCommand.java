@@ -4,6 +4,7 @@ import com.gmail.creepycucumber1.hungerclans.HungerClans;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Statistic;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -31,7 +32,7 @@ public class TimeTopCommand extends CommandBase {
         long total = 0L;
         for(String uuidString : plugin.getDataManager().getConfig().getConfigurationSection("players").getKeys(false)) {
             OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(uuidString));
-            time = plugin.getPlayerManager().getTotalTimePlayed(p);
+            time = p.getStatistic(Statistic.PLAY_ONE_MINUTE) * 1000L / 20;
             map.put(time, p.getName());
             total += time;
         }
@@ -58,7 +59,7 @@ public class TimeTopCommand extends CommandBase {
         for(int i = index; i < index + 10; i++) {
             if(i > list.size() - 1) return true;
             player.sendMessage(TextUtil.convertColor("&a" + (i + 1) + ". &f" + map.get(list.get(i)) +
-                    " &7(tier " + getLevel(list.get(i)) + ") " + (player.hasPermission("hungercore.staff") ? TextUtil.toHours(list.get(i)) : "")));
+                    " &7(tier " + getLevel(list.get(i)) + ") " + TextUtil.toHours(list.get(i))));
         }
 
         return true;

@@ -13,6 +13,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityResurrectEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -39,11 +40,11 @@ public class EventManager implements Listener {
         plugin.getPlayerManager().setUpdateTimeLastToNow(player);
 
         if(plugin.getPlayerManager().getCombatLogged(player)) {
-            player.setHealth(0.0D);
+            Bukkit.getScheduler().runTaskLater(plugin, () -> player.setHealth(0.0D), 5);
             plugin.getPlayerManager().setCombatLogged(player,false);
         }
 
-        long time = plugin.getPlayerManager().getTotalTimePlayed(player);
+        long time = player.getStatistic(Statistic.PLAY_ONE_MINUTE) * 1000L / 20;
 
         if(time >= 3600000L && !player.hasPermission("hungerclans.timeplayed.1h")) {
             addPermission(player, "hungerclans.timeplayed.1h");
@@ -62,6 +63,22 @@ public class EventManager implements Listener {
         }
         else if(time >= 4320000000L && !player.hasPermission("hungerclans.timeplayed.50d")) {
             addPermission(player, "hungerclans.timeplayed.50d");
+        }
+
+        if(time < 86400000L && player.hasPermission("hungerclans.timeplayed.1d")) {
+            removePermission(player, "hungerclans.timeplayed.1d");
+        }
+        else if(time < 432000000L && player.hasPermission("hungerclans.timeplayed.5d")) {
+            removePermission(player, "hungerclans.timeplayed.5d");
+        }
+        else if(time < 864000000L && player.hasPermission("hungerclans.timeplayed.10d")) {
+            removePermission(player, "hungerclans.timeplayed.10d");
+        }
+        else if(time < 2160000000L && player.hasPermission("hungerclans.timeplayed.25d")) {
+            removePermission(player, "hungerclans.timeplayed.25d");
+        }
+        else if(time < 4320000000L && player.hasPermission("hungerclans.timeplayed.50d")) {
+            removePermission(player, "hungerclans.timeplayed.50d");
         }
 
         plugin.getDiscordManager().updateUserRoles(player);
@@ -147,7 +164,12 @@ public class EventManager implements Listener {
         boolean combatLogged = false;
 
         if(!plugin.getConfigManager().getConfig().getBoolean("boolean.checkCombatLog")) return;
-        if(player.getStatistic(Statistic.TIME_SINCE_DEATH) < 15 * 20) return;
+        if(player.getStatistic(Statistic.TIME_SINCE_DEATH) < 20 * 20) return;
+        String lastDamager = "none";
+        if(player.getLastDamageCause() != null && (player.getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.ENTITY_ATTACK) ||
+                player.getLastDamageCause().getCause().equals(EntityDamageEvent.DamageCause.ENTITY_SWEEP_ATTACK))) {
+            if(player.getLastDamageCause().getEntity() instanceof Player) { lastDamager = player.getLastDamageCause().getEntity().getName(); }
+        }
 
         if(plugin.getConfigManager().getConfig().getBoolean("boolean.antiCombatLogPlus")) {
             if(player.getLocation().getNearbyPlayers(15).size() > 0 ||
@@ -184,10 +206,10 @@ public class EventManager implements Listener {
             for (Player p : Bukkit.getOnlinePlayers()) {
                 p.sendMessage(TextUtil.convertColor("&9&lCOMBAT LOG &8» &f" + player.getName() +
                         plugin.getClanManager().getColor(clanName) + " [" +
-                        plugin.getClanManager().getCode(clanName) + "] &7left during battle!"));
+                        plugin.getClanManager().getCode(clanName) + "] &7left during battle" + (!lastDamager.equals("none") ? " with &f" + lastDamager + "&7" : "") + "!"));
             }
             Bukkit.getLogger().info("COMBAT LOG » " + player.getName() + " [" +
-                    plugin.getClanManager().getCode(clanName) + "] left during battle!");
+                    plugin.getClanManager().getCode(clanName) + "] left during battle" + (!lastDamager.equals("none") ? " with " + lastDamager : "") + "!");
         }
 
     }
@@ -272,6 +294,10 @@ public class EventManager implements Listener {
 
     private void addPermission(Player p, String permission) {
         plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "lp user " + p.getName() + " permission set " + permission + " true");
+    }
+
+    private void removePermission(Player p, String permission) {
+        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "lp user " + p.getName() + " permission set " + permission + " false");
     }
 
 }

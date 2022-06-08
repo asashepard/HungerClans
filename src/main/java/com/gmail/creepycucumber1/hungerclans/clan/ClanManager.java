@@ -143,7 +143,7 @@ public class ClanManager {
     }
 
     public String getRole(OfflinePlayer player) {
-        if(!isInClan(player)) return null;
+        if(!isInClan(player)) return "none";
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
         if(player.getUniqueId().toString().equals(cfg.get(getClan(player) + ".leader").toString()))
             return "leader";
@@ -153,7 +153,7 @@ public class ClanManager {
         for(String uuid : (ArrayList<String>) cfg.get(getClan(player) + ".members"))
             if(uuid.equals(player.getUniqueId().toString()))
                 return "member";
-        return null;
+        return "none";
     }
 
     //setter
@@ -175,8 +175,10 @@ public class ClanManager {
         if(!isInClan(player)) return;
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
         String clanName = plugin.getClanManager().getClan(player);
-        if(role.equalsIgnoreCase("leader"))
+        if(role.equalsIgnoreCase("leader")) {
             cfg.set(clanName + ".leader", player.getUniqueId().toString());
+            plugin.getDiscordManager().updateUserRoles(player);
+        }
         else if(role.equalsIgnoreCase("trusted")) {
             ArrayList<String> trusted = new ArrayList<>(cfg.getStringList(clanName + ".trusted"));
             trusted.add(player.getUniqueId().toString());
@@ -199,6 +201,7 @@ public class ClanManager {
             cfg.set(clanName + ".trusted", trusted);
             ArrayList<String> members = new ArrayList<>(cfg.getStringList(clanName + ".members"));
             members.remove(player.getUniqueId().toString());
+            removePermission(player, "clan." + clanName);
             cfg.set(clanName + ".members", members);
         }
         plugin.getDataManager().saveConfig();
@@ -381,6 +384,10 @@ public class ClanManager {
         if(stripped.length() > 4)
             return stripped.substring(0, 4).toUpperCase();
         return stripSpaces(str).substring(0, 4).toUpperCase();
+    }
+
+    private void removePermission(OfflinePlayer p, String permission) {
+        plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), "lp user " + p.getName() + " permission set " + permission + " false");
     }
 
 }

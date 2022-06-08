@@ -28,6 +28,17 @@ public class ConfigCommand extends CommandBase {
             }
         }
 
+        if(args.length == 0) {
+            sender.sendMessage("Integer options:");
+            for(String str : iOptions) sender.sendMessage(TextUtil.convertColor("&7- " + str + ": &e" +
+                    plugin.getConfigManager().getConfig().getInt("integer." + str)));
+            sender.sendMessage("Boolean options:");
+            for(String str : bOptions) {
+                boolean bool = plugin.getConfigManager().getConfig().getBoolean("boolean." + str);
+                sender.sendMessage(TextUtil.convertColor("&7- " + str + ": " + (bool ? "&2" : "&4") + bool));
+            }
+        }
+
         if(args[0].equalsIgnoreCase("reload") && sender.hasPermission("huncerclans.staff")) {
             sender.sendMessage("Reloading HungerClans config...");
             plugin.getConfigManager().reloadConfig();

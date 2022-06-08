@@ -32,7 +32,7 @@ public class MineTopCommand extends CommandBase {
         long total = 0;
         for(String uuidString : plugin.getDataManager().getConfig().getConfigurationSection("players").getKeys(false)) {
             OfflinePlayer p = Bukkit.getOfflinePlayer(UUID.fromString(uuidString));
-            mined = plugin.getPlayerManager().getBlocksMined(player);
+            mined = plugin.getPlayerManager().getBlocksMined(p);
             total += mined;
             while(map.containsKey(mined)) mined += Math.random();
             map.put(mined, p.getName());
