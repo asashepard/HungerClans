@@ -69,7 +69,7 @@ public class ClanWhisperCommand extends CommandBase {
         ChatColor color = plugin.getClanManager().getColor(clan);
         for(Player admin : Bukkit.getOnlinePlayers())
             if(plugin.getEssentials().getUser(admin.getUniqueId()).isSocialSpyEnabled())
-                admin.sendMessage(TextUtil.convertColor("&7[" + color + clan + "&7]" + message.split("]")[1]));
+                admin.sendMessage(TextUtil.convertColor("&7[" + color + plugin.getClanManager().getDisplayName(clan) + "&7]" + message.split("]")[1]));
 
         Bukkit.getLogger().info(message);
 

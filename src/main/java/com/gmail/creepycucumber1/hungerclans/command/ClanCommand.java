@@ -118,7 +118,7 @@ public class ClanCommand extends CommandBase {
 
                 player.sendMessage(TextUtil.convertColor("&3&lMembers of " +
                         plugin.getClanManager().getColor(clan) + "&l" + clan + "&3:"));
-                ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clan);
+                ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + plugin.getClanManager().getClanName(clan));
                 for(String uuid : (ArrayList<String>) cfg.get("members"))
                     player.sendMessage(TextUtil.convertColor(" &7- &f" + Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName() +
                             " &7[" + plugin.getClanManager().getRole(Bukkit.getOfflinePlayer(UUID.fromString(uuid))) + "]"));
@@ -130,7 +130,7 @@ public class ClanCommand extends CommandBase {
             }
             String clan = plugin.getClanManager().getClan(player);
             player.sendMessage(TextUtil.convertColor("&3&lMembers of " +
-                    plugin.getClanManager().getColor(clan) + "&l" +  clan + "&3:"));
+                    plugin.getClanManager().getColor(clan) + "&l" + plugin.getClanManager().getDisplayName(clan) + "&3:"));
             ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clan);
             for(String uuid : (ArrayList<String>) cfg.get("members"))
                 player.sendMessage(TextUtil.convertColor(" &7- &f" + Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName() +
@@ -476,8 +476,8 @@ public class ClanCommand extends CommandBase {
                 return true;
             }
             String clanName = plugin.getClanManager().getClan(player);
-            if(!plugin.getClanManager().getRole(player).equalsIgnoreCase("leader")) {
-                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must be the clan leader to change war acceptance status."));
+            if(plugin.getClanManager().getRole(player).equalsIgnoreCase("member")) {
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must be trusted or the clan leader to change war acceptance status."));
                 return true;
             }
             plugin.getClanManager().toggleAcceptingWar(clanName);
@@ -485,6 +485,24 @@ public class ClanCommand extends CommandBase {
                 player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Your clan is now a potential participant in new wars."));
             else
                 player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Your clan is now no longer a potential participant in new wars."));
+        } //leader/trusted
+        else if(args[0].equalsIgnoreCase("name")) {
+            if(!inClan) {
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan!"));
+                return true;
+            }
+            String clanName = plugin.getClanManager().getClan(player);
+            if(!plugin.getClanManager().getRole(player).equalsIgnoreCase("leader")) {
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must be the clan leader to change the clan name."));
+                return true;
+            }
+            if(args.length != 2) {
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cUsage: /c name [name]"));
+                return true;
+            }
+            if(plugin.getClanManager().changeDisplayName(clanName, args[1], player)) {
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Successfully set your clan name!"));
+            }
         } //leader
         else {
             OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
@@ -498,10 +516,10 @@ public class ClanCommand extends CommandBase {
                 return true;
             }
             ChatColor color = plugin.getClanManager().getColor(clanName);
-            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &7Player &a" + args[0] + "&7 is of the clan " + color + clanName + "&7."));
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &7Player &a" + args[0] + "&7 is of the clan " + color + plugin.getClanManager().getDisplayName(clanName) + "&7."));
             sendClickableCommand(player, TextUtil.convertColor("&7Click here to view all members of the clan."),
                     "/c members " + clanName,
-                    "Members of " + clanName);
+                    "Members of " + plugin.getClanManager().getDisplayName(clanName));
             return true;
         }
 

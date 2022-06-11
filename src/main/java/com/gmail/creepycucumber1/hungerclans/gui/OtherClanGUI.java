@@ -25,7 +25,8 @@ public class OtherClanGUI extends GUI {
 
         ItemStack banner = plugin.getClanManager().getBanner(clanName);
         ItemMeta bannerMeta = banner.getItemMeta();
-        bannerMeta.setDisplayName(TextUtil.convertColor(color + "&l" + clanName + " &r" + color + "[" + plugin.getClanManager().getCode(clanName) + "]"));
+        bannerMeta.setDisplayName(TextUtil.convertColor(color + "&l" + plugin.getClanManager().getDisplayName(clanName) +
+                " &r" + color + "[" + plugin.getClanManager().getCode(clanName) + "]"));
         ArrayList<String> bannerLore = new ArrayList<>();
         bannerLore.add(TextUtil.convertColor("&7 - Members: &f" + members));
         if(plugin.getClanManager().getMotto(clanName).length() > 0)

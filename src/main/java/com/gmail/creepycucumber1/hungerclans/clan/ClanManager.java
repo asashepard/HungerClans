@@ -54,10 +54,7 @@ public class ClanManager {
             player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cA clan name must only have letters!"));
             return;
         }
-        List<String> bannedNames = new ArrayList<>(List.of("join", "leave", "gabe", "hayes", "xarkenz", "longbread", "nigg", "fag",
-                "cunt", "burn jews", "fuck", "shit", "clan", "none", "amogus"));
-        bannedNames.addAll(TextUtil.blockedWords);
-        for(String str : bannedNames)
+        for(String str : TextUtil.blockedWords)
             if(clanName.toLowerCase().contains(str)) {
                 Bukkit.getLogger().info(player.getName() + "'s clan name blocked: " + clanName);
                 player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease think of something more creative, you swine."));
@@ -212,7 +209,11 @@ public class ClanManager {
     //getter
     public ArrayList<String> getClanList() {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
-        return new ArrayList<>(cfg.getKeys(false));
+        ArrayList<String> names = new ArrayList<>();
+        for(String key : cfg.getKeys(false)) {
+            names.add(getDisplayName(key));
+        }
+        return names;
     }
 
     public ArrayList<String> getClansThisStartup() {
@@ -280,6 +281,21 @@ public class ClanManager {
     public boolean getAcceptingWar(String clanName) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
         return cfg.getBoolean("acceptingWar");
+    }
+
+    public String getDisplayName(String clanName) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
+        String name = cfg.getString("displayName");
+        if(name == null) name = clanName;
+        return name;
+    }
+
+    public String getClanName(String displayName) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
+        for(String str : cfg.getKeys(false)) {
+            if(getDisplayName(str).equals(displayName)) return str;
+        }
+        return "none";
     }
 
     //setter
@@ -378,8 +394,42 @@ public class ClanManager {
 
     public void toggleAcceptingWar(String clanName) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
-        cfg.set("acceptingWar", cfg.getBoolean("acceptingWar"));
+        cfg.set("acceptingWar", !cfg.getBoolean("acceptingWar"));
         plugin.getDataManager().saveConfig();
+    }
+
+    public boolean changeDisplayName(String clanName, String displayName, Player player) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
+        //redundant code
+        for(String existingName : cfg.getKeys(false))
+            if(existingName.toLowerCase().contains(clanName.toLowerCase()) ||
+                    clanName.toLowerCase().contains(existingName.toLowerCase()) ||
+                    clanName.substring(0, 4).equalsIgnoreCase(existingName.substring(0, 4))) {
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat clan name is too similar to another!"));
+                return false;
+            }
+        if(stripSpaces(clanName).length() < 4) {
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat clan name is too short!"));
+            return false;
+        }
+        if(stripSpaces(clanName).length() > 18) {
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cThat clan name is too long!"));
+            return false;
+        }
+        if(!clanName.matches("^[A-Za-z]+$")) {
+            player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cA clan name must only have letters!"));
+            return false;
+        }
+        for(String str : TextUtil.blockedWords)
+            if(clanName.toLowerCase().contains(str)) {
+                Bukkit.getLogger().info(player.getName() + "'s clan name blocked: " + clanName);
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cPlease think of something more creative, you swine."));
+                return false;
+            }
+        cfg.set("displayName", displayName);
+        cfg.set("code", getClanCode(displayName));
+        plugin.getDataManager().saveConfig();
+        return true;
     }
 
     private String stripSpaces(String str) {

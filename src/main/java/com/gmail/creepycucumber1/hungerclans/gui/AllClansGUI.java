@@ -19,13 +19,13 @@ public class AllClansGUI extends GUI {
         super(plugin, player.getUniqueId(), "§lClan Explorer", (plugin.getClanManager().getClanList().size() > 9 ? 2 : 1));
         this.player = player;
 
-        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans");
-        ArrayList<String> clansList = new ArrayList<>(cfg.getKeys(false));
+        ArrayList<String> clansList = plugin.getClanManager().getClanList();
         for(int i = 0; i < clansList.size(); i++) {
-            String clanName = clansList.get(i);
+            String clanName = plugin.getClanManager().getClanName(clansList.get(i));
             ItemStack banner = plugin.getClanManager().getBanner(clanName);
             ItemMeta bannerMeta = banner.getItemMeta();
-            bannerMeta.setDisplayName(TextUtil.convertColor(plugin.getClanManager().getColor(clanName) + "&l" + clanName +
+            bannerMeta.setDisplayName(TextUtil.convertColor(plugin.getClanManager().getColor(clanName) + "&l" +
+                    plugin.getClanManager().getDisplayName(clanName) +
                     "&r" + plugin.getClanManager().getColor(clanName) +
                     " [" + plugin.getClanManager().getCode(clanName) + "]"));
             ArrayList<String> bannerLore = new ArrayList<>();
