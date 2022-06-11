@@ -4,35 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66c48feb-92b1-464f-a3b7-a52576bd5b4c" name="Changes" comment="new features, optimizations">
+    <list default="true" id="66c48feb-92b1-464f-a3b7-a52576bd5b4c" name="Changes" comment="latest changes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/clan/ClanManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/clan/ClanManager.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/ClanCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/ClanCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/ConfigCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/ConfigCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/MineTopCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/MineTopCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/PlaceTopCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/PlaceTopCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/TimeTopCommand.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/command/TimeTopCommand.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/discord/DiscordManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/discord/DiscordManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/event/EventManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/event/EventManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/runnable/NametagManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/runnable/NametagManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/util/TextUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/util/TextUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/gui/ClanDashboardGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/gui/ClanDashboardGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/gui/OtherClanGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/gmail/creepycucumber1/hungerclans/gui/OtherClanGUI.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT-shaded.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT-shaded.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/HungerClans-1.0-SNAPSHOT.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/HungerClans.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/HungerClans.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/clan/ClanManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/clan/ClanManager.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/ClanCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/ClanCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/ConfigCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/ConfigCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/MineTopCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/MineTopCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/PlaceTopCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/PlaceTopCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/TimeTopCommand.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/command/TimeTopCommand.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/event/EventManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/event/EventManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/gui/ClanDashboardGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/gui/ClanDashboardGUI.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/gui/OtherClanGUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/gui/OtherClanGUI.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/GeneralMonitor$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/GeneralMonitor$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/GeneralMonitor.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/GeneralMonitor.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/NametagManager$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/NametagManager$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/NametagManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/runnable/NametagManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/util/TextUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/gmail/creepycucumber1/hungerclans/util/TextUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/original-HungerClans-1.0-SNAPSHOT.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/original-HungerClans-1.0-SNAPSHOT.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -220,7 +203,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654567923357</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="latest changes">
+      <created>1654658260440</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1654658260440</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -254,6 +244,7 @@
     <MESSAGE value="formatting fixes" />
     <MESSAGE value="first day fixes" />
     <MESSAGE value="new features, optimizations" />
-    <option name="LAST_COMMIT_MESSAGE" value="new features, optimizations" />
+    <MESSAGE value="latest changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="latest changes" />
   </component>
 </project>

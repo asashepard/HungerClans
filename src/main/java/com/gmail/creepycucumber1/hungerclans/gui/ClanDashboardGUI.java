@@ -48,6 +48,10 @@ public class ClanDashboardGUI extends GUI {
             items[10] = new GUIItem(viewInfo, "info");
         }
 
+        boolean aW = (plugin.getClanManager().getAcceptingWar(clanName));
+        ItemStack war = ItemUtil.createItemStack((aW ? Material.GREEN_WOOL : Material.RED_WOOL), (aW ? "&7War: &aenabled" : "&7War: &cdisabled"));
+        items[5] = new GUIItem(war, "war");
+
         ItemStack help = ItemUtil.createItemStack(Material.COMPASS, "&7Help");
         items[8] = new GUIItem(help, "help");
 
@@ -72,7 +76,7 @@ public class ClanDashboardGUI extends GUI {
         ItemStack warPane = ItemUtil.createItemStack((plugin.getWarManager().isInWar(clanName) ? Material.BLACK_STAINED_GLASS_PANE : Material.WHITE_STAINED_GLASS_PANE), " ");
         GUIItem wPane = new GUIItem(warPane, "pane");
         for(int i = 1; i <= 26 - (large ? 9 : 0); i += 2)
-            if(i != 13)
+            if(i != 13 && i != 5)
                 items[i] = wPane;
 
         ItemStack clanPane = ItemUtil.createItemStack(ColorUtil.colorToGlass(plugin.getClanManager().getColor(clanName)).getType(), " ");
@@ -116,6 +120,12 @@ public class ClanDashboardGUI extends GUI {
         else if(item.getItemId().equalsIgnoreCase("help")) {
             p.closeInventory();
             plugin.getServer().dispatchCommand(p, "c help");
+        }
+        else if(item.getItemId().equalsIgnoreCase("war")) {
+            if(plugin.getClanManager().getRole(p).equalsIgnoreCase("leader")) {
+                p.closeInventory();
+                Bukkit.getServer().dispatchCommand(p, "clan war");
+            }
         }
         else if(item.getItemId().equalsIgnoreCase("info") ||
                 item.getItemId().equalsIgnoreCase("pane") ||

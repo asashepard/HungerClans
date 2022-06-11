@@ -470,6 +470,22 @@ public class ClanCommand extends CommandBase {
             }
             Bukkit.getServer().dispatchCommand(player, "untrust clan");
         } //claim owner
+        else if(args[0].equalsIgnoreCase("war")) {
+            if(!inClan) {
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou aren't in a clan!"));
+                return true;
+            }
+            String clanName = plugin.getClanManager().getClan(player);
+            if(!plugin.getClanManager().getRole(player).equalsIgnoreCase("leader")) {
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &cYou must be the clan leader to change war acceptance status."));
+                return true;
+            }
+            plugin.getClanManager().toggleAcceptingWar(clanName);
+            if(plugin.getClanManager().getAcceptingWar(clanName))
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Your clan is now a potential participant in new wars."));
+            else
+                player.sendMessage(TextUtil.convertColor("&4&lCLANS &8» &3Your clan is now no longer a potential participant in new wars."));
+        } //leader
         else {
             OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
             String clanName = "none";

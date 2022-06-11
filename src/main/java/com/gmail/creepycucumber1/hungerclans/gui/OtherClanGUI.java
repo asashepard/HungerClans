@@ -1,7 +1,6 @@
 package com.gmail.creepycucumber1.hungerclans.gui;
 
 import com.gmail.creepycucumber1.hungerclans.HungerClans;
-import com.gmail.creepycucumber1.hungerclans.util.ColorUtil;
 import com.gmail.creepycucumber1.hungerclans.util.ItemUtil;
 import com.gmail.creepycucumber1.hungerclans.util.TextUtil;
 import net.md_5.bungee.api.ChatColor;
@@ -46,8 +45,9 @@ public class OtherClanGUI extends GUI {
         ItemStack green = ItemUtil.createItemStack(Material.GREEN_CONCRETE, "&2Peace");
         items[1] = new GUIItem(green, clanName);
 
-        ItemStack red = ItemUtil.createItemStack(Material.RED_CONCRETE, "&4Declare War &f- $2500");
-        items[7] = new GUIItem(red, clanName);
+        boolean aW = plugin.getClanManager().getAcceptingWar(clanName);
+        ItemStack war = ItemUtil.createItemStack((aW ? Material.RED_CONCRETE : Material.BLACK_CONCRETE), (aW ? "&4Declare War &f- $2500" : "&7This clan currently refuses wars"));
+        items[7] = new GUIItem(war, clanName);
 
     }
 

@@ -277,6 +277,11 @@ public class ClanManager {
         return noDeclareMap.containsKey(otherClanName);
     }
 
+    public boolean getAcceptingWar(String clanName) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
+        return cfg.getBoolean("acceptingWar");
+    }
+
     //setter
     public void setColor(String clanName, String color) {
         ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
@@ -368,6 +373,12 @@ public class ClanManager {
         List<HashMap<String, String>> noDeclare = List.of(noDeclareMap);
         cfg.set("noDeclare", noDeclare);
 
+        plugin.getDataManager().saveConfig();
+    }
+
+    public void toggleAcceptingWar(String clanName) {
+        ConfigurationSection cfg = plugin.getDataManager().getConfig().getConfigurationSection("clans." + clanName);
+        cfg.set("acceptingWar", cfg.getBoolean("acceptingWar"));
         plugin.getDataManager().saveConfig();
     }
 
